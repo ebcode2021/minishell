@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/16 17:19:09 by eunson           ###   ########.fr       */
+/*   Updated: 2022/12/16 21:47:29 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,85 @@
 // 00. signal 처리
 
 //test log
+
+void	exit_check(char *input)
+{
+	char	*trimed;
+
+	if (!input)
+		builtin_exit();
+	trimed = ft_strtrim(input, " "); 
+	if (ft_strncmp("exit", trimed, 5) == 0)
+	{
+		free(trimed);
+		builtin_exit();
+	}
+
+	//kill all process;
+	// exit_code 직접 세팅..?
+	//set_exit_code()
+	//exit(exit code?)
+}
+
+void	syntax_check(char *input)
+{
+	// | 이후에 공백만 들어온경우
+	// redirection이 잘못된 경우
+}
+
+void	event_handler(char **commands)
+{
+	here_doc_handler(commands);
+	reserved_word_handler(commands); /// $ ! ~
+	// 1. here_doc
+
+	
+}
+
+char	**command_parser(char *input)
+{
+	char	**pipe_split;
+
+	// 1) | 가 이상하지 않은지
+	// 2) redirection이 이상하지 않은지.
+	syntax_check(input);
+	pipe_split = ft_split(input, '|');
+	event_handler(pipe_split);
+	return (pipe_split);
+}
+
+void	execute(char **commands)
+{
+	// commands = "ls -al", "pwd", "hostname"
+	while (*commands) 
+	//pipe_n_fork
+	//자식(child)
+	//command_str 을 공백으로 split
+	//? 나 ! 확장
+	if(is_builtin(split_commands[0]))
+		builtin_handler();
+	else
+	{
+		//find_path
+		//execve() 여기서 바로 실행
+	}
+}
+
 int main(void)
 {
-	char	*str;
+	char	*input;
+	char	**commands;
 
+	set_signal_handler();
 	while (1)
 	{
-		str = readline("picoshell> ");
-		add_history(str);
-		if (ft_strncmp("exit", str, 5) == 0) //eof 처리 해주기
-			exit(0);
-		printf("input : %s\n", str);
-		free(str);
+		input = readline("picoshell> ");
+		exit_check(input); 
+		add_history(input);
+		commands = command_parser(input);
+		execute(commands);
+		printf("아무래도..input : %s\n",input);
+		free(input);
 	}
 	return (0);
 }

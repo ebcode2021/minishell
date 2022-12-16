@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/12 14:57:26 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/16 21:14:27 by eunson           ###   ########.fr       */
+/*   Created: 2022/12/16 17:32:19 by eunson            #+#    #+#             */
+/*   Updated: 2022/12/16 17:57:42 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "minishell.h"
 
-typedef struct s_token
+static void	sigint_handler(void)
 {
-	int		type;
-	char	*str;
-}				t_token;
+	// 지금 진행중인 process kill?? new_life
+	// tgoto? nono
+}
 
-typedef struct s_node
+static void	sigquit_handler(void)
 {
-	t_token			*token;
-	struct s_node	*parent;
-	struct s_node	*l_child;
-	struct s_node	*r_child;
-}				t_node;
+	return ;
+}
 
-#endif
+void	set_signal_handler(void)
+{
+	signal(SIGINT, sigint_handler); // ctrl + c (new prompt)
+	signal(SIGQUIT, sigquit_handler); // ctrl + \ (do nothing..)
+}
