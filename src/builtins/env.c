@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:02 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/16 17:32:03 by eunson           ###   ########.fr       */
+/*   Updated: 2022/12/19 14:46:45 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+void	*builtin_env(char *envp[])
+{
+	while (*envp)
+		print("%s\n", *envp++);
+}
