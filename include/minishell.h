@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/16 16:25:07 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/19 18:59:37 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,12 @@
 # include <sys/stat.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "struct.h"
+# include "error.h"
+# include "const.h"
+
+void	free_split(char **splitted);
+void	exit_with_error_msg(const char *msg);
+void	*ft_malloc(size_t size);
 
 #endif

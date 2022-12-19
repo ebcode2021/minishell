@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/19 13:32:43 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/19 19:18:12 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,84 +25,110 @@
 
 //test log
 
-void	exit_check(char *input)
-{
-	char	*trimed;
+// void	exit_check(char *input)
+// {
+// 	char	*trimed;
 
-	if (!input)
-		builtin_exit();
-	trimed = ft_strtrim(input, " "); 
-	if (ft_strncmp("exit", trimed, 5) == 0)
-	{
-		free(trimed);
-		builtin_exit();
-	}
+// 	if (!input)
+// 		builtin_exit();
+// 	trimed = ft_strtrim(input, " "); 
+// 	if (ft_strncmp("exit", trimed, 5) == 0)
+// 	{
+// 		free(trimed);
+// 		builtin_exit();
+// 	}
 
-	//kill all process;
-	// exit_code 직접 세팅..?
-	//set_exit_code()
-	//exit(exit code?)
-}
+// 	//kill all process;
+// 	// exit_code 직접 세팅..?
+// 	//set_exit_code()
+// 	//exit(exit code?)
+// }
 
-void	syntax_check(char *input)
-{
-	// | 이후에 공백만 들어온경우
-	// redirection이 잘못된 경우
-}
+// void	syntax_check(char *input)
+// {
+// 	// | 이후에 공백만 들어온경우
+// 	// redirection이 잘못된 경우
+// }
 
-void	event_handler(char **commands)
-{
-	here_doc_handler(commands);
-	reserved_word_handler(commands); /// $ ! ~
-	// 1. here_doc
+// void	event_handler(char **commands)
+// {
+// 	here_doc_handler(commands);
+// 	reserved_word_handler(commands); /// $ ! ~
+// 	// 1. here_doc
 
 	
-}
+// }
 
-char	**command_parser(char *input)
+// char	**command_parser(char *input)
+// {
+// 	char	**pipe_split;
+
+// 	// 1) | 가 이상하지 않은지
+// 	// 2) redirection이 이상하지 않은지.
+// 	syntax_check(input);
+// 	pipe_split = ft_split(input, '|');
+// 	event_handler(pipe_split);
+// 	return (pipe_split);
+// }
+
+// void	execute(char **commands)
+// {
+// 	// commands = "ls -al", "pwd", "hostname"
+// 	while (*commands) 
+// 	//pipe_n_fork
+// 	//자식(child)
+// 	//command_str 을 공백으로 split
+// 	//? 나 ! 확장
+// 	if(is_builtin(split_commands[0]))
+// 		builtin_handler();
+// 	else
+// 	{
+// 		//find_path
+// 		//execve() 여기서 바로 실행
+// 	}
+// }
+
+void	set_system_info(t_system *system, char *envp[])
 {
-	char	**pipe_split;
+	char	**splitted;
 
-	// 1) | 가 이상하지 않은지
-	// 2) redirection이 이상하지 않은지.
-	syntax_check(input);
-	pipe_split = ft_split(input, '|');
-	event_handler(pipe_split);
-	return (pipe_split);
-}
-
-void	execute(char **commands)
-{
-	// commands = "ls -al", "pwd", "hostname"
-	while (*commands) 
-	//pipe_n_fork
-	//자식(child)
-	//command_str 을 공백으로 split
-	//? 나 ! 확장
-	if(is_builtin(split_commands[0]))
-		builtin_handler();
-	else
+	system->env_lst = 0;
+	while (*envp)
 	{
-		//find_path
-		//execve() 여기서 바로 실행
+		splitted = ft_split(*envp++, '=');
+		ft_lstadd_back(&system->env_lst, ft_lstnew(splitted[0], splitted[1]));
+		free_split(splitted);
 	}
+	getcwd(system->pwd, BUFFER_SIZE);
+	system->last_errno = 0;
+	system->last_exit_status_code = 0;
 }
 
 int main(int argc, char *argv[], char *envp[])
 {
-	char	*input;
-	char	**commands;
+	// char		*input;
+	// char		**commands;
+	t_system	system;
 
-	set_signal_handler();
-	while (1)
+	//set_signal_handler();
+	argc = 0;
+	argv = 0;
+	set_system_info(&system, envp);
+	while (system.env_lst)
 	{
-		input = readline("picoshell> ");
-		exit_check(input); 
-		add_history(input);
-		commands = command_parser(input);
-		execute(commands);
-		printf("아무래도..input : %s\n",input);
-		free(input);
+		printf("%s=%s\n", system.env_lst->variable_name, system.env_lst->value);
+		system.env_lst = system.env_lst->next;
 	}
 	return (0);
+	// while (1)
+	// {
+	// 	input = readline("picoshell> ");
+	// 	exit_check(input); 
+	// 	add_history(input);
+	// 	commands = command_parser(input);
+	// 	execute(commands);
+	// 	printf("아무래도..input : %s\n",input);
+	// 	free(input);
+	// }
+	//return (0);
 }

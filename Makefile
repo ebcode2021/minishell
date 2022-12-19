@@ -2,7 +2,8 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 SRC_DIR = src/
-SRC = minishell.c
+SRC = minishell.c \
+	ft_allocs.c
 BUILT_IN = builtins/*.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SRCS:.c=.o)
@@ -26,7 +27,7 @@ $(NAME) : $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(READLINE) -o $(NAME)
 
 $(LIBFT):
-	@$(MAKE) -C ./libft all
+	@$(MAKE) -C ./libft bonus
 
 clean : 
 	@$(MAKE) -C ./libft clean

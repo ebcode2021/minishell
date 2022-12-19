@@ -6,16 +6,26 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:47:39 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/12 14:56:57 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/19 19:14:52 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	free_split(char **splitted)
+{
+	size_t	i;
+
+	i = 0;
+	while (splitted[i])
+		free(splitted[i++]);
+	free(splitted);
+}
+
 void	exit_with_error_msg(const char *msg)
 {
 	if (msg)
-		ft_putendl_fd(msg, 2);
+		ft_putendl_fd((char *)msg, 2);
 	exit(1);
 }
 
