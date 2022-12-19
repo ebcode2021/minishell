@@ -42,7 +42,7 @@ BONUS_SRCS = ft_lstadd_back.c \
 			ft_lstnew.c \
 			ft_lstsize.c \
 			ft_lstfind.c \
-			ft_lstremove_if.c \
+			ft_lstremove_if.c
 
 OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
