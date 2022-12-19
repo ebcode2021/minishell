@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 23:02:13 by jinholee          #+#    #+#             */
-/*   Updated: 2022/07/06 12:32:46 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:25:25 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 	while (list)
 	{
 		temp = list->next;
-		del(list->content);
+		del(list->variable_name);
+		del(list->value);
 		free(list);
 		list = temp;
 	}

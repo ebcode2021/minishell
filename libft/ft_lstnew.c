@@ -3,24 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:31:46 by jinholee          #+#    #+#             */
-/*   Updated: 2022/07/04 22:35:40 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:25:06 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstnew(void *variable_name, char *value)
 {
 	t_list	*lstnew;
 
 	lstnew = malloc (sizeof(t_list));
 	if (!lstnew)
 		return (lstnew);
-	lstnew->content = content;
+	lstnew->variable_name = variable_name;
+	lstnew->value = value;
 	lstnew->next = 0;
 	return (lstnew);
 }
