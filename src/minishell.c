@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/20 16:31:45 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/20 19:05:22 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 // 00. signal 처리
 
 //test log
+
+t_system	sys;
 
 void	exit_check(char *input)
 {
@@ -77,7 +79,7 @@ void	execute(char **commands)
 
 	idx = 0;
 	// asdf=1
-	// command가 맞나? 아님 builtin인가? -> export
+	// command가 맞나? 아님 builtin인가? . export
 	// commands = "ls -al", "pwd", "hostname"
 	while (commands[idx]) 
 	//pipe_n_fork
@@ -92,32 +94,31 @@ void	execute(char **commands)
 		error_handler();
 }
 
-void	set_system_info(t_system *system, char *envp[])
+void	set_system_info(char *envp[])
 {
 	char	**splitted;
 
-	system->env_lst = 0;
+	sys.env_lst = 0;
 	while (*envp)
 	{
 		splitted = ft_split(*envp++, '=');
-		ft_lstadd_back(&system->env_lst, ft_lstnew(splitted[0], splitted[1]));
+		ft_lstadd_back(&sys.env_lst, ft_lstnew(splitted[0], splitted[1]));
 		free_split(splitted);
 	}
-	getcwd(system->pwd, BUFFER_SIZE);
-	system->last_errno = 0;
-	system->last_exit_status_code = 0;
+	getcwd(sys.pwd, BUFFER_SIZE);
+	sys.last_errno = 0;
+	sys.last_exit_status_code = 0;
 }
 
 int main(int argc, char *argv[], char *envp[])
 {
 	// char		*input;
 	// char		**commands;
-	t_system	system;
 
 	//set_signal_handler();
 	argc = 0;
 	argv = 0;
-	set_system_info(&system, envp);
+	set_system_info(envp);
 	return (0);
 	// while (1)
 	// {

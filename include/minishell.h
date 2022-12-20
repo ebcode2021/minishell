@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/19 18:59:37 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/20 19:03:14 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include "struct.h"
 # include "error.h"
 # include "const.h"
+
+extern t_system	sys;
 
 void	free_split(char **splitted);
 void	exit_with_error_msg(const char *msg);

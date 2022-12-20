@@ -6,29 +6,21 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:57:26 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/20 09:09:59 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:36:48 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# include "libft.h"
-# include "const.h"
+//# include "libft.h"
+//# include "const.h"
 
 typedef struct s_token
 {
 	int		type;
 	char	*str;
 }				t_token;
-
-typedef struct s_node
-{
-	t_token			*token;
-	struct s_node	*parent;
-	struct s_node	*l_child;
-	struct s_node	*r_child;
-}				t_node;
 
 typedef struct s_system
 {
