@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/20 19:03:14 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/20 20:18:13 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>
+# include <dirent.h>
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
