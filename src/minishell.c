@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/19 19:18:12 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/20 16:31:45 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@
 // 	// 2) redirection이 이상하지 않은지.
 // 	syntax_check(input);
 // 	pipe_split = ft_split(input, '|');
-// 	event_handler(pipe_split);
+// 	event_handler(pipe_split); // !, $
 // 	return (pipe_split);
 // }
 
@@ -114,11 +114,6 @@ int main(int argc, char *argv[], char *envp[])
 	argc = 0;
 	argv = 0;
 	set_system_info(&system, envp);
-	while (system.env_lst)
-	{
-		printf("%s=%s\n", system.env_lst->variable_name, system.env_lst->value);
-		system.env_lst = system.env_lst->next;
-	}
 	return (0);
 	// while (1)
 	// {
