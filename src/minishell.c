@@ -52,15 +52,6 @@ void	syntax_check(char *input)
 	// redirection이 잘못된 경우
 }
 
-void	event_handler(char **commands)
-{
-	here_doc_handler(commands);
-	reserved_word_handler(commands); /// $ ! ~
-	// 1. here_doc
- 
-	
-}
-
 char	**command_parser(char *input)
 {
 	char	**pipe_split;
