@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/20 20:15:33 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/21 18:55:29 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,66 @@ void	exit_check(char *input)
 	//exit(exit code?)
 }
 
-void	syntax_check(char *input)
+int	is_redirection(char **input)
 {
-	// | 이후에 공백만 들어온경우
-	// redirection이 잘못된 경우
+	char	c;
+
+	if (**input == '<' || **input == '>')
+	{
+		c == **input;
+		*input++;
+		if (c == '<' && **input == '<')
+			return (IN_REDIECTION);
+		else if (c == '>' && **input == '>')
+			return (OUT_APPEND);
+		else if (c == '<')
+			return (1);
+		else if (c == '>')
+			return (3);
+	}
+	return (0);
 }
 
-char	**command_parser(char *input)
+void	syntax_check(char *input)
 {
+	size_t	idx;
+	char	*trimed;
+
+	idx = 0;
+	trimed = ft_strtrim(input, " ");
+	if (input[idx++] == '|')
+		error_handler();
+	while (input[idx])
+	{
+		while (input[idx] == ' ')
+			input++;
+		if (is_redirection(&input))
+		{
+			if (*input == '|' || *input == '\n')
+				printf("syntax error near unexpected token \`%c\'", *input);
+		}
+		else if (is_pipe(&input))
+		{
+			
+		}
+		input++;
+	}
+	// | 로 바로 시작되는 경우
+	// | | 사이에 공백만 들어온경우
+	// redirection 기호 이후에 아무인자가 없는 경우.
+}
+
+char	**command_parser(char *input) 
+{
+	size_t	idx;
 	char	**pipe_split;
 
-	// 1) | 가 이상하지 않은지
-	// 2) redirection이 이상하지 않은지.
+	idx = 0;
 	syntax_check(input);
+	quote_interpreter(input);
 	pipe_split = ft_split(input, '|');
-	event_handler(pipe_split); // !, $
+	while (pipe_split[idx])
+		event_handler(pipe_split[idx++]);
 	return (pipe_split);
 }
 
