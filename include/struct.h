@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jinhong <jinhong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:57:26 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/20 20:03:43 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/25 22:48:31 by jinhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ typedef struct s_token
 typedef struct s_system
 {
 	t_list	*env_lst;
+	t_list	*here_doc_names;
 	char	pwd[BUFFER_SIZE];
 	int		last_exit_status_code;
 	int		last_errno;
+	int		here_doc_index;
 }				t_system;
 
 typedef struct s_redirection

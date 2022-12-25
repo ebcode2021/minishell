@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jinhong <jinhong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/20 20:15:33 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/25 22:55:27 by jinhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 t_system	sys;
 
-void	exit_check(char *input)
+/* void	exit_check(char *input)
 {
 	char	*trimed;
 
@@ -84,6 +84,16 @@ void	execute(char **commands)
 	else 
 		error_handler();
 }
+ */
+
+void	init_system_info()
+{
+	sys.env_lst = 0;
+	sys.last_exit_status_code = 0;
+	sys.last_errno = 0;
+	sys.here_doc_names = 0;
+	sys.here_doc_index = 0;
+}
 
 void	set_system_info(char *envp[])
 {
@@ -108,8 +118,9 @@ int main(int argc, char *argv[], char *envp[])
 
 	//set_signal_handler();
 	argc = 0;
-	argv = 0;
+	// argv = 0;
 	set_system_info(envp);
+	syntax_check(argv[1]);
 	return (0);
 	// while (1)
 	// {
