@@ -30,4 +30,21 @@ typedef struct s_system
 	int		last_errno;
 }				t_system;
 
+typedef struct s_redirection
+{
+	char	*infile;
+	char	*outfile;
+	int		infile_fd;
+	int		outfile_fd;
+	int		open_option;
+	int		redirection_type;
+}				t_redirecion;
+
+typedef struct s_command_line
+{
+	char			*command;
+	char			**args;
+	t_redirecion	redirection;
+}				t_command_line;
+
 #endif
