@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/26 10:52:15 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/26 15:26:15 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int main(int argc, char *argv[], char *envp[])
 		add_history(input);
 		if (syntax_check(input))
 		{
-			here_doc_handler(input);
+			here_doc_fork(input);
 		}
 		//commands = command_parser(input);
 		//execute(commands);
