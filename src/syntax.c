@@ -3,31 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinhong <jinhong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 15:04:05 by jinhong           #+#    #+#             */
-/*   Updated: 2022/12/25 15:49:44 by jinhong          ###   ########.fr       */
+/*   Updated: 2022/12/26 10:57:58 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	raise_syntax_error(char c)
+int	syntax_ok(char *trimed)
+{
+	free(trimed);
+	return (1);
+}
+
+int	raise_syntax_error(char c, char *trimed)
 {
 	if (c == '\n')
 		printf("bash: syntax error near unexpected token `newline\'\n");
 	else
 		printf("bash: syntax error near unexpected token `%c\'\n", c);
-	exit(1);
+	free(trimed);
+	return (0);
 }
 
-void	syntax_check(char *input)
+int	syntax_check(char *input)
 {
 	int			i;
 	const char	*trimed = ft_strtrim(input, " ");
 
 	if (*trimed == '|')
-		raise_syntax_error('|');
+		return (raise_syntax_error('|', (char *)trimed));
 	i = -1;
 	while (trimed[++i])
 	{
@@ -38,14 +45,14 @@ void	syntax_check(char *input)
 				i++;
 			else if (ft_strncmp(trimed + i, "<<<", 3) == 0 \
 				|| ft_strncmp(trimed + i, ">>>", 3) == 0)
-				raise_syntax_error(trimed[i]);
+				return (raise_syntax_error(trimed[i], (char *)trimed));
 			while (trimed[++i] == ' ')
 				i += 0;
 			if (!trimed[i])
-				raise_syntax_error('\n');
+				return (raise_syntax_error('\n', (char *)trimed));
 			else if (trimed[i] == '|' || trimed[i] == '<' || trimed[i] == '>')
-				raise_syntax_error(trimed[i]);
+				return (raise_syntax_error(trimed[i], (char *)trimed));
 		}
 	}
-	free((char *)trimed);
+	return (syntax_ok((char *)trimed));
 }

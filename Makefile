@@ -4,7 +4,8 @@ CFLAGS = -Wall -Werror -Wextra
 SRC_DIR = src/
 SRC = minishell.c \
 	ft_allocs.c \
-	syntax.c
+	syntax.c \
+	here_doc.c
 BUILT_IN = builtins/*.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SRCS:.c=.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinhong <jinhong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/25 15:40:30 by jinhong          ###   ########.fr       */
+/*   Updated: 2022/12/26 10:47:37 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <errno.h>
+# include <fcntl.h>
 # include <dirent.h>
 # include <signal.h>
 # include <sys/wait.h>
@@ -34,6 +35,7 @@ extern t_system	sys;
 void	free_split(char **splitted);
 void	exit_with_error_msg(const char *msg);
 void	*ft_malloc(size_t size);
-void	syntax_check(char *input);
+int		syntax_check(char *input);
+void	here_doc_handler(char *raw_input);
 
 #endif

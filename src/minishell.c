@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinhong <jinhong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/25 22:55:27 by jinhong          ###   ########.fr       */
+/*   Updated: 2022/12/26 10:52:15 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,24 +113,26 @@ void	set_system_info(char *envp[])
 
 int main(int argc, char *argv[], char *envp[])
 {
-	// char		*input;
+	char		*input;
 	// char		**commands;
 
 	//set_signal_handler();
 	argc = 0;
-	// argv = 0;
+	argv = 0;
 	set_system_info(envp);
-	syntax_check(argv[1]);
+	while (1)
+	{
+		input = readline("picoshell> ");
+		//exit_check(input); 
+		add_history(input);
+		if (syntax_check(input))
+		{
+			here_doc_handler(input);
+		}
+		//commands = command_parser(input);
+		//execute(commands);
+		//printf("아무래도..input : %s\n",input);
+		free(input);
+	}
 	return (0);
-	// while (1)
-	// {
-	// 	input = readline("picoshell> ");
-	// 	exit_check(input); 
-	// 	add_history(input);
-	// 	commands = command_parser(input);
-	// 	execute(commands);
-	// 	printf("아무래도..input : %s\n",input);
-	// 	free(input);
-	// }
-	//return (0);
 }
