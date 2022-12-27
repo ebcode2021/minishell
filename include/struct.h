@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinhong <jinhong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:57:26 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/25 22:48:31 by jinhong          ###   ########.fr       */
+/*   Updated: 2022/12/27 09:26:40 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 
 # include "libft.h"
 # include "const.h"
-
-typedef struct s_token
-{
-	int		type;
-	char	*str;
-}				t_token;
 
 typedef struct s_system
 {
@@ -34,19 +28,17 @@ typedef struct s_system
 
 typedef struct s_redirection
 {
-	char	*infile;
-	char	*outfile;
-	int		infile_fd;
-	int		outfile_fd;
-	int		open_option;
-	int		redirection_type;
+	char	*file_name;
+	int		option;
+	int		type;
 }				t_redirecion;
 
-typedef struct s_command_line
+typedef struct s_exec_block
 {
-	char			*command;
-	char			**args;
-	t_redirecion	redirection;
-}				t_command_line;
+	char				*command;
+	char				**args;
+	t_redirecion		redirection;
+	struct s_exec_block *next;
+}				t_exec_block;
 
 #endif
