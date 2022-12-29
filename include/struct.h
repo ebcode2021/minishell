@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:57:26 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/27 09:26:40 by eunson           ###   ########.fr       */
+/*   Updated: 2022/12/27 16:52:25 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ typedef struct s_system
 
 typedef struct s_redirection
 {
-	char	*file_name;
-	int		option;
-	int		type;
+	char					*file_name;
+	int						type;
+	struct s_redirection	*next;
 }				t_redirecion;
 
 typedef struct s_exec_block
 {
 	char				*command;
 	char				**args;
-	t_redirecion		redirection;
+	t_redirecion		*redirection;
 	struct s_exec_block *next;
 }				t_exec_block;
 

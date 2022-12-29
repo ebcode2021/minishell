@@ -5,7 +5,8 @@ SRC_DIR = src/
 SRC = minishell.c \
 	ft_allocs.c \
 	syntax.c \
-	here_doc.c
+	here_doc.c \
+	exec_block_parser.c
 BUILT_IN = builtins/*.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SRCS:.c=.o)

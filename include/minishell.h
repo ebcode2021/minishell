@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/26 15:34:07 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/27 12:58:36 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	here_doc(char *eof, char *tmp_filename);
 void	here_doc_handler(char *raw_input, char *tmp_filename);
 int		here_doc_fork(char *raw_input);
 char	*expand_quotes(char *input);
+void	exec_block_parser(char *raw_input);
 
 #endif
