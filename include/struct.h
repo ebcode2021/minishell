@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:57:26 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/27 16:52:25 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/29 12:59:55 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_exec_block
 	char				*command;
 	char				**args;
 	t_redirecion		*redirection;
+	size_t				idx;
 	struct s_exec_block *next;
 }				t_exec_block;
 

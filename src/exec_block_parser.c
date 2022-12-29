@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/29 11:43:00 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/29 12:29:51 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,25 @@ void	block_add(t_exec_block	**head, t_exec_block *new)
 char	*str_replace(char *str, char *to_find, char *to_replace)
 {
 	char	buffer[BUFFER_SIZE];
-	size_t	str_index;
-	size_t	buffer_index;
+	size_t	str_idx;
+	size_t	buf_idx;
 
-	str_index = 0;
-	buffer_index = 0;
-	buffer[0] = 0;
-	while (str[str_index])
+	str_idx = 0;
+	buf_idx = 0;
+	while (str[str_idx])
 	{
-		if (ft_strncmp(str + str_index, to_find, ft_strlen(to_find)) == 0)
+		if (ft_strncmp(str + str_idx, to_find, ft_strlen(to_find)) == 0)
 		{
-			buffer[buffer_index] = 0;
-			ft_strlcat(buffer, to_replace, ft_strlen(to_replace));
-			str_index += ft_strlen(to_find);
-			buffer_index += ft_strlen(to_replace);
+			ft_memcpy(buffer + buf_idx, to_replace, ft_strlen(to_replace));
+			str_idx += ft_strlen(to_find);
+			buf_idx += ft_strlen(to_replace);
 		}
 		else
 		{
-			buffer[buffer_index++] = str[str_index++];
+			buffer[buf_idx++] = str[str_idx++];
 		}
 	}
-	buffer[buffer_index] = 0;
-	free(str);
+	buffer[buf_idx] = 0;
 	return (ft_strdup(buffer));
 }
 
@@ -121,8 +118,13 @@ void	add_redirection(t_redirecion **head, char **split, size_t *index)
 	size_t			i;
 
 	if (!*head)
+	{
 		*head = malloc(sizeof(t_redirecion));
-	elem = *head;
+		elem = *head;
+		elem->next = 0;
+	}
+	else
+		elem = *head;
 	while (elem->next)
 		elem = elem->next;
 	elem->next = malloc(sizeof(t_redirecion));
@@ -144,6 +146,7 @@ char	**set_redirections(t_exec_block *block, char **split)
 	char	*tmp;
 	size_t	i;
 
+	replaced = ft_calloc(1,1);
 	i = 0;
 	while (split[i])
 	{
@@ -157,24 +160,34 @@ char	**set_redirections(t_exec_block *block, char **split)
 		}
 		i++;
 	}
-	free_split(split);
+	while (block->redirection)
+	{
+		printf("file :%s, type:%d\n", block->redirection->file_name, block->redirection->type);
+		block->redirection = block->redirection->next;
+	}
 	return (ft_split(replaced, ' '));
 }
 
 t_exec_block	*str_to_block(char *str)
 {
 	t_exec_block	*block;
-	//char			**split;
+	char			*replaced;
+	char			**split;
 
 	block = block_new();
-	str = str_replace(str, "<", " < ");
-	printf("replaced < : %s\n", str);
-	str = str_replace(str, ">", " > ");
-	printf("replaced > : %s\n", str);
-	//split = split_with_char(str, ' ');
-	// split = set_redirections(block, split);
-	// block->args = split;
-	// block->command = ft_strdup(block->args[0]);
+	replaced = str_replace(str, "<", " < ");
+	str = str_replace(replaced, ">", " > ");
+	printf("replaced : %s\n", str);
+	free(replaced);
+	split = split_with_char(str, ' ');
+	split = set_redirections(block, split);
+	block->args = split;
+	block->command = ft_strdup(block->args[0]);
+	// while (block->redirection)
+	// {
+	// 	printf("file :%s, type:%d\n", block->redirection->file_name, block->redirection->type);
+	// 	block->redirection = block->redirection->next;
+	// }
 	return (block);
 }
 
