@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2022/12/30 19:17:09 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/30 21:39:37 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,6 @@ char	*get_tmp_filename(int number)
 	free(str_num);
 	return (tmp_filename);
 }
-
-// char	*expand_quotes(char *input)
-// {
-// 	char	buffer[BUFFER_SIZE];
-// 	char	opening;
-// 	size_t	input_index;
-// 	size_t	buffer_index;
-
-// 	opening = 0;
-// 	input_index = 0;
-// 	buffer_index = 0;
-// 	while (input[input_index])
-// 	{
-// 		if (opening && input[input_index] == opening)
-// 			opening = 0;
-// 		else if (!opening \
-// 			&& (input[input_index] == '\'' || input[input_index] == '\"'))
-// 			opening = input[input_index];
-// 		else
-// 			buffer[buffer_index++] = input[input_index];
-// 		input_index++;
-// 	}
-// 	buffer[buffer_index] = 0;
-// 	return (ft_strdup(buffer));
-// }
 
 void	here_doc(char *eof, char *tmp_filename)
 {
@@ -73,30 +48,6 @@ void	here_doc(char *eof, char *tmp_filename)
 		free(input);
 	}
 }
-
-// void	here_doc_handler(char *raw_input, char *tmp_filename)
-// {
-// 	size_t	input_index;
-// 	size_t	buffer_index;
-// 	char	*input;
-// 	char	buffer[BUFFER_SIZE];
-
-// 	input = expand_quotes(raw_input);
-// 	input_index = 0;
-// 	buffer_index = 0;
-// 	while (input[input_index] == ' ')
-// 		input_index++;
-// 	while (input[input_index])
-// 	{
-// 		if (input[input_index] == '<' || input[input_index] == '>' \
-// 			|| input[input_index] == '|' || input[input_index] == ' ')
-// 			break ;
-// 		buffer[buffer_index++] = input[input_index++];
-// 	}
-// 	buffer[buffer_index] = 0;
-// 	here_doc(buffer, tmp_filename);
-// 	free(input);
-// }
 
 int	here_doc_handler(t_redirecion *redirection)
 {

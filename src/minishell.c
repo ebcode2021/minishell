@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/30 18:20:50 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/30 21:31:05 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ void	set_system_info(char *envp[])
 
 int main(int argc, char *argv[], char *envp[])
 {
-	char		*input;
-	// char		**commands;
+	char			*input;
+	t_exec_block	*elem;
 
 	//set_signal_handler();
 	if (!argc && !argv)
@@ -127,8 +127,10 @@ int main(int argc, char *argv[], char *envp[])
 		add_history(input);
 		if (syntax_check(input))
 		{
-			exec_block_parser(input);
+			elem = exec_block_parser(input);
+			free_block(elem);
 		}
+		//system("leaks minishell");
 		//commands = command_parser(input);
 		//execute(commands);
 		//printf("아무래도..input : %s\n",input);
