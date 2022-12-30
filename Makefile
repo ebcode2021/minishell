@@ -15,7 +15,8 @@ INCLUDE = include \
 		-I libft \
 		-I ${HOME}/.brew/opt/readline/include
 LIBFT = libft/libft.a
-READLINE = -lreadline -L ~/.brew/opt/readline/lib
+#READLINE = -lreadline -L ~/.brew/opt/readline/lib
+READLINE = -lreadline -L /usr/local/Cellar/readline/8.2.1/lib
 
 ifdef SANITIZE
 	CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3

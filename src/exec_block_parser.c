@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/29 17:23:08 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/30 18:22:25 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	print_block(t_exec_block *block)
 	printf("\n");
 	while (block->redirection)
 	{
-		printf("file: %s, type: %d\n", block->redirection->file_name, block->redirection->type);
+		printf("file: %s, type: %d\n", \
+			block->redirection->file_name, block->redirection->type);
 		block->redirection = block->redirection->next;
 	}
 	printf("==========================\n");
@@ -89,6 +90,7 @@ char	*str_replace(char *str, char *to_find, char *to_replace)
 			buffer[buf_idx++] = str[str_idx++];
 	}
 	buffer[buf_idx] = 0;
+	free(str);
 	return (ft_strdup(buffer));
 }
 
@@ -139,7 +141,7 @@ char	**split_with_char(char *raw_input, char c)
 
 void	add_redirection(t_redirecion **head, char **split, size_t *index)
 {
-	t_redirecion	*elem;
+	t_redirecion	*block;
 	t_redirecion	*new;
 	size_t			i;
 
@@ -148,10 +150,10 @@ void	add_redirection(t_redirecion **head, char **split, size_t *index)
 		*head = new;
 	else
 	{
-		elem = *head;
-		while (elem->next)
-			elem = elem->next;
-		elem->next = new;
+		block = *head;
+		while (block->next)
+			block = block->next;
+		block->next = new;
 	}
 	i = *index;
 	if (*split[i] == '<' || *split[i] == '>')
@@ -159,7 +161,7 @@ void	add_redirection(t_redirecion **head, char **split, size_t *index)
 		new->type = *split[i++];
 		if (*split[i] == '<' || *split[i] == '>')
 			new->type += *split[i++];
-		new->file_name = split[i];
+		new->file_name = ft_strdup(split[i]);
 	}
 	*index = i;
 }
@@ -194,7 +196,7 @@ char	*double_quote_handler(char *str)
 	char	*replaced;
 
 	replaced = str_replace(str, "\"", "");
-	return (replaced);       
+	return (replaced);
 }
 
 char	*single_quote_handler(char *str)
@@ -215,14 +217,14 @@ char	*quote_handler(char *str)
 	return (result);
 }
 
-void	set_arguments(t_exec_block *block, char **split)
+char	**set_arguments(char **split)
 {
 	size_t	i;
 	char	**args;
 
 	i = 0;
 	while (split[i])
-		printf("%s\n", split[i++]);
+		i++;
 	args = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (split[i])
@@ -231,8 +233,7 @@ void	set_arguments(t_exec_block *block, char **split)
 		i++;
 	}
 	args[i] = 0;
-	block->args = args;
-	free_split(split);
+	return (args);
 }
 
 t_exec_block	*str_to_block(char *str)
@@ -243,19 +244,46 @@ t_exec_block	*str_to_block(char *str)
 
 	block = block_new();
 	replaced = str_replace(str, "<", " < ");
-	str = str_replace(replaced, ">", " > ");
-	free(replaced);
-	split = set_redirections(block, split_with_char(str, ' '));
-	free(str);
-	//set_arguments(block, split);
-	block->args = split;
+	replaced = str_replace(replaced, ">", " > ");
+	split = set_redirections(block, split_with_char(replaced, ' '));
+	block->args = set_arguments(split);
 	if (block->args[0])
 		block->command = ft_strdup(block->args[0]);
 	print_block(block);
+	free(replaced);
+	free(split);
 	return (block);
 }
 
-void	exec_block_parser(char *raw_input)
+void	free_block(t_exec_block **blocks)
+{
+	t_exec_block	*block;
+	t_exec_block	*block_tmp;
+	t_redirecion	*r_cur;
+	t_redirecion	*r_tmp;
+
+	block = *blocks;
+	while (block)
+	{
+		if (block->command)
+			free(block->command);
+		free_split(block->args);
+		r_cur = block->redirection;
+		while (r_cur)
+		{
+			r_tmp = r_cur->next;
+			free(r_cur->file_name);
+			free(r_cur);
+			r_cur = r_tmp;
+		}
+		block_tmp = block->next;
+		free(block);
+		block = block_tmp;
+	}
+	*blocks = 0;
+}
+
+t_exec_block *exec_block_parser(char *raw_input)
 {
 	char			**pipe_split;
 	t_exec_block	*exec_blocks;
@@ -266,6 +294,8 @@ void	exec_block_parser(char *raw_input)
 	pipe_split = split_with_char(raw_input, '|');
 	while (pipe_split[i])
 		block_add(&exec_blocks, str_to_block(pipe_split[i++]));
-	free_split(pipe_split);
+	free(pipe_split);
+	//free_block(&exec_blocks);
 	//system("leaks minishell");
+	return (exec_blocks);
 }
