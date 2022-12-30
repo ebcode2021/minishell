@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/30 21:49:29 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/31 00:41:09 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int				here_doc_handler(t_redirecion *redirection);
 char			*quote_handler(char *str);
 char			*single_quote_handler(char *str);
 char			*double_quote_handler(char *str);
+char			*get_env(char *str, size_t *index);
+char			*expand_env(char *str);
 
 /*redirection_utils.c*/
 void			add_redirection(t_redirecion **head, \
