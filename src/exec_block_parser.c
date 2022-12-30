@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/30 18:22:25 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:13:38 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,7 @@ char	**set_arguments(char **split)
 t_exec_block	*str_to_block(char *str)
 {
 	t_exec_block	*block;
+	t_redirecion	*elem;
 	char			*replaced;
 	char			**split;
 
@@ -249,6 +250,13 @@ t_exec_block	*str_to_block(char *str)
 	block->args = set_arguments(split);
 	if (block->args[0])
 		block->command = ft_strdup(block->args[0]);
+	elem = block->redirection;
+	while (elem)
+	{
+		if (elem->type == 120)
+			here_doc_handler(elem);
+		elem = elem->next;
+	}
 	print_block(block);
 	free(replaced);
 	free(split);

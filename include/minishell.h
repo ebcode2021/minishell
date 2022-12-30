@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/30 18:20:10 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:13:16 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void			exit_with_error_msg(const char *msg);
 void			*ft_malloc(size_t size);
 int				syntax_check(char *input);
 void			here_doc(char *eof, char *tmp_filename);
-void			here_doc_handler(char *raw_input, char *tmp_filename);
-int				here_doc_fork(char *raw_input);
+int				here_doc_handler(t_redirecion *redirection);
 char			*expand_quotes(char *input);
 t_exec_block	*exec_block_parser(char *raw_input);
 
