@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/31 00:41:09 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:34:25 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ int				here_doc_handler(t_redirecion *redirection);
 
 /*quote_handler.c*/
 char			*quote_handler(char *str);
-char			*single_quote_handler(char *str);
 char			*double_quote_handler(char *str);
 char			*get_env(char *str, size_t *index);
 char			*expand_env(char *str);
+char			*expanded_join(char **split);
 
 /*redirection_utils.c*/
 void			add_redirection(t_redirecion **head, \
@@ -56,6 +56,7 @@ char			**set_redirections(t_exec_block *block, char **split);
 char			**set_arguments(char **split);
 
 /*string_utils.c*/
+int				is_blank(char *str);
 char			*str_replace(char *str, char *to_find, char *to_replace);
 void			convert_back(char **split, char c);
 char			**split_with_char(char *raw_input, char c);

@@ -6,11 +6,25 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:37:55 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/30 21:47:13 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/31 13:31:35 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		is_blank(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 char	*str_replace(char *str, char *to_find, char *to_replace)
 {

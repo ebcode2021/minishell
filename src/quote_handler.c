@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/31 00:37:49 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:30:28 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,19 @@ char	*get_env(char *str, size_t *index)
 {
 	t_list	*lst;
 	char	buffer[BUFFER_SIZE];
-	size_t	i;
+	size_t	str_idx;
+	size_t	buf_idx;
 
-	i = *index + 1;
-	while (str[i] && str[i] != ' ')
-	{
-		buffer[i - 1] = str[i];
-		i++;
-	}
-	buffer[i - 1] = 0;
-	*index = i;
+	str_idx = *index + 1;
+	buf_idx = 0;
+	while (str[str_idx] && (str[str_idx] != ' ' || str[str_idx] != -1))
+		buffer[buf_idx++] = str[str_idx++];
+	buffer[buf_idx] = 0;
+	*index = str_idx;
 	lst = sys.env_lst;
 	while (lst)
 	{
-		if (ft_strncmp(buffer, lst->variable_name, i + 1) == 0)
+		if (ft_strncmp(buffer, lst->variable_name, buf_idx + 1) == 0)
 			return (lst->value);
 		lst = lst->next;
 	}
@@ -64,29 +63,52 @@ char	*expand_env(char *str)
 	return (ft_strdup(buffer));
 }
 
-char	*double_quote_handler(char *str)
+char	*expanded_join(char **split)
 {
-	char	*replaced;
+	char	*tmp;
+	char	*expanded;
+	char	*result;
 
-	replaced = str_replace(str, "\"", "");
-	replaced = expand_env(replaced);
-	return (replaced);
+	result = ft_calloc(1, 1);
+	expanded = ft_calloc(1, 1);
+	while (*split)
+	{
+		expanded = expand_env(*split++);
+		tmp = result;
+		result = ft_strjoin(tmp, expanded);
+		free(tmp);
+		free(expanded);
+	}
+	return (result);
 }
 
-char	*single_quote_handler(char *str)
+char	*double_quote_handler(char *str)
 {
-	return (str_replace(str, "\'", ""));
+	char	**split;
+	char	*replaced;
+
+	split = ft_split(str, '\"');
+	replaced = expanded_join(split);
+	free(split);
+	return (replaced);
 }
 
 char	*quote_handler(char *str)
 {
 	char	*result;
 
-	if (*str == '\"')
+	if (ft_strchr(str, '\"'))
 		result = double_quote_handler(str);
-	else if (*str == '\'')
-		result = single_quote_handler(str);
+	else if (ft_strchr(str, '\''))
+		result = str_replace(str, "\'", "");
 	else
+	{
 		result = expand_env(str);
+		if (is_blank(result))
+		{
+			free(result);
+			return (0);
+		}
+	}
 	return (result);
 }
