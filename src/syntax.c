@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 15:04:05 by jinhong           #+#    #+#             */
-/*   Updated: 2022/12/26 10:57:58 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/30 22:03:30 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ int	syntax_check(char *input)
 			if (!trimed[i])
 				return (raise_syntax_error('\n', (char *)trimed));
 			else if (trimed[i] == '|' || trimed[i] == '<' || trimed[i] == '>')
+				return (raise_syntax_error(trimed[i], (char *)trimed));
+		}
+		else if (trimed[i] == '|')
+		{
+			while (trimed[++i] == ' ')
+				i += 0;
+			if (trimed[i] == '|')
 				return (raise_syntax_error(trimed[i], (char *)trimed));
 		}
 	}

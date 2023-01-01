@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 16:59:14 by jinholee          #+#    #+#             */
-/*   Updated: 2022/07/06 18:25:09 by jinholee         ###   ########.fr       */
+/*   Updated: 2022/12/30 16:14:31 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	find_len;
-	size_t	haystack_len;
 	size_t	i;
 
-	haystack_len = ft_strlen((char *)haystack);
 	if (!*needle)
 		return ((char *)haystack);
 	find_len = ft_strlen(needle);

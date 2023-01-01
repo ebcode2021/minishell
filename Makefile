@@ -6,7 +6,11 @@ SRC = minishell.c \
 	ft_allocs.c \
 	syntax.c \
 	here_doc.c \
-	exec_block_parser.c
+	exec_block_parser.c \
+	block_utils.c \
+	quote_handler.c \
+	redirection_utils.c \
+	string_utils.c
 BUILT_IN = builtins/*.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SRCS:.c=.o)
@@ -16,6 +20,7 @@ INCLUDE = include \
 		-I ${HOME}/.brew/opt/readline/include
 LIBFT = libft/libft.a
 READLINE = -lreadline -L ~/.brew/opt/readline/lib
+#READLINE = -lreadline -L /usr/local/Cellar/readline/8.2.1/lib
 
 ifdef SANITIZE
 	CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
