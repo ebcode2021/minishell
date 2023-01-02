@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/01 19:01:11 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/02 09:45:59 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	get_redirection_fd(t_exec_block *exec)
 	return (fd);
 }
 
-void	set_redirection_fd(t_exec_block *exec, int current_fd[2])
+void	set_redirection_fd(t_exec_block *exec)
 {
 	int	change_fd;
 
@@ -66,38 +66,41 @@ void	set_redirection_fd(t_exec_block *exec, int current_fd[2])
 	{
 		change_fd = get_redirection_fd(exec);
 		if(exec->redirection->type == INFILE)
-			current_fd[STDIN_FILENO] = change_fd;
+			dup2(change_fd, STDIN_FILENO);
 		else
-			current_fd[STDOUT_FILENO] = change_fd;
+			dup2(change_fd, STDOUT_FILENO);
+		close(change_fd);
 		exec->redirection = exec->redirection->next;
 	}
 }
 
 void	change_io_fd(t_exec_block *exec, t_pipe *iter_pipe)
 {
-	int	current_fd[2];
-
-	current_fd[READ] = STDIN_FILENO;
-	current_fd[WRITE] = STDOUT_FILENO;
 	if (iter_pipe)
 	{
 		if (exec->idx == 0)
-			//처음
+			dup2(iter_pipe->fd[WRITE], STDOUT_FILENO);
 		if (exec->next == 0)
-			//마지막
+			dup2(iter_pipe->prev_fd, STDIN_FILENO);
 		if (exec->idx && exec->next)
-			//중간
+		{
+			dup2(iter_pipe->prev_fd, STDIN_FILENO);
+			dup2(iter_pipe->fd[WRITE], STDOUT_FILENO);
+		}
 	}
 	if (exec->redirection)
-		set_redirection_fd(exec, current_fd);
+		set_redirection_fd(exec);
 }
 
 void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 {
 	change_io_fd(exec, iter_pipe);
-	close(iter_pipe->fd[READ]);
-	close(iter_pipe->fd[WRITE]);
-	close(iter_pipe->prev_fd);
+	if (iter_pipe)
+	{
+		close(iter_pipe->fd[READ]);
+		close(iter_pipe->fd[WRITE]);
+		close(iter_pipe->prev_fd);
+	}
 	if (exec->command)
 	{
 		if (is_builtin(exec->command))
@@ -105,6 +108,17 @@ void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 		else
 			command_handler(exec);
 	}
+}
+void	single_execute(t_exec_block *exec)
+{
+	pid_t	pid;
+	
+	pid = fork();
+	if (pid == 0)
+		child_process(exec, 0);
+	else if (pid == -1)
+		error_handler();
+	waitpid(pid, &sys.last_errno, 0);
 }
 
 void	execute(t_exec_block *execs)
@@ -143,6 +157,6 @@ void	execute_handler(t_exec_block *execs)
 		if (is_builtin(execs->command))
 			builtin_handler(execs);
 		else
-			execute(execs);
+			single_execute(execs);
 	}
 }

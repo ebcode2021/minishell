@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/27 15:53:59 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/02 09:51:28 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,19 @@ void	builtin_hanlder(t_exec_block *exec)
 
 	command_name = exec->command;
 	if (!ft_strncmp(command_name, "cd", 3))
-		builtin_cd();
+		builtin_cd(exec);
 	else if (!ft_strncmp(command_name, "echo", 5))
-		builtin_echo();
+		builtin_echo(exec);
 	else if (!ft_strncmp(command_name, "env", 4))
-		builtin_env();
+		builtin_env(exec);
 	else if (!ft_strncmp(command_name, "exit", 5))
-		builtin_exit();
+		builtin_exit(exec);
 	else if (!ft_strncmp(command_name, "export", 7))
-		builtin_export();
+		builtin_export(exec);
 	else if (!ft_strncmp(command_name, "pwd", 4))
-		builtin_pwd();
+		builtin_pwd(exec);
 	else
-		builtin_unset();
+		builtin_unset(exec);
 }
 
 char	**get_path_in_envp(void)
