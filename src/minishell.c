@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/02 15:14:47 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/02 19:06:06 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,41 +23,13 @@
 // 9. builtin 명령어인지 아닌지 구분해서 각 함수로 처리하던지 execve로 처리하던지
 // 00. signal 처리
 
-//test log
+//to do list
+//1. cmd_not_found 처리. 자식프로세스와 부모 프로세스일때 구분해서 처리할것.
+//2. built_in 구현. 역시 에러처리는 1번과 같이
+//3. signal 공부해서 어떻게 처리할지
 
 t_system	sys;
 
-/* void	exit_check(char *input)
-{
-	char	*trimed;
-
-	if (!input)
-		builtin_exit();
-	trimed = ft_strtrim(input, " "); 
-	if (ft_strncmp("exit", trimed, 5) == 0)
-	{
-		free(trimed);
-		builtin_exit();
-	}
-
-	//kill all process;
-	// exit_code 직접 세팅..?
-	//set_exit_code()
-	//exit(exit code?)
-}
- */
-
-void	clear_check(char *input)
-{
-	char	*trimed;
-	
-	trimed = ft_strtrim(input, " ");
-	if (ft_strncmp("clear", trimed, 6) == 0)
-	{
-		free(trimed);
-		//어쩌고저쩌고
-	}
-}
 void	init_system_info()
 {
 	sys.env_lst = 0;
@@ -95,8 +67,6 @@ int main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		input = readline("picoshell> ");
-		//exit_check(input); 
-		//clear_check(input);
 		add_history(input);
 		if (syntax_check(input))
 		{
@@ -105,8 +75,6 @@ int main(int argc, char *argv[], char *envp[])
 			free_block(elem);
 		}
 		//system("leaks minishell");
-		//commands = command_parser(input);
-		//execute(commands);
 		free(input);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/31 14:30:28 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/02 19:03:53 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ char	*expand_env(char *str)
 				buf_idx += ft_strlen(env);
 			}
 		}
-		else
+		else if (str[str_idx] != '\"')
 			buffer[buf_idx++] = str[str_idx++];
+		else
+			str_idx++;
 	}
 	free(str);
 	buffer[buf_idx] = 0;
@@ -70,7 +72,6 @@ char	*expanded_join(char **split)
 	char	*result;
 
 	result = ft_calloc(1, 1);
-	expanded = ft_calloc(1, 1);
 	while (*split)
 	{
 		expanded = expand_env(*split++);
@@ -90,6 +91,7 @@ char	*double_quote_handler(char *str)
 	split = ft_split(str, '\"');
 	replaced = expanded_join(split);
 	free(split);
+	free(str);
 	return (replaced);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 15:04:05 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/02 15:46:12 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/02 16:40:18 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	syntax_ok(char *trimed)
 int	raise_syntax_error(char c, char *trimed)
 {
 	if (c == '\n')
-		fprintf(stderr,"bash: syntax error near unexpected token `newline\'\n");
+		fprintf(stderr,"picoshell: syntax error near unexpected token `newline\'\n");
 	else
-		fprintf(stderr,"bash: syntax error near unexpected token `%c\'\n", c);
+		fprintf(stderr,"picoshell: syntax error near unexpected token `%c\'\n", c);
 	free(trimed);
 	return (0);
 }
