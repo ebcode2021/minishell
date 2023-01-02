@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/02 19:06:06 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/02 21:50:17 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int main(int argc, char *argv[], char *envp[])
 			elem = exec_block_parser(input);
 			execute_handler(elem);
 			free_block(elem);
+			
 		}
 		//system("leaks minishell");
 		free(input);

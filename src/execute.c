@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/02 15:46:12 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/02 21:47:14 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	execute_handler(t_exec_block *execs)
 	else
 	{
 		if (is_builtin(execs->command))
-			builtin_handler(execs);
+			builtin_handler(execs);// builtin을 parent에서 하니까 그냥 exit하면 안됨.
 		else
 			single_execute(execs);
 	}
