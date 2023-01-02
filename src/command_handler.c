@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/02 14:30:32 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/02 15:46:12 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	command_handler(t_exec_block *exec)
 	char	*cmd_path;
 
 	cmd_path = get_cmd_path(exec->command);
-	printf("cmd handler 경로 : %s\n", cmd_path);
+	fprintf(stderr,"cmd handler 경로 : %s\n", cmd_path);
 	if (!cmd_path)
 		error_handler();
 	else

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   block_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:33:57 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/30 21:37:12 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:51:07 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ void	print_block(t_exec_block *block)
 	t_redirecion	*elem;
 
 	i = 0;
-	printf("==========================\n");
-	printf("cmd: %s\nargs:", block->command);
+	fprintf(stderr,"==========================\n");
+	fprintf(stderr,"cmd: %s\nargs:", block->command);
 	while (block->args[i])
-		printf("%s, ", block->args[i++]);
-	printf("\n");
+		fprintf(stderr,"%s, ", block->args[i++]);
+	fprintf(stderr,"\n");
 	elem = block->redirection;
 	while (elem)
 	{
-		printf("file: %s, type: %d\n", \
+		fprintf(stderr,"file: %s, type: %d\n", \
 			elem->file_name, elem->type);
 		elem = elem->next;
 	}
-	printf("==========================\n");
+	fprintf(stderr,"==========================\n");
 }
 
 t_exec_block	*block_new(void)
@@ -68,7 +68,7 @@ void	block_add(t_exec_block	**head, t_exec_block *new)
 			idx++;
 		}
 		block->next = new;
-		new->idx = idx;
+		new->idx = idx + 1;
 	}
 }
 

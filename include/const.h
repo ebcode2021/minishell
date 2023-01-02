@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/02 12:22:55 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/02 15:58:12 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CONST_H
 
 # define BUFFER_SIZE 1024
-# define HERE_DOC_DIRECTORY "/tmp/here_doc/"
+# define HERE_DOC_DIRECTORY "/tmp/here_doc"
 # define AMBIGUOUS "ambiguous redirect"
 # define INFILE 60
 # define OUTFILE 62

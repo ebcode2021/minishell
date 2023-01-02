@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:08 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/20 09:06:16 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:46:12 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	builtin_pwd(char *directory)
 {
-	printf("%s\n", directory);
+	fprintf(stderr,"%s\n", directory);
 }

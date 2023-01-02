@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/02 15:04:16 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/02 15:46:12 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,25 @@ void	set_redirection_fd(t_exec_block *exec)
 
 void	change_io_fd(t_exec_block *exec, t_pipe *iter_pipe)
 {
-	printf("chg_io\n");
-	printf("cmd : %s\n", exec->command);
-	printf("idx : %zu\n", exec->idx);
+	fprintf(stderr,"chg_io\n");
+	fprintf(stderr,"cmd : %s\n", exec->command);
+	fprintf(stderr,"idx : %zu\n", exec->idx);
 	if (iter_pipe)
 	{
-		printf("iter_pipe 있다.\n");
+		fprintf(stderr,"iter_pipe 있다.\n");
 		if (exec->idx == 0)
 		{
-			printf("처음");
+			fprintf(stderr,"처음");
 			dup2(iter_pipe->fd[WRITE], STDOUT_FILENO);
 		}
 		if (exec->next == 0)
 		{
-			printf("마지막");
+			fprintf(stderr,"마지막");
 			dup2(iter_pipe->prev_fd, STDIN_FILENO);
 		}
 		if (exec->idx && exec->next)
 		{
-			printf("중간");
+			fprintf(stderr,"중간");
 			dup2(iter_pipe->prev_fd, STDIN_FILENO);
 			dup2(iter_pipe->fd[WRITE], STDOUT_FILENO);
 		}
@@ -97,12 +97,12 @@ void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 	}
 	if (exec->command)
 	{
-		printf("실행시키는부분\n");
+		fprintf(stderr,"실행시키는부분\n");
 		if (is_builtin(exec->command))
 			builtin_handler(exec);
 		else
 		{
-			printf("cmd다.\n");
+			fprintf(stderr,"cmd다.\n");
 			command_handler(exec);
 		}
 	}
@@ -111,15 +111,15 @@ void	single_execute(t_exec_block *exec)
 {
 	pid_t	pid;
 	
-	printf("single_execute\n");
+	fprintf(stderr,"single_execute\n");
 	pid = fork();
 	if (pid == 0)
 	{
 		change_io_fd(exec, 0);
-		printf("cmd : %s\n", exec->command);
+		fprintf(stderr,"cmd : %s\n", exec->command);
 		if (exec->command)
 		{
-			printf("여기?????\n");
+			fprintf(stderr,"여기?????\n");
 			command_handler(exec);
 		}
 	}
