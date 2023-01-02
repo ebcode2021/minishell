@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/20 21:05:00 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/02 12:11:51 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	assert_cd(char *directory)
 	dir = opendir(directory);
 	if (!dir)
 		error_handler();
-	closedir()
+	//closedir()
 }
 
 void	builtin_cd(char **directories)

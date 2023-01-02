@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:57:26 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/29 12:59:55 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/02 12:24:29 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,11 @@ typedef struct s_exec_block
 	size_t				idx;
 	struct s_exec_block *next;
 }				t_exec_block;
+
+typedef struct s_pipe
+{
+	int	prev_fd;
+	int	fd[2];
+}				t_pipe;
 
 #endif
