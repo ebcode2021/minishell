@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/31 13:39:13 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:14:47 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,47 +45,19 @@ t_system	sys;
 	//set_exit_code()
 	//exit(exit code?)
 }
-
-void	syntax_check(char *input)
-{
-	// | 이후에 공백만 들어온경우
-	// redirection이 잘못된 경우
-}
-
-char	**command_parser(char *input)
-{
-	char	**pipe_split;
-
-	// 1) | 가 이상하지 않은지
-	// 2) redirection이 이상하지 않은지.
-	syntax_check(input);
-	pipe_split = ft_split(input, '|');
-	event_handler(pipe_split); // !, $
-	return (pipe_split);
-}
-
-void	execute(char **commands)
-{
-	size_t	idx;
-
-	idx = 0;
-	// asdf=1
-	// command가 맞나? 아님 builtin인가? . export
-	// commands = "ls -al", "pwd", "hostname"
-	while (commands[idx]) 
-	//pipe_n_fork
-	//자식(child)
-	//command_str 을 공백으로 split
-	//? 나 ! 확장
-	if (is_command(commands[idx]))
-		command_handler(commands[idx]);
-	else if(is_builtin(commands[idx]))
-		builtin_handler(commands[idx]);
-	else 
-		error_handler();
-}
  */
 
+void	clear_check(char *input)
+{
+	char	*trimed;
+	
+	trimed = ft_strtrim(input, " ");
+	if (ft_strncmp("clear", trimed, 6) == 0)
+	{
+		free(trimed);
+		//어쩌고저쩌고
+	}
+}
 void	init_system_info()
 {
 	sys.env_lst = 0;
@@ -124,16 +96,17 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		input = readline("picoshell> ");
 		//exit_check(input); 
+		//clear_check(input);
 		add_history(input);
 		if (syntax_check(input))
 		{
 			elem = exec_block_parser(input);
+			execute_handler(elem);
 			free_block(elem);
 		}
 		//system("leaks minishell");
 		//commands = command_parser(input);
 		//execute(commands);
-		//printf("아무래도..input : %s\n",input);
 		free(input);
 	}
 	return (0);

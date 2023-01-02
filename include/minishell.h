@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/31 14:34:25 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/02 12:11:12 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "const.h"
+# include "error.h"
+# include "struct.h"
 # include "libft.h"
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <errno.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <errno.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 # include <signal.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "struct.h"
-# include "error.h"
-# include "const.h"
 
 extern t_system	sys;
 
@@ -70,5 +70,18 @@ void			print_block(t_exec_block *block);
 /*exec_block_parser.c*/
 t_exec_block	*str_to_block(char *str);
 t_exec_block 	*exec_block_parser(char *raw_input);
+
+/*execute.c*/
+void			execute_handler(t_exec_block *execs);
+
+/*error_handler.c*/
+void			error_handler();
+
+/*builtin_handler.c*/
+int				is_builtin(char *command);
+void			builtin_handler(t_exec_block *exec);
+
+/*command_handler.c*/
+void			command_handler(t_exec_block *exec);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2022/12/30 21:39:37 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:06:52 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,26 @@ void	here_doc(char *eof, char *tmp_filename)
 	char		*input;
 	const int	eof_len = ft_strlen(eof) + 1;
 
-	fd = open(tmp_filename, O_CREAT);
+	fd = open(tmp_filename, O_CREAT | O_RDWR | O_TRUNC, 0666);
 	while (1)
 	{
 		input = readline("> ");
-		if (!input)
-			continue ;
-		add_history(input);
-		if (ft_strncmp(input, eof, eof_len) == 0)
+		if (input)
 		{
-			ft_lstadd_back(&sys.here_doc_names, \
-				ft_lstnew((char *)tmp_filename, ""));
+			add_history(input);
+			if (ft_strncmp(input, eof, eof_len) == 0)
+			{
+				ft_lstadd_back(&sys.here_doc_names, \
+					ft_lstnew((char *)tmp_filename, ""));
+				free(input);
+				close(fd);
+				return ;
+			}
+			ft_putendl_fd(input, fd);
 			free(input);
-			close(fd);
-			return ;
 		}
-		write(fd, input, ft_strlen(input));
-		free(input);
+		else
+			ft_putendl_fd("", fd);
 	}
 }
 

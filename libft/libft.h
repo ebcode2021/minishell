@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:00:42 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/19 18:38:20 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/01 17:03:48 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_list
 {
 	char			*variable_name;
 	char			*value;
+	int				show;
 	struct s_list	*next;
 }					t_list;
 
