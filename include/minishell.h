@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/02 12:11:12 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 09:56:27 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,11 @@ void			builtin_handler(t_exec_block *exec);
 
 /*command_handler.c*/
 void			command_handler(t_exec_block *exec);
+
+/*fd_handler.c*/
+void			reset_fd(void);
+int				get_redirection_fd(t_exec_block *exec);
+void			set_redirection_fd(t_exec_block *exec);
+void			change_io_fd(t_exec_block *exec, t_pipe *iter_pipe);
 
 #endif
