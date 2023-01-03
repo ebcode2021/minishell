@@ -3,40 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/02 12:11:51 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 15:38:28 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_pwd(char *diretory)
+int	change_dir(char *dest)
 {
-	const char	*pwd[2] = {"PWD", 0};
-	const char	*new_pwd[2] = {diretory, 0};
-
-	builtin_unset(pwd);
-	builtin_export(new_pwd);
+	if (!dest)
+	{
+		fprintf(stderr, "picoshell: cd: HOME not set\n");
+		return (-1);
+	}
+	else if (chdir(dest) == -1)
+	{
+		ft_putstr_fd("cd: ", 2);
+		perror(dest);
+		return (-1);
+	}
+	getcwd(sys.pwd, BUFFER_SIZE);
+	return (0);
 }
 
-void	assert_cd(char *directory)
+int	hyphen_handler()
 {
-	DIR		*dir;
+	char	*OLDPWD;
 
-	dir = opendir(directory);
-	if (!dir)
-		error_handler();
-	//closedir()
+	OLDPWD = get_env("$OLDPWD", 0);
+	if (!OLDPWD)
+	{
+		fprintf(stderr, "picoshell: cd: OLDPWD not set\n");
+		return (-1);
+	}
+	change_dir(OLDPWD);
+	printf("%s\n", sys.pwd);
+	return (0);
 }
 
-void	builtin_cd(char **directories)
+void	builtin_cd(t_exec_block *block)
 {
-	char	*pwd;
-	size_t	idx;
+	size_t	number_of_args;
 
-	pwd = directories[0];
-	assert_cd(pwd);
-	update_pwd(pwd)
+	//set redirections
+	number_of_args = 0;
+	while (block->args[number_of_args])
+		number_of_args++;
+	if (number_of_args > 2)
+		fprintf(stderr, "picoshell: cd: too many argument\n");
+	else if (number_of_args == 1)
+		change_dir(get_env("$HOME", 0));
+	else if (number_of_args == 2)
+	{
+		if (ft_strncmp(block->args[1], "-", 2) == 0)
+			hyphen_handler();
+		else
+			change_dir(block->args[1]);
+	}
 }
