@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 15:35:38 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 16:02:48 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,21 @@ char	*get_cmd_path(char *command)
 {
 	char	**path_lists;
 	char	*cmd_path;
+	char	*cmd_path2;
+	size_t	idx;
+
+	idx = 0;
 
 	path_lists = get_path_in_envp();
-	while (*path_lists)
+	while (path_lists[idx])
 	{
-		cmd_path = (char *)malloc(ft_strlen(*path_lists) + 1);
-		cmd_path = ft_strjoin(*path_lists, "/");
-		cmd_path = ft_strjoin(cmd_path, command);
-		if (!access(cmd_path, F_OK))
-			return (cmd_path);
+		cmd_path = ft_strjoin(path_lists[idx], "/");
+		cmd_path2 = ft_strjoin(cmd_path, command);
 		free(cmd_path);
-		path_lists++;
+		if (!access(cmd_path2, F_OK))
+			return (cmd_path2);
+		idx++;
+		free(cmd_path2);
 	}
 	return (0);
 }
@@ -52,10 +56,7 @@ char	**current_env_lst()
 	head = sys.env_lst;
 	while (head)
 	{
-		env_lst[idx] = ft_strdup(head->variable_name);
-		env_lst[idx] = ft_strjoin(env_lst[idx], "=");
-		env_lst[idx] = ft_strjoin(env_lst[idx], head->value);
-		idx++;
+		env_lst[idx++] = head->copy;
 		head = head->next;
 	}
 	return (env_lst);

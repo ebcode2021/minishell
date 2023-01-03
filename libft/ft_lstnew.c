@@ -3,25 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:31:46 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/19 19:17:57 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:01:03 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-t_list	*ft_lstnew(void *variable_name, char *value)
+t_list	*ft_lstnew(char *envp)
 {
 	t_list	*lstnew;
+	char	**split;
 
+	split = ft_split(envp, "=");
 	lstnew = malloc (sizeof(t_list));
 	if (!lstnew)
 		return (lstnew);
-	lstnew->variable_name = ft_strdup(variable_name);
-	lstnew->value = ft_strdup(value);
+	lstnew->copy = ft_strdup(envp);
+	lstnew->variable_name = ft_strdup(split[0]);
+	lstnew->value = ft_strdup(split[1]);
 	lstnew->next = 0;
+	free_split(split);
 	return (lstnew);
 }

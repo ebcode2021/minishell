@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:00:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/01 17:03:48 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 16:01:39 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 typedef struct s_list
 {
+	char			*copy;
 	char			*variable_name;
 	char			*value;
-	int				show;
 	struct s_list	*next;
 }					t_list;
 
@@ -57,7 +57,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-t_list	*ft_lstnew(void *variable_name, char *value);
+t_list	*ft_lstnew(char *envp);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
