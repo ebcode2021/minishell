@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/02 21:47:14 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 09:47:08 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,69 +21,6 @@ pid_t	pipe_n_fork(t_pipe *new_pipe)
 	if (pid == -1)
 		error_handler();
 	return (pid);
-}
-
-int	get_redirection_fd(t_exec_block *exec)
-{
-	int	fd;
-	
-	if (exec->redirection->type == INFILE)
-		fd = open(exec->redirection->file_name, O_RDONLY);
-	else if (exec->redirection->type == OUTFILE_A)
-		fd = open(exec->redirection->file_name, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	else
-		fd = open(exec->redirection->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (fd == -1)
-	{
-		error_handler();
-		exit(EXIT_FAILURE);
-	}
-	return (fd);
-}
-
-void	set_redirection_fd(t_exec_block *exec)
-{
-	int	change_fd;
-
-	while (exec->redirection)
-	{
-		change_fd = get_redirection_fd(exec);
-		if(exec->redirection->type == INFILE)
-			dup2(change_fd, STDIN_FILENO);
-		else
-			dup2(change_fd, STDOUT_FILENO);
-		close(change_fd);
-		exec->redirection = exec->redirection->next;
-	}
-}
-
-void	change_io_fd(t_exec_block *exec, t_pipe *iter_pipe)
-{
-	fprintf(stderr,"chg_io\n");
-	fprintf(stderr,"cmd : %s\n", exec->command);
-	fprintf(stderr,"idx : %zu\n", exec->idx);
-	if (iter_pipe)
-	{
-		fprintf(stderr,"iter_pipe 있다.\n");
-		if (exec->idx == 0)
-		{
-			fprintf(stderr,"처음");
-			dup2(iter_pipe->fd[WRITE], STDOUT_FILENO);
-		}
-		if (exec->next == 0)
-		{
-			fprintf(stderr,"마지막");
-			dup2(iter_pipe->prev_fd, STDIN_FILENO);
-		}
-		if (exec->idx && exec->next)
-		{
-			fprintf(stderr,"중간");
-			dup2(iter_pipe->prev_fd, STDIN_FILENO);
-			dup2(iter_pipe->fd[WRITE], STDOUT_FILENO);
-		}
-	}
-	if (exec->redirection)
-		set_redirection_fd(exec);
 }
 
 void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
