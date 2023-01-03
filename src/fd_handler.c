@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_handler.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 09:39:24 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 14:57:18 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:31:06 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ void	change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe)
 
 void	reset_fd(void)
 {
-	dup2(STD_IN, STDIN_FILENO);
-	dup2(STD_OUT, STDOUT_FILENO);
+	dup2(STDIN_FILENO, STD_IN);
+	dup2(STDOUT_FILENO, STD_OUT);
 }

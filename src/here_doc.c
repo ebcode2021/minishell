@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/03 17:12:00 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:44:12 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 char	*get_tmp_filename(int number)
 {
 	char	*str_num;
+	char	*tty;
 	char	*tmp_filename;
 
 	str_num = ft_itoa(number);
+	tty = ttyname(STD_OUT);
 	tmp_filename = ft_strjoin(HERE_DOC_DIRECTORY, str_num);
 	free(str_num);
 	return (tmp_filename);

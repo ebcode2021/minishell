@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 17:02:12 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:25:39 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	is_builtin(char *command)
 
 // cd는 첫 arg
 // echo
-void	check_arg(t_exec_block *exec)
-{
+// void	check_arg(t_exec_block *exec)
+// {
 	
-}
+// }
 
 void	builtin_handler(t_exec_block *exec)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   const.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 11:27:44 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 18:58:03 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CONST_H
 
 # define BUFFER_SIZE 1024
-# define HERE_DOC_DIRECTORY "/tmp/here_doc"
+# define HERE_DOC_DIRECTORY "/tmp/picoshell/"
 # define AMBIGUOUS "ambiguous redirect"
 # define SECRET_KEY "chainsaw_man_4242"
 # define INFILE 60

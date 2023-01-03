@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:31:46 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 17:13:52 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:27:27 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ t_list	*ft_lstnew(char *envp)
 {
 	t_list	*lstnew;
 	char	**split;
+	size_t	idx;
 
-	split = ft_split(envp, "=");
+	split = ft_split(envp, '=');
 	lstnew = malloc (sizeof(t_list));
 	if (!lstnew)
 		return (lstnew);
@@ -28,6 +29,9 @@ t_list	*ft_lstnew(char *envp)
 	if (split[1])
 		lstnew->value = ft_strdup(split[1]);
 	lstnew->next = 0;
-	free_split(split);
+	idx = 0;
+	while (split[idx])
+		free(split[idx++]);
+	free(split);
 	return (lstnew);
 }

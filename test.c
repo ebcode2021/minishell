@@ -10,27 +10,11 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 
-void	child_process(void)
-{
-	while (1)
-	{
-		
-	}
-	reutrn (0);
-}
-
 int	main(void)
 {
-	pid_t	pid;
+	char	*tty;
 
-	pid = fork();
-	if (pid == 0)
-	{
-		child_process();
-	}
-	else
-	{
-		waitpid(-1, 0, 0);
-	}
+	tty = ttyname(STDOUT_FILENO);
+	printf("%s\n", tty);
 	return (0);
 }
