@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 15:04:27 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 16:02:14 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,9 @@ void	init_system_info()
 
 void	set_system_info(char *envp[])
 {
-	char	**splitted;
-
 	sys.env_lst = 0;
 	while (*envp)
-	{
-		splitted = ft_split(*envp++, '=');
-		ft_lstadd_back(&sys.env_lst, ft_lstnew(splitted[0], splitted[1]));
-		free_split(splitted);
-	}
+		ft_lstadd_back(&sys.env_lst, ft_lstnew(*envp++));
 	getcwd(sys.pwd, BUFFER_SIZE);
 	sys.last_errno = 0;
 	sys.last_exit_status_code = 0;
@@ -77,7 +71,7 @@ int main(int argc, char *argv[], char *envp[])
 			free_block(elem);
 			reset_fd();
 		}
-		//system("leaks minishell");
+		system("leaks minishell");
 		free(input);
 	}
 	return (0);
