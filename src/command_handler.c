@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 15:27:31 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 15:35:38 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,18 @@ char	**current_env_lst()
 {
 	char	**env_lst;
 	size_t	idx;
+	t_list	*head;
 
 	idx = 0;
 	env_lst = (char **)malloc(sizeof(char *) * (ft_lstsize(sys.env_lst) + 1));
-	while (env_lst[idx])
+	head = sys.env_lst;
+	while (head)
 	{
-		env_lst[idx] = ft_strdup(sys.env_lst->variable_name);
+		env_lst[idx] = ft_strdup(head->variable_name);
 		env_lst[idx] = ft_strjoin(env_lst[idx], "=");
-		env_lst[idx] = ft_strjoin(env_lst[idx], sys.env_lst->value);
-		printf("%s\n", env_lst[idx]);
+		env_lst[idx] = ft_strjoin(env_lst[idx], head->value);
 		idx++;
-		
+		head = head->next;
 	}
 	return (env_lst);
 }
@@ -67,9 +68,8 @@ void	command_handler(t_exec_block *exec)
 
 	cmd_path = get_cmd_path(exec->command);
 	env_lst = current_env_lst();
-	printf("%s\n", cmd_path);
 	if (!cmd_path)
 		command_not_found(exec->command);
 	else
-		execve(cmd_path, exec->args, env_lst);
+		execve(cmd_path, exec->args, current_env_lst());
 }
