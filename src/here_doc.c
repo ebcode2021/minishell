@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/02 16:06:52 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:12:00 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	here_doc(char *eof, char *tmp_filename)
 			if (ft_strncmp(input, eof, eof_len) == 0)
 			{
 				ft_lstadd_back(&sys.here_doc_names, \
-					ft_lstnew((char *)tmp_filename, ""));
+					ft_lstnew(tmp_filename));
 				free(input);
 				close(fd);
 				return ;

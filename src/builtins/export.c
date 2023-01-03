@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:06 by eunson            #+#    #+#             */
-/*   Updated: 2022/12/20 16:51:32 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:15:14 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ void	assert_export(char *arg)
 
 void	builtin_export(t_system *sys, char **args)
 {
-	char	*splitted;
-	char	*variable_name;
-	char	*value;
 	size_t	idx;
 
 	if (!*args)
@@ -38,13 +35,7 @@ void	builtin_export(t_system *sys, char **args)
 	while (args[idx])
 	{
 		assert_export(args[idx]);
-		splitted = ft_split(args[idx], '=');
-		variable_name = splitted[0];
-		value = splitted[1];
-		if (!value)
-			value = "";
-		ft_lstadd_back(&sys->env_list, ft_lstnew(variable_name, value));
-		free_split(splitted);
+		ft_lstadd_back(&sys->env_list, ft_lstnew(args[idx]));
 		idx++;
 	}
 }

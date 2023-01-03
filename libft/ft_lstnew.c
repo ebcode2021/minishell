@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:31:46 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 16:01:03 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 17:13:52 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ t_list	*ft_lstnew(char *envp)
 		return (lstnew);
 	lstnew->copy = ft_strdup(envp);
 	lstnew->variable_name = ft_strdup(split[0]);
-	lstnew->value = ft_strdup(split[1]);
+	lstnew->value = 0;
+	if (split[1])
+		lstnew->value = ft_strdup(split[1]);
 	lstnew->next = 0;
 	free_split(split);
 	return (lstnew);
