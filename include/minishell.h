@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 09:56:27 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 10:21:22 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_exec_block 	*exec_block_parser(char *raw_input);
 void			execute_handler(t_exec_block *execs);
 
 /*error_handler.c*/
-void			error_handler();
+void			error_handler(t_exec_block *exec, int category, int parents);
 
 /*builtin_handler.c*/
 int				is_builtin(char *command);
@@ -86,8 +86,8 @@ void			command_handler(t_exec_block *exec);
 
 /*fd_handler.c*/
 void			reset_fd(void);
-int				get_redirection_fd(t_exec_block *exec);
-void			set_redirection_fd(t_exec_block *exec);
-void			change_io_fd(t_exec_block *exec, t_pipe *iter_pipe);
+int				get_redirection_fd(t_exec_block *exec, int parents);
+void			set_redirection_fd(t_exec_block *exec, int parents);
+void			change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe);
 
 #endif

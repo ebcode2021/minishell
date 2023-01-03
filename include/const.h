@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 09:33:53 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 11:27:44 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define BUFFER_SIZE 1024
 # define HERE_DOC_DIRECTORY "/tmp/here_doc"
 # define AMBIGUOUS "ambiguous redirect"
+# define SECRET_KEY "chainsaw_man_4242"
 # define INFILE 60
 # define OUTFILE 62
 # define HERE_DOC 120
@@ -29,5 +30,8 @@
 
 # define STD_IN 1000
 # define STD_OUT 1001
+
+# define PARENTS 0
+# define CHILD 1
 
 #endif

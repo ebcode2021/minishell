@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 09:52:35 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 11:12:48 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,13 @@ pid_t	pipe_n_fork(t_pipe *new_pipe)
 	if (new_pipe)
 		pipe(new_pipe->fd);
 	pid = fork();
-	if (pid == -1)
-		error_handler();
 	return (pid);
 }
 
 void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 {
-	change_io_fd(exec, iter_pipe);
-	if (iter_pipe)
-	{
-		close(iter_pipe->fd[READ]);
-		close(iter_pipe->fd[WRITE]);
-		close(iter_pipe->prev_fd);
-	}
+	change_pipe_fd(exec, iter_pipe);
+	set_redirection_fd(exec, CHILD);
 	if (exec->command)
 	{
 		if (is_builtin(exec->command))
@@ -50,7 +43,7 @@ void	single_execute(t_exec_block *exec)
 	pid = pipe_n_fork(0);
 	if (pid == 0)
 	{
-		change_io_fd(exec, 0);
+		set_redirection_fd(exec, CHILD);
 		if (exec->command)
 			command_handler(exec);
 	}
@@ -89,7 +82,10 @@ void	execute_handler(t_exec_block *execs)
 	else
 	{
 		if (is_builtin(execs->command))
-			builtin_handler(execs);// builtin을 parent에서 하니까 그냥 exit하면 안됨.
+		{
+			set_redirection_fd(execs, PARENTS);
+			builtin_handler(execs);
+		}
 		else
 			single_execute(execs);
 	}

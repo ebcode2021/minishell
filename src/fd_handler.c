@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 09:39:24 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 09:48:29 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 12:00:24 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ void	reset_fd(void)
 	dup2(STD_OUT, STDOUT_FILENO);
 }
 
-int	get_redirection_fd(t_exec_block *exec)
+int	get_redirection_fd(t_exec_block *exec, int parents)
 {
-	int	fd;
+	int		fd;
+	char	*file_name;
 
+	file_name = quote_handler(exec->redirection->file_name);
+	if (!file_name)
+		error_handler(exec, REDIRECTION, 0);
 	if (exec->redirection->type == INFILE)
 		fd = open(exec->redirection->file_name, O_RDONLY);
 	else if (exec->redirection->type == OUTFILE_A)
@@ -31,20 +35,17 @@ int	get_redirection_fd(t_exec_block *exec)
 		fd = open(exec->redirection->file_name, \
 					O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)
-	{
-		error_handler();
-		exit(EXIT_FAILURE);
-	}
+		error_handler(exec, REDIRECTION, parents);
 	return (fd);
 }
 
-void	set_redirection_fd(t_exec_block *exec)
+void	set_redirection_fd(t_exec_block *exec, int parents)
 {
 	int	change_fd;
 
 	while (exec->redirection)
 	{
-		change_fd = get_redirection_fd(exec);
+		change_fd = get_redirection_fd(exec, parents);
 		if (exec->redirection->type == INFILE)
 			dup2(change_fd, STDIN_FILENO);
 		else
@@ -54,7 +55,7 @@ void	set_redirection_fd(t_exec_block *exec)
 	}
 }
 
-void	change_io_fd(t_exec_block *exec, t_pipe *iter_pipe)
+void	change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe)
 {
 	if (iter_pipe)
 	{
@@ -68,6 +69,7 @@ void	change_io_fd(t_exec_block *exec, t_pipe *iter_pipe)
 			dup2(iter_pipe->fd[WRITE], STDOUT_FILENO);
 		}
 	}
-	if (exec->redirection)
-		set_redirection_fd(exec);
+	close(iter_pipe->fd[READ]);
+	close(iter_pipe->fd[WRITE]);
+	close(iter_pipe->prev_fd);
 }
