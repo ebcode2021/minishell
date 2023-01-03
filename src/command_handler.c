@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 16:02:48 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 21:06:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	**current_env_lst()
 		env_lst[idx++] = head->copy;
 		head = head->next;
 	}
+	env_lst[idx] = 0;
 	return (env_lst);
 }
 
@@ -72,5 +73,5 @@ void	command_handler(t_exec_block *exec)
 	if (!cmd_path)
 		command_not_found(exec->command);
 	else
-		execve(cmd_path, exec->args, current_env_lst());
+		execve(cmd_path, exec->args, env_lst);
 }

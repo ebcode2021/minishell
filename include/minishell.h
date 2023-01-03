@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 16:50:16 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:47:26 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,9 @@ int				get_redirection_fd(t_exec_block *exec, char *file_name);
 void			set_redirection_fd(t_exec_block *exec, int child);
 void			change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe);
 void			reset_fd(void);
+
+/*builtins*/
+void			builtin_cd(t_exec_block *block);
+void			builtin_pwd(void);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 18:24:27 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:44:10 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	set_system_info(char *envp[])
 	getcwd(sys.pwd, BUFFER_SIZE);
 	sys.last_errno = 0;
 	sys.last_exit_status_code = 0;
+	sys.home_dir = "/Users/eunson";
 }
 
 int main(int argc, char *argv[], char *envp[])

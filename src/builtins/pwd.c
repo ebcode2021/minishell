@@ -6,13 +6,13 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:08 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 17:07:44 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 20:47:50 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_pwd(t_exec_block *exec)
+void	builtin_pwd(void)
 {
-	ft_putstr_fd(sys.pwd, STDOUT_FILENO);
+	ft_putendl_fd(sys.pwd, STDOUT_FILENO);
 }

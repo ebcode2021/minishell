@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 17:29:51 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:59:47 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	single_execute(t_exec_block *exec)
 		set_redirection_fd(exec, CHILD);
 		if (exec->command)
 			command_handler(exec);
+		exit(EXIT_SUCCESS);
 	}
 	waitpid(pid, &sys.last_errno, 0);
 }
@@ -63,7 +64,7 @@ void	execute(t_exec_block *execs)
 		if (pid == 0)
 		{
 			child_process(head, &iter_pipe);
-			break ;
+			exit(EXIT_SUCCESS);
 		}
 		close(iter_pipe.prev_fd);
 		close(iter_pipe.fd[WRITE]);
@@ -84,6 +85,7 @@ void	execute_handler(t_exec_block *execs)
 	{
 		if (is_builtin(execs->command))
 		{
+			printf("i'm builtin: %s\n", execs->command);
 			set_redirection_fd(execs, PARENTS);
 			builtin_handler(execs);
 		}
