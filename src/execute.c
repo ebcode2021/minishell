@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 09:47:08 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 09:52:35 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ pid_t	pipe_n_fork(t_pipe *new_pipe)
 {
 	pid_t	pid;
 
-	pipe(new_pipe->fd);
+	if (new_pipe)
+		pipe(new_pipe->fd);
 	pid = fork();
 	if (pid == -1)
 		error_handler();
@@ -34,34 +35,25 @@ void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 	}
 	if (exec->command)
 	{
-		fprintf(stderr,"실행시키는부분\n");
 		if (is_builtin(exec->command))
 			builtin_handler(exec);
 		else
-		{
-			fprintf(stderr,"cmd다.\n");
 			command_handler(exec);
-		}
 	}
 }
+
 void	single_execute(t_exec_block *exec)
 {
 	pid_t	pid;
-	
-	fprintf(stderr,"single_execute\n");
-	pid = fork();
+
+	fprintf(stderr, "single_execute\n");
+	pid = pipe_n_fork(0);
 	if (pid == 0)
 	{
 		change_io_fd(exec, 0);
-		fprintf(stderr,"cmd : %s\n", exec->command);
 		if (exec->command)
-		{
-			fprintf(stderr,"여기?????\n");
 			command_handler(exec);
-		}
 	}
-	else if (pid == -1)
-		error_handler();
 	waitpid(pid, &sys.last_errno, 0);
 }
 
@@ -93,7 +85,7 @@ void	execute(t_exec_block *execs)
 void	execute_handler(t_exec_block *execs)
 {
 	if (execs->next)
-		execute(execs); 
+		execute(execs);
 	else
 	{
 		if (is_builtin(execs->command))
