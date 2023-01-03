@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/02 15:46:12 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 15:27:31 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,35 @@ char	*get_cmd_path(char *command)
 	return (0);
 }
 
+char	**current_env_lst()
+{
+	char	**env_lst;
+	size_t	idx;
+
+	idx = 0;
+	env_lst = (char **)malloc(sizeof(char *) * (ft_lstsize(sys.env_lst) + 1));
+	while (env_lst[idx])
+	{
+		env_lst[idx] = ft_strdup(sys.env_lst->variable_name);
+		env_lst[idx] = ft_strjoin(env_lst[idx], "=");
+		env_lst[idx] = ft_strjoin(env_lst[idx], sys.env_lst->value);
+		printf("%s\n", env_lst[idx]);
+		idx++;
+		
+	}
+	return (env_lst);
+}
+
 void	command_handler(t_exec_block *exec)
 {
 	char	*cmd_path;
+	char	**env_lst;
 
 	cmd_path = get_cmd_path(exec->command);
-	fprintf(stderr,"cmd handler 경로 : %s\n", cmd_path);
+	env_lst = current_env_lst();
+	printf("%s\n", cmd_path);
 	if (!cmd_path)
-		error_handler();
+		command_not_found(exec->command);
 	else
-		execve(cmd_path, exec->args, (char* const *)&(sys.env_lst));
-	sys.last_exit_status_code = 0;
+		execve(cmd_path, exec->args, env_lst);
 }

@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 10:21:22 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 14:51:27 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ t_exec_block 	*exec_block_parser(char *raw_input);
 void			execute_handler(t_exec_block *execs);
 
 /*error_handler.c*/
-void			error_handler(t_exec_block *exec, int category, int parents);
+void			print_error_msg(char *location, char *argument);
+//void			builtin_error(t_exec_block *exec, int idx, int child);
+void			redirection_error(char *file_name, int child);
+void			command_not_found(char *command);
+
 
 /*builtin_handler.c*/
 int				is_builtin(char *command);
@@ -83,11 +87,12 @@ void			builtin_handler(t_exec_block *exec);
 
 /*command_handler.c*/
 void			command_handler(t_exec_block *exec);
+void			redirection_error(char *file_name, int child);
 
 /*fd_handler.c*/
-void			reset_fd(void);
-int				get_redirection_fd(t_exec_block *exec, int parents);
-void			set_redirection_fd(t_exec_block *exec, int parents);
+int				get_redirection_fd(t_exec_block *exec, char *file_name);
+void			set_redirection_fd(t_exec_block *exec, int child);
 void			change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe);
+void			reset_fd(void);
 
 #endif

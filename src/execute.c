@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 11:12:48 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 14:55:18 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	single_execute(t_exec_block *exec)
 {
 	pid_t	pid;
 
-	fprintf(stderr, "single_execute\n");
 	pid = pipe_n_fork(0);
 	if (pid == 0)
 	{

@@ -14,7 +14,8 @@ SRC = minishell.c \
 	execute.c \
 	builtin_handler.c \
 	command_handler.c \
-	error_handler.c
+	error_handler.c \
+	fd_handler.c
 BUILT_IN = builtins/*.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 OBJS = $(SRCS:.c=.o)
