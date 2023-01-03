@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 14:48:03 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:03:10 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_env(char *str, size_t *index)
 		buffer[buf_idx++] = str[str_idx++];
 	buffer[buf_idx] = 0;
 	if (index)
-		*index = str_idx;
+		*index = str_idx + 1;
 	lst = sys.env_lst;
 	while (lst)
 	{
@@ -60,8 +60,6 @@ char	*expand_env(char *str)
 		}
 		else if (str[str_idx] != '\"')
 			buffer[buf_idx++] = str[str_idx++];
-		else
-			str_idx++;
 	}
 	free(str);
 	buffer[buf_idx] = 0;
@@ -108,7 +106,7 @@ char	*quote_handler(char *str)
 		result = str_replace(str, "\'", "");
 	else
 	{
-		result = expand_env(str);
+		result = tilde_replace(expand_env(str));
 		if (is_blank(result))
 		{
 			free(result);

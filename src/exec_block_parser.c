@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/02 19:06:22 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:22:43 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_exec_block	*str_to_block(char *str)
 			here_doc_handler(elem);
 		elem = elem->next;
 	}
-	//print_block(block);
+	print_block(block);
 	free(replaced);
 	free(split);
 	return (block);

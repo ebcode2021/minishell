@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:37:55 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/31 13:31:35 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:01:05 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,28 @@ int		is_blank(char *str)
 		i++;
 	}
 	return (1);
+}
+
+char	*tilde_replace(char *str)
+{
+	char	buffer[BUFFER_SIZE];
+	size_t	str_idx;
+	size_t	buf_idx;
+
+	str_idx = 0;
+	buf_idx = 0;
+	if (ft_strncmp(str, "~", 2) == 0 \
+		|| ft_strncmp(str, "~/", 2) == 0)
+	{
+		ft_memcpy(buffer, sys.home_dir, ft_strlen(sys.home_dir) + 1);
+		buf_idx += ft_strlen(sys.home_dir);
+		str_idx += 1;
+	}
+	while (str[str_idx])
+		buffer[buf_idx++] = str[str_idx++];
+	buffer[buf_idx] = 0;
+	free(str);
+	return (ft_strdup(buffer));
 }
 
 char	*str_replace(char *str, char *to_find, char *to_replace)

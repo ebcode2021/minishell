@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 14:51:27 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 16:50:16 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int				is_blank(char *str);
 char			*str_replace(char *str, char *to_find, char *to_replace);
 void			convert_back(char **split, char c);
 char			**split_with_char(char *raw_input, char c);
+char			*tilde_replace(char *str);
 
 /*block_utils.c*/
 t_exec_block	*block_new(void);
