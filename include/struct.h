@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:57:26 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/02 12:24:29 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 09:30:03 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_system
 	int		last_exit_status_code;
 	int		last_errno;
 	int		here_doc_index;
+	int		current_fd[2];
 }				t_system;
 
 typedef struct s_redirection

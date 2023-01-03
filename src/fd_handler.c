@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   const.h                                            :+:      :+:    :+:   */
+/*   fd_handler.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 09:33:53 by eunson           ###   ########.fr       */
+/*   Created: 2023/01/03 09:39:24 by eunson            #+#    #+#             */
+/*   Updated: 2023/01/03 09:45:01 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONST_H
-# define CONST_H
+#include "minishell.h"
 
-# define BUFFER_SIZE 1024
-# define HERE_DOC_DIRECTORY "/tmp/here_doc"
-# define AMBIGUOUS "ambiguous redirect"
-# define INFILE 60
-# define OUTFILE 62
-# define HERE_DOC 120
-# define OUTFILE_A 124
-
-# define READ 0
-# define WRITE 1
-
-# define REDIRECTION 0
-# define BUILT_IN 1
-
-# define STD_IN 1000
-# define STD_OUT 1001
-
-#endif
+void	reset_fd(void)
+{
+	dup2(STD_IN, STDIN_FILENO);
+	dup2(STD_OUT, STDOUT_FILENO);
+}

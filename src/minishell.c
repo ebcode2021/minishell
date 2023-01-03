@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/02 21:50:17 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/03 09:34:20 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	init_system_info()
 	sys.last_errno = 0;
 	sys.here_doc_names = 0;
 	sys.here_doc_index = 0;
+	sys.current_fd[READ] = dup2(STD_IN, STDIN_FILENO);
+	sys.current_fd[WRITE] = dup2(STD_OUT, STDOUT_FILENO);
 }
 
 void	set_system_info(char *envp[])
@@ -73,7 +75,7 @@ int main(int argc, char *argv[], char *envp[])
 			elem = exec_block_parser(input);
 			execute_handler(elem);
 			free_block(elem);
-			
+			reset_fd();
 		}
 		//system("leaks minishell");
 		free(input);
