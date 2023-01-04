@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 16:20:13 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:39:36 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	change_dir(char *dest)
 {
+	t_list	*OLDPWD;
+
 	if (!dest)
 	{
 		fprintf(stderr, "picoshell: cd: HOME not set\n");
@@ -25,6 +27,11 @@ int	change_dir(char *dest)
 		perror(dest);
 		return (-1);
 	}
+	OLDPWD = ft_lstfind(sys.env_lst, "OLDPWD");
+	if (!OLDPWD)
+		ft_lstadd_back(&sys.env_lst, ft_lstnew(dest));
+	else
+		OLDPWD->value = dest;
 	getcwd(sys.pwd, BUFFER_SIZE);
 	return (0);
 }

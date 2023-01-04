@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 20:47:26 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 13:41:34 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void			builtin_handler(t_exec_block *exec);
 /*command_handler.c*/
 void			command_handler(t_exec_block *exec);
 void			redirection_error(char *file_name, int child);
+char			**current_env_lst();
 
 /*fd_handler.c*/
 int				get_redirection_fd(t_exec_block *exec, char *file_name);
@@ -99,5 +100,6 @@ void			reset_fd(void);
 /*builtins*/
 void			builtin_cd(t_exec_block *block);
 void			builtin_pwd(void);
-
+void			builtin_env(void);
+void			builtin_echo(t_exec_block *execs);
 #endif

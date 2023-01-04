@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 12:07:08 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:41:10 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	builtin_handler(t_exec_block *exec)
 
 	if (!ft_strncmp(command_name, "cd", 3))
 		builtin_cd(exec);
-	// else if (!ft_strncmp(command_name, "echo", 5))
-	// 	builtin_echo(exec);
-	// else if (!ft_strncmp(command_name, "env", 4))
-	// 	builtin_env(exec);
-	// else if (!ft_strncmp(command_name, "exit", 5))
+	else if (!ft_strncmp(command_name, "echo", 5))
+		builtin_echo(exec);
+	else if (!ft_strncmp(command_name, "env", 4))
+		builtin_env();
+	// else if (!ft_str ncmp(command_name, "exit", 5))
 	// 	builtin_exit(exec);
 	// else if (!ft_strncmp(command_name, "export", 7))
 	// 	builtin_export(exec);

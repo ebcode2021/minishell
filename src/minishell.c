@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 12:08:03 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:40:30 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	set_tmp_dir(char **envp)
 			execve("/bin/rm", rm_args, envp);
 			exit(1);
 		}
+		waitpid(pid, 0, 0);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -64,15 +65,32 @@ void	set_tmp_dir(char **envp)
 			exit(1);
 		}
 		return ;
+		waitpid(pid, 0, 0);
 	}
 	closedir(dir);
 }
+
+void	clean_up(void)
+{
+	pid_t		pid;
+	char		**envp;
+	char *const rm_args[4] = {"rm", "-rf", sys.tmp_dir, 0};
+
+	pid = fork();
+	if (pid == 0)
+	{
+		envp = current_env_lst();
+		execve("/bin/rm", rm_args, envp);
+		exit(1);
+	}
+	waitpid(pid, 0, 0);
+}
+
 
 void	set_system_info(char *envp[])
 {
 	getcwd(sys.pwd, BUFFER_SIZE);
 	sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
-	printf("%s\n", sys.tmp_dir);
 	set_tmp_dir(envp);
 	sys.env_lst = 0;
 	while (*envp)

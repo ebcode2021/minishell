@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 20:59:47 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 13:42:23 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,24 @@ void	execute(t_exec_block *execs)
 	waitpid(pid, &sys.last_errno, 0);
 }
 
+void	set_current_cmd(t_exec_block *execs)
+{
+	t_list	*new_lst;
+	char	*data;
+
+	ft_lst_remove_if(&sys.env_lst, "_");
+	if (!execs->command || execs->next)
+		return ;
+	data = ft_strjoin("_=", execs->command);
+	new_lst = ft_lstnew(data);
+	ft_lstadd_back(&sys.env_lst, new_lst);
+}
+
 void	execute_handler(t_exec_block *execs)
 {
 	if (!execs)
 		return ;
+	set_current_cmd(execs);
 	if (execs->next)
 		execute(execs);
 	else
