@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 18:09:52 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:35:50 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,21 @@ void	clean_up(void)
 
 void	set_system_info(char *envp[])
 {
+	t_list	*env;
+
 	getcwd(sys.pwd, BUFFER_SIZE);
 	sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
 	set_tmp_dir(envp);
 	sys.env_lst = 0;
 	while (*envp)
 		ft_lstadd_back(&sys.env_lst, ft_lstnew(*envp++));
-	sys.home_dir = ft_lstfind(sys.env_lst, "HOME")->value;
+	sys.home_dir = sys.pwd;
+	env = ft_lstfind(sys.env_lst, "HOME");
+	if (env)
+		sys.home_dir = env->value;
+	env = ft_lstfind(sys.env_lst, "OLDPWD");
+	free(env->value);
+	env->value = 0;
 	sys.last_errno = 0;
 	sys.last_exit_status_code = 0;
 }

@@ -3,19 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 13:39:36 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 19:11:05 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	change_dir(char *dest)
+void	update_OLDPWD(void)
 {
 	t_list	*OLDPWD;
+	
+	OLDPWD = ft_lstfind(sys.env_lst, "OLDPWD");
+	if (!OLDPWD)
+		ft_lstadd_back(&sys.env_lst, ft_lstnew(sys.pwd));
+	else
+	{
+		if (OLDPWD->value)
+			free(OLDPWD->value);
+		OLDPWD->value = ft_strdup(sys.pwd);
+	}
+}
 
+int	change_dir(char *dest)
+{
 	if (!dest)
 	{
 		fprintf(stderr, "picoshell: cd: HOME not set\n");
@@ -27,11 +40,7 @@ int	change_dir(char *dest)
 		perror(dest);
 		return (-1);
 	}
-	OLDPWD = ft_lstfind(sys.env_lst, "OLDPWD");
-	if (!OLDPWD)
-		ft_lstadd_back(&sys.env_lst, ft_lstnew(dest));
-	else
-		OLDPWD->value = dest;
+	update_OLDPWD();
 	getcwd(sys.pwd, BUFFER_SIZE);
 	return (0);
 }
