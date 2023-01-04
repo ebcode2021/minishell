@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 20:44:10 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 11:00:12 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,21 @@ void	init_system_info()
 	sys.current_fd[WRITE] = dup2(STD_OUT, STDOUT_FILENO);
 }
 
+void	set_tmp_dir(void)
+{
+	pid_t	pid;
+
+	sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
+	if (opendir(sys.tmp_dir) == 0)
+	{
+		pid = fork();
+		if (pid == 0)
+		{ 
+			exit(1);
+		}
+	}
+}
+
 void	set_system_info(char *envp[])
 {
 	sys.env_lst = 0;
@@ -49,7 +64,8 @@ void	set_system_info(char *envp[])
 	getcwd(sys.pwd, BUFFER_SIZE);
 	sys.last_errno = 0;
 	sys.last_exit_status_code = 0;
-	sys.home_dir = "/Users/eunson";
+	sys.home_dir = ft_lstfind(sys.env_lst, "HOME")->value;
+	set_tmp_dir();
 }
 
 int main(int argc, char *argv[], char *envp[])
