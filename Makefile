@@ -15,14 +15,9 @@ SRC = minishell.c \
 	builtin_handler.c \
 	command_handler.c \
 	error_handler.c \
-<<<<<<< HEAD
 	fd_handler.c \
 	signal_handler.c
-BUILT_IN = builtins/cd.c builtins/pwd.c
-=======
-	fd_handler.c
 BUILT_IN = builtins/cd.c builtins/pwd.c builtins/echo.c builtins/env.c builtins/export.c builtins/unset.c builtins/exit.c
->>>>>>> f59e7c6388d7dc5c80650f7de5d438054b5fe370
 SRCS = $(addprefix $(SRC_DIR), $(SRC)) $(addprefix $(SRC_DIR), $(BUILT_IN))
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)

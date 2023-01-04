@@ -6,11 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/01/04 16:08:27 by jinholee         ###   ########.fr       */
-=======
-/*   Updated: 2023/01/04 18:42:27 by jinholee         ###   ########.fr       */
->>>>>>> f59e7c6388d7dc5c80650f7de5d438054b5fe370
+/*   Updated: 2023/01/04 21:20:05 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +107,6 @@ void			builtin_exit(t_exec_block *execs);
 
 /*signals*/
 void			set_signal_handler(void);
+void			pseudo_SIGTERM(void);
 
 #endif
