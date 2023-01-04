@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:06 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 17:49:18 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 22:07:41 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,21 @@ void	save_address(t_list **addrs)
 
 void	bubble_sort(t_list **array)
 {
-	int	idx;
-	int	jdx;
+	int		idx;
+	int		jdx;
+	char	*left_variable;
+	char	*right_variable;
 	t_list	*tmp_lst;
 
 	idx = 0;
 	while (array[idx])
 	{
 		jdx = idx + 1;
+		left_variable = array[idx]->variable_name;
 		while (array[jdx])
 		{
-			if (ft_strncmp(array[idx]->variable_name, array[jdx]->variable_name, BUFFER_SIZE) > 0)
+			right_variable = array[jdx]->variable_name;
+			if (ft_strncmp(left_variable, right_variable, BUFFER_SIZE) > 0)
 			{
 				tmp_lst = array[idx];
 				array[idx] = array[jdx];
@@ -51,10 +55,10 @@ void	bubble_sort(t_list **array)
 	}
 }
 
-void	print_sorted_env_lst()
+void	print_sorted_env_lst(void)
 {
-	t_list 	**addrs;
 	size_t	idx;
+	t_list	**addrs;
 
 	idx = 0;
 	addrs = (t_list **)malloc(sizeof(t_list *) * (ft_lstsize(sys.env_lst) + 1));
@@ -109,7 +113,8 @@ void	builtin_export(t_exec_block *exec)
 				free(variable_name);
 			}
 			else
-				print_custom_error_msg(exec->command, exec->args[idx], NOT_A_VALID_IDENTIFIER);
+				print_custom_error_msg \
+				(exec->command, exec->args[idx], NOT_A_VALID_IDENTIFIER);
 			idx++;
 		}
 	}
