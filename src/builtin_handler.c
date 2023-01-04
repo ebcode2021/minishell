@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 12:07:08 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:13:48 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,21 @@ int	is_builtin(char *command)
 	return (0);
 }
 
-// cd는 첫 arg
-// echo
+int	check_export_unset_argv(char *arguments, int unset)
+{
+	size_t	idx;
 
-// export 값이 없어도 보이지만, env는 값이 없으면 안보임.
-// void	check_env_arguments(t_exec_block *exec)
-// {
-	
-// }
+	idx = 1;
+	if (!(ft_isalpha(arguments[0]) || arguments[0] == '_'))
+		return (0);
+	while (arguments[idx] && (unset || arguments[idx] != '='))
+	{
+		if (!(ft_isalnum(arguments[idx]) || arguments[idx] == '_'))
+			return (0);
+		idx++;
+	}
+	return (1);
+}
 
 
 void	builtin_handler(t_exec_block *exec)
@@ -44,19 +51,18 @@ void	builtin_handler(t_exec_block *exec)
 	char	*command_name;
 
 	command_name = exec->command;
-
 	if (!ft_strncmp(command_name, "cd", 3))
 		builtin_cd(exec);
-	// else if (!ft_strncmp(command_name, "echo", 5))
-	// 	builtin_echo(exec);
-	// else if (!ft_strncmp(command_name, "env", 4))
-	// 	builtin_env(exec);
-	// else if (!ft_strncmp(command_name, "exit", 5))
-	// 	builtin_exit(exec);
-	// else if (!ft_strncmp(command_name, "export", 7))
-	// 	builtin_export(exec);
+	else if (!ft_strncmp(command_name, "echo", 5))
+		builtin_echo(exec);
+	else if (!ft_strncmp(command_name, "env", 4))
+		builtin_env();
+	else if (!ft_strncmp(command_name, "export", 7))
+		builtin_export(exec);
+	else if (!ft_strncmp(command_name, "exit", 5))
+		builtin_exit(exec);
 	else if (!ft_strncmp(command_name, "pwd", 4))
 		builtin_pwd();
-	// else
-	// 	builtin_unset(exec);
+	else
+		builtin_unset(exec);
 }

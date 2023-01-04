@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 12:01:15 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:39:59 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define BUFFER_SIZE 1024
 # define TMP_DIRECTORY "/tmp/picoshell/"
 # define AMBIGUOUS "ambiguous redirect"
-# define SECRET_KEY "chainsaw_man_4242"
+
 # define INFILE 60
 # define OUTFILE 62
 # define HERE_DOC 120
@@ -33,5 +33,9 @@
 
 # define PARENTS 0
 # define CHILD 1
+
+# define EXPORT 0
+# define UNSET 1
+# define LONG_MAX 9223372036854775807UL
 
 #endif

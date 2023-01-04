@@ -3,31 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:00 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/01 20:13:14 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:45:13 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_echo(t_exec_block block)
+void	builtin_echo(t_exec_block *execs)
 {
-	size_t	i;
-	int		fd;
+	size_t	idx;
 	int		n_option;
 
 	//set redirections. but infile does nothing.
 	//echo < infile; shoul work the same as just echo;
-	i = 0;
+	idx = 1;
 	n_option = 0;
-	while (block->args[i] && ft_strncmp(block->args[i], "-n", 3) == 0)
-		i++;
-	while (block->args[i])
+	while (execs->args[idx] && ft_strncmp(execs->args[idx], "-n", 3) == 0)
 	{
-		ft_putstr_fd(block->args[i], fd);
+		idx++;
+		n_option = 1;
+	}
+	while (execs->args[idx])
+	{
+		ft_putstr_fd(execs->args[idx++], STDOUT_FILENO);
+		if (execs->args[idx])
+			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
 	if (!n_option)
-		ft_putchar_fd('\n', fd);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 }

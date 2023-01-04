@@ -13,6 +13,7 @@
 #include <sys/ioctl.h>
 #include <sys/time.h>
 
+<<<<<<< HEAD
 
 static void sigint_handler(int signum) {
   // Check if the user is trying to write something on the terminal
@@ -43,4 +44,9 @@ int main(int argc, char* argv[]) {
   }
 
   return 0;
+=======
+int	main(int argc, char **argv, char **envp)
+{
+	printf("%s\n", str_replace(argv[1], "\'", ""));
+>>>>>>> f59e7c6388d7dc5c80650f7de5d438054b5fe370
 }

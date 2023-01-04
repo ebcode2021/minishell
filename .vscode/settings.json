@@ -6,7 +6,12 @@
     "string.h": "c",
     "__locale": "c",
     "ios": "c",
+<<<<<<< HEAD
     "stat.h": "c"
+=======
+    "limits": "c",
+    "type_traits": "c"
+>>>>>>> f59e7c6388d7dc5c80650f7de5d438054b5fe370
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "clang",

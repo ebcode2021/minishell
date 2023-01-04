@@ -6,11 +6,26 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 16:20:13 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:11:05 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	update_OLDPWD(void)
+{
+	t_list	*OLDPWD;
+	
+	OLDPWD = ft_lstfind(sys.env_lst, "OLDPWD");
+	if (!OLDPWD)
+		ft_lstadd_back(&sys.env_lst, ft_lstnew(sys.pwd));
+	else
+	{
+		if (OLDPWD->value)
+			free(OLDPWD->value);
+		OLDPWD->value = ft_strdup(sys.pwd);
+	}
+}
 
 int	change_dir(char *dest)
 {
@@ -25,6 +40,7 @@ int	change_dir(char *dest)
 		perror(dest);
 		return (-1);
 	}
+	update_OLDPWD();
 	getcwd(sys.pwd, BUFFER_SIZE);
 	return (0);
 }
