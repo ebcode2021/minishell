@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 13:41:34 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 17:19:56 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,6 @@ void			builtin_cd(t_exec_block *block);
 void			builtin_pwd(void);
 void			builtin_env(void);
 void			builtin_echo(t_exec_block *execs);
+void			builtin_exit(t_exec_block *execs);
+
 #endif

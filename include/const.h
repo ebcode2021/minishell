@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 12:01:15 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:43:48 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@
 
 # define PARENTS 0
 # define CHILD 1
+
+# define LONG_MAX 9223372036854775807UL
 
 #endif

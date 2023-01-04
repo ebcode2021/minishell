@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 17:03:10 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:09:25 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ char	*quote_handler(char *str)
 {
 	char	*result;
 
-	if (ft_strchr(str, '\"'))
+	if (*str ==  '\"')
 		result = double_quote_handler(str);
-	else if (ft_strchr(str, '\''))
+	else if (*str == '\'')
 		result = str_replace(str, "\'", "");
 	else
 	{

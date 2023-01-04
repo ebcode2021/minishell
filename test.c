@@ -12,5 +12,5 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-
+	printf("%s\n", str_replace(argv[1], "\'", ""));
 }
