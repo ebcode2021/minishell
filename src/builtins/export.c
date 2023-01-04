@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:06 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 17:32:03 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 17:49:18 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,25 @@ void	print_sorted_env_lst()
 	free(addrs);
 }
 
+char	*find_variable_name(char *argument)
+{
+	size_t	idx;
+	char	*variable_name;
+
+	idx = 0;
+	while (argument[idx] != '=')
+		idx++;
+	variable_name = (char *)malloc(sizeof(char) * idx);
+	idx = 0;
+	while (argument[idx] != '=')
+	{
+		variable_name[idx] = argument[idx];
+		idx++;
+	}
+	variable_name[idx] = 0;
+	return (variable_name);
+}
+
 void	builtin_export(t_exec_block *exec)
 {
 	size_t	idx;
@@ -83,7 +102,7 @@ void	builtin_export(t_exec_block *exec)
 		{
 			if (check_export_unset_argv(exec->args[idx], EXPORT))
 			{
-				variable_name = ft_strdup(exec->args[idx]);
+				variable_name = find_variable_name(exec->args[idx]);
 				ft_lst_remove_if(&sys.env_lst, variable_name);
 				new_lst = ft_lstnew(exec->args[idx]);
 				ft_lstadd_back(&sys.env_lst, new_lst);
