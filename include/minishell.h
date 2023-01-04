@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 13:41:34 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 17:32:54 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,14 @@ t_exec_block 	*exec_block_parser(char *raw_input);
 void			execute_handler(t_exec_block *execs);
 
 /*error_handler.c*/
+void			print_custom_error_msg(char *location, char *argument, char *message);
 void			print_error_msg(char *location, char *argument);
-//void			builtin_error(t_exec_block *exec, int idx, int child);
 void			redirection_error(char *file_name, int child);
-void			command_not_found(char *command);
-
 
 /*builtin_handler.c*/
 int				is_builtin(char *command);
 void			builtin_handler(t_exec_block *exec);
+int				check_export_unset_argv(char *arguments, int unset);
 
 /*command_handler.c*/
 void			command_handler(t_exec_block *exec);
@@ -102,4 +101,7 @@ void			builtin_cd(t_exec_block *block);
 void			builtin_pwd(void);
 void			builtin_env(void);
 void			builtin_echo(t_exec_block *execs);
+void			builtin_unset(t_exec_block *exec);
+void			builtin_export(t_exec_block *exec);
+
 #endif

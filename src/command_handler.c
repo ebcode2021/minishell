@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 21:06:00 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 17:33:14 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	command_handler(t_exec_block *exec)
 	cmd_path = get_cmd_path(exec->command);
 	env_lst = current_env_lst();
 	if (!cmd_path)
-		command_not_found(exec->command);
+		print_custom_error_msg(exec->command, 0, COMMAND_NOT_FOUND);
 	else
 		execve(cmd_path, exec->args, env_lst);
 }

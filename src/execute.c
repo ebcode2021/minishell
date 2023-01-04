@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 13:42:23 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 17:23:30 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void	execute_handler(t_exec_block *execs)
 	{
 		if (is_builtin(execs->command))
 		{
-			printf("i'm builtin: %s\n", execs->command);
 			set_redirection_fd(execs, PARENTS);
 			builtin_handler(execs);
 		}
