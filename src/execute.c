@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 17:23:30 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 20:06:36 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	single_execute(t_exec_block *exec)
 		set_redirection_fd(exec, CHILD);
 		if (exec->command)
 			command_handler(exec);
-		exit(EXIT_SUCCESS);
+		exit(1);
 	}
 	waitpid(pid, &sys.last_errno, 0);
 }
@@ -55,16 +55,19 @@ void	execute(t_exec_block *execs)
 	pid_t			pid;
 	t_pipe			iter_pipe;
 	t_exec_block	*head;
+	size_t			idx;
 
+	idx = 0;
 	iter_pipe.prev_fd = -1;
 	head = execs;
 	while (head)
 	{
+		idx++;
 		pid = pipe_n_fork(&iter_pipe);
 		if (pid == 0)
 		{
 			child_process(head, &iter_pipe);
-			exit(EXIT_SUCCESS);
+			exit(1);
 		}
 		close(iter_pipe.prev_fd);
 		close(iter_pipe.fd[WRITE]);
@@ -72,7 +75,8 @@ void	execute(t_exec_block *execs)
 		head = head->next;
 	}
 	close(iter_pipe.fd[READ]);
-	waitpid(pid, &sys.last_errno, 0);
+	while (idx--)
+		waitpid(-1, &sys.last_errno, 0);
 }
 
 void	set_current_cmd(t_exec_block *execs)
