@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 20:47:26 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 16:08:27 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,8 @@ void			reset_fd(void);
 /*builtins*/
 void			builtin_cd(t_exec_block *block);
 void			builtin_pwd(void);
+
+/*signals*/
+void			set_signal_handler(void);
 
 #endif

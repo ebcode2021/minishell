@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 12:08:03 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:41:46 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,17 @@ int main(int argc, char *argv[], char *envp[])
 	char			*input;
 	t_exec_block	*elem;
 
-	//set_signal_handler();
 	if (!argc && !argv)
 		return (0);
+	//set_signal_handler();
 	set_system_info(envp);
 	while (1)
 	{
 		input = readline("picoshell> ");
-		add_history(input);
+		if (input)
+			add_history(input);
+		if (!input)
+			input = ft_strdup("exit");
 		if (syntax_check(input))
 		{
 			elem = exec_block_parser(input);
