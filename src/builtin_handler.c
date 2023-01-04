@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 21:06:24 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 12:07:08 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ int	is_builtin(char *command)
 
 // cd는 첫 arg
 // echo
-// void	check_arg(t_exec_block *exec)
+
+// export 값이 없어도 보이지만, env는 값이 없으면 안보임.
+// void	check_env_arguments(t_exec_block *exec)
 // {
 	
 // }
+
 
 void	builtin_handler(t_exec_block *exec)
 {

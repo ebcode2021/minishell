@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 11:00:12 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 12:08:03 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,45 @@ void	init_system_info()
 	sys.current_fd[WRITE] = dup2(STD_OUT, STDOUT_FILENO);
 }
 
-void	set_tmp_dir(void)
+void	set_tmp_dir(char **envp)
 {
-	pid_t	pid;
+	DIR			*dir;
+	pid_t		pid;
+	char *const rm_args[4] = {"rm", "-rf", sys.tmp_dir, 0};
+	char *const mkdir_args[4] = {"mkdir", "-p", sys.tmp_dir, 0};
 
-	sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
-	if (opendir(sys.tmp_dir) == 0)
+	dir = opendir(sys.tmp_dir);
+	if (dir == 0)
 	{
 		pid = fork();
 		if (pid == 0)
-		{ 
+		{
+			execve("/bin/rm", rm_args, envp);
 			exit(1);
 		}
+		pid = fork();
+		if (pid == 0)
+		{
+			execve("/bin/mkdir", mkdir_args, envp);
+			exit(1);
+		}
+		return ;
 	}
+	closedir(dir);
 }
 
 void	set_system_info(char *envp[])
 {
+	getcwd(sys.pwd, BUFFER_SIZE);
+	sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
+	printf("%s\n", sys.tmp_dir);
+	set_tmp_dir(envp);
 	sys.env_lst = 0;
 	while (*envp)
 		ft_lstadd_back(&sys.env_lst, ft_lstnew(*envp++));
-	getcwd(sys.pwd, BUFFER_SIZE);
+	sys.home_dir = ft_lstfind(sys.env_lst, "HOME")->value;
 	sys.last_errno = 0;
 	sys.last_exit_status_code = 0;
-	sys.home_dir = ft_lstfind(sys.env_lst, "HOME")->value;
-	set_tmp_dir();
 }
 
 int main(int argc, char *argv[], char *envp[])
