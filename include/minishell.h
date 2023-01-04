@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 21:20:05 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:37:35 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include <sys/stat.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <curses.h>
+# include <term.h>
 
 extern t_system	sys;
 
