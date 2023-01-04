@@ -6,14 +6,9 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 17:54:42 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:49:32 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//kill all process;
-// exit_code 직접 세팅..?
-//set_exit_code()
-//exit(exit code?)
 
 #include "minishell.h"
 
@@ -60,7 +55,7 @@ void	builtin_exit(t_exec_block *execs)
 			ft_putstr_fd("picoshell: exit: ", STDERR_FILENO);
 			ft_putstr_fd(execs->args[1], STDERR_FILENO);
 			ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-			exit(0);
+			exit(exit_code);
 		}
 		if (execs->args[2])
 		{
@@ -69,4 +64,5 @@ void	builtin_exit(t_exec_block *execs)
 			return ;
 		}
 	}
+	exit(exit_code);
 }
