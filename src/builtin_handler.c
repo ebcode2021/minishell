@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 17:03:59 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/04 18:13:48 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	builtin_handler(t_exec_block *exec)
 		builtin_echo(exec);
 	else if (!ft_strncmp(command_name, "env", 4))
 		builtin_env();
-	// else if (!ft_strncmp(command_name, "exit", 5))
-	// 	builtin_exit();
 	else if (!ft_strncmp(command_name, "export", 7))
 		builtin_export(exec);
+	else if (!ft_strncmp(command_name, "exit", 5))
+		builtin_exit(exec);
 	else if (!ft_strncmp(command_name, "pwd", 4))
 		builtin_pwd();
 	else
