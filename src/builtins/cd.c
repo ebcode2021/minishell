@@ -3,80 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 19:11:05 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/04 21:49:16 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_OLDPWD(void)
+void	update_oldpwd(void)
 {
-	t_list	*OLDPWD;
-	
-	OLDPWD = ft_lstfind(sys.env_lst, "OLDPWD");
-	if (!OLDPWD)
+	t_list	*oldpwd;
+
+	oldpwd = ft_lstfind(sys.env_lst, "OLDPWD");
+	if (!oldpwd)
 		ft_lstadd_back(&sys.env_lst, ft_lstnew(sys.pwd));
 	else
 	{
-		if (OLDPWD->value)
-			free(OLDPWD->value);
-		OLDPWD->value = ft_strdup(sys.pwd);
+		if (oldpwd->value)
+			free(oldpwd->value);
+		oldpwd->value = ft_strdup(sys.pwd);
 	}
 }
 
-int	change_dir(char *dest)
+void	change_dir(char *dest, t_exec_block *exec)
 {
 	if (!dest)
-	{
-		fprintf(stderr, "picoshell: cd: HOME not set\n");
-		return (-1);
-	}
+		print_custom_error_msg(exec->command, 0, HOME_NOT_SET);
 	else if (chdir(dest) == -1)
+		print_error_msg(exec->command, exec->args[1]);
+	else
 	{
-		ft_putstr_fd("cd: ", 2);
-		perror(dest);
-		return (-1);
+		update_oldpwd();
+		getcwd(sys.pwd, BUFFER_SIZE);
 	}
-	update_OLDPWD();
-	getcwd(sys.pwd, BUFFER_SIZE);
-	return (0);
 }
 
-int	hyphen_handler()
+void	hyphen_handler(t_exec_block *exec)
 {
-	char	*OLDPWD;
+	char	*oldpwd;
 
-	OLDPWD = get_env("$OLDPWD", 0);
-	if (!OLDPWD)
+	oldpwd = get_env("$OLDPWD", 0);
+	if (oldpwd)
 	{
-		fprintf(stderr, "picoshell: cd: OLDPWD not set\n");
-		return (-1);
+		change_dir(oldpwd, exec);
+		ft_putendl_fd(sys.pwd, STDIN_FILENO);
 	}
-	change_dir(OLDPWD);
-	printf("%s\n", sys.pwd);
-	return (0);
+	else
+		print_custom_error_msg(exec->command, 0, OLDPWD_NOT_SET);
 }
 
-void	builtin_cd(t_exec_block *block)
+void	builtin_cd(t_exec_block *exec)
 {
-	size_t	number_of_args;
+	size_t	arg_cnt;
 
-	//set redirections
-	number_of_args = 0;
-	while (block->args[number_of_args])
-		number_of_args++;
-	if (number_of_args > 2)
-		fprintf(stderr, "picoshell: cd: too many argument\n");
-	else if (number_of_args == 1)
-		change_dir(get_env("$HOME", 0));
-	else if (number_of_args == 2)
+	arg_cnt = 0;
+	while (exec->args[arg_cnt])
+		arg_cnt++;
+	if (arg_cnt > 2)
+		print_custom_error_msg(exec->command, 0, TOO_MANY_ARG);
+	else if (arg_cnt == 2)
 	{
-		if (ft_strncmp(block->args[1], "-", 2) == 0)
-			hyphen_handler();
+		if (ft_strncmp(exec->args[1], "-", 2) == 0)
+			hyphen_handler(exec);
 		else
-			change_dir(block->args[1]);
+			change_dir(exec->args[1], exec);
 	}
+	else
+		change_dir(get_env("$HOME", 0), exec);
 }
