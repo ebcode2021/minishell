@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 20:57:36 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 21:11:44 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 		else
 			command_handler(exec);
 	}
+	exit(EXIT_FAILURE);
 }
 
 void	single_execute(t_exec_block *exec)
@@ -59,10 +60,7 @@ void	execute(t_exec_block *execs)
 		idx++;
 		pid = pipe_n_fork(&iter_pipe);
 		if (pid == 0)
-		{
 			child_process(head, &iter_pipe);
-			exit(1);
-		}
 		close(iter_pipe.prev_fd);
 		close(iter_pipe.fd[WRITE]);
 		iter_pipe.prev_fd = iter_pipe.fd[READ];
@@ -71,6 +69,8 @@ void	execute(t_exec_block *execs)
 	close(iter_pipe.fd[READ]);
 	while (idx--)
 		waitpid(-1, &g_sys.last_errno, 0);
+	child_error_handler(g_sys.last_exit_status_code);
+	signal(SIGINT, new_prompt);
 }
 
 void	execute_handler(t_exec_block *execs)
