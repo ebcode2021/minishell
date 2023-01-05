@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 15:04:05 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/02 16:40:18 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:46:39 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	syntax_ok(char *trimed)
+static int	check_syntax(char *trimed)
 {
 	free(trimed);
 	return (1);
 }
 
-int	raise_syntax_error(char c, char *trimed)
+static int	raise_syntax_error(char c, char *trimed)
 {
 	if (c == '\n')
 		fprintf(stderr,"picoshell: syntax error near unexpected token `newline\'\n");
@@ -30,36 +30,36 @@ int	raise_syntax_error(char c, char *trimed)
 
 int	syntax_check(char *input)
 {
-	int			i;
+	int			idx;
 	const char	*trimed = ft_strtrim(input, " ");
 
 	if (*trimed == '|')
 		return (raise_syntax_error('|', (char *)trimed));
-	i = -1;
-	while (trimed[++i])
+	idx = -1;
+	while (trimed[++idx])
 	{
-		if (trimed[i] == '<' || trimed[i] == '>')
+		if (trimed[idx] == '<' || trimed[idx] == '>')
 		{
-			if (ft_strncmp(trimed + i, "<<", 2) == 0 \
-				|| ft_strncmp(trimed + i, ">>", 2) == 0)
-				i++;
-			else if (ft_strncmp(trimed + i, "<<<", 3) == 0 \
-				|| ft_strncmp(trimed + i, ">>>", 3) == 0)
-				return (raise_syntax_error(trimed[i], (char *)trimed));
-			while (trimed[++i] == ' ')
-				i += 0;
-			if (!trimed[i])
+			if (ft_strncmp(trimed + idx, "<<", 2) == 0 \
+				|| ft_strncmp(trimed + idx, ">>", 2) == 0)
+				idx++;
+			else if (ft_strncmp(trimed + idx, "<<<", 3) == 0 \
+				|| ft_strncmp(trimed + idx, ">>>", 3) == 0)
+				return (raise_syntax_error(trimed[idx], (char *)trimed));
+			while (trimed[++idx] == ' ')
+				idx += 0;
+			if (!trimed[idx])
 				return (raise_syntax_error('\n', (char *)trimed));
-			else if (trimed[i] == '|' || trimed[i] == '<' || trimed[i] == '>')
-				return (raise_syntax_error(trimed[i], (char *)trimed));
+			else if (trimed[idx] == '|' || trimed[idx] == '<' || trimed[idx] == '>')
+				return (raise_syntax_error(trimed[idx], (char *)trimed));
 		}
-		else if (trimed[i] == '|')
+		else if (trimed[idx] == '|')
 		{
-			while (trimed[++i] == ' ')
-				i += 0;
-			if (trimed[i] == '|')
-				return (raise_syntax_error(trimed[i], (char *)trimed));
+			while (trimed[++idx] == ' ')
+				idx += 0;
+			if (trimed[idx] == '|')
+				return (raise_syntax_error(trimed[idx], (char *)trimed));
 		}
 	}
-	return (syntax_ok((char *)trimed));
+	return (check_syntax((char *)trimed));
 }

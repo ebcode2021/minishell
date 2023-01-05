@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:19:10 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 13:09:06 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:53:05 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define NOT_A_VALID_IDENTIFIER ": not a valid identifier"
 # define NUMERIC_ARG ": numeric argument required"
 # define OLDPWD_NOT_SET ": OLDPWD not set"
+# define SYNTAX_NEW_LINE ": syntax error near unexpected token `newline\'"
+# define SYNTAX_TOKEN  ": syntax error near unexpected token `"
 # define TOO_MANY_ARG ": too many arguments"
 
 #endif

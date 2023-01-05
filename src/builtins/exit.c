@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:25:57 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,24 @@ int	is_long(char *str)
 	return (flag);
 }
 
-void	builtin_exit(t_exec_block *execs)
+void	builtin_exit(t_exec_block *exec)
 {
 	int		exit_code;
 
 	exit_code = 0;
 	ft_putendl_fd("exit", STDERR_FILENO);
-	if (execs->args[1])
+	if (exec->args[1])
 	{
-		if (is_long(execs->args[1]))
-			exit_code = ft_atoi(execs->args[1]);
+		if (is_long(exec->args[1]))
+			exit_code = ft_atoi(exec->args[1]);
 		else
 		{
-			print_custom_error(execs->command, execs->args[1], NUMERIC_ARG);
+			print_custom_error(exec->command, exec->args[1], NUMERIC_ARG);
 			exit(exit_code);
 		}
-		if (execs->args[2])
+		if (exec->args[2])
 		{
-			print_custom_error(execs->command, 0, TOO_MANY_ARG);
+			print_custom_error(exec->command, 0, TOO_MANY_ARG);
 			g_sys.last_exit_status_code = 1;
 			return ;
 		}

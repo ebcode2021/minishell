@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:33:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 10:41:12 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:41:29 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_block(t_exec_block *block)
 	t_redirecion	*elem;
 
 	i = 0;
-	fprintf(stderr,"==========================\n");
+	ft_putendl_fd("==========================", STDERR_FILENO);
 	fprintf(stderr,"cmd: %s\nargs:", block->command);
 	while (block->args[i])
 		fprintf(stderr,"%s, ", block->args[i++]);
@@ -30,7 +30,7 @@ void	print_block(t_exec_block *block)
 			elem->file_name, elem->type);
 		elem = elem->next;
 	}
-	fprintf(stderr,"==========================\n");
+	ft_putendl_fd("==========================", STDERR_FILENO);
 }
 
 t_exec_block	*new_block(void)
