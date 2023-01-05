@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 10:47:54 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	builtin_exit(t_exec_block *execs)
 		if (execs->args[2])
 		{
 			print_custom_error(execs->command, 0, TOO_MANY_ARG);
-			sys.last_exit_status_code = 1;
+			g_sys.last_exit_status_code = 1;
 			return ;
 		}
 	}

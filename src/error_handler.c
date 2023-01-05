@@ -6,13 +6,13 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 10:59:10 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:15:14 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_custom_error(char *location, char *argument, char *message)
+void	print_custom_error(char *location, char *argument, char *msg)
 {
 	ft_putstr_fd("picoshell: ", STDERR_FILENO);
 	if (location)
@@ -22,7 +22,7 @@ void	print_custom_error(char *location, char *argument, char *message)
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd(argument, STDERR_FILENO);
 	}
-	ft_putendl_fd(message, STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
 }
 
 void	print_error(char *location, char *argument)
@@ -49,7 +49,7 @@ void	redirection_error(char *file_name, int child)
 	}
 	if (child)
 	{
-		sys.last_exit_status_code = 1;
+		g_sys.last_exit_status_code = 1;
 		//builtin_exit(exec);
 	}
 }

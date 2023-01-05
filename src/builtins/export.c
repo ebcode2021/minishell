@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:06 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 10:47:54 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	save_address(t_list **addrs)
 	t_list	*head;
 
 	idx = 0;
-	head = sys.env_lst;
+	head = g_sys.env_lst;
 	while (head)
 	{
 		addrs[idx++] = head;
@@ -61,7 +61,7 @@ void	print_sorted_env_lst(void)
 	t_list	**addrs;
 
 	idx = 0;
-	addrs = (t_list **)malloc(sizeof(t_list *) * (ft_lstsize(sys.env_lst) + 1));
+	addrs = (t_list **)malloc(sizeof(t_list *) * (ft_lstsize(g_sys.env_lst) + 1));
 	save_address(addrs);
 	bubble_sort(addrs);
 	while (addrs[idx])
@@ -107,9 +107,9 @@ void	builtin_export(t_exec_block *exec)
 			if (check_export_unset_argv(exec->args[idx], EXPORT))
 			{
 				variable_name = find_variable_name(exec->args[idx]);
-				ft_lst_remove_if(&sys.env_lst, variable_name);
+				ft_lst_remove_if(&g_sys.env_lst, variable_name);
 				new_lst = ft_lstnew(exec->args[idx]);
-				ft_lstadd_back(&sys.env_lst, new_lst);
+				ft_lstadd_back(&g_sys.env_lst, new_lst);
 				free(variable_name);
 			}
 			else

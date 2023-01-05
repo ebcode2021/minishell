@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:37:55 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/03 17:01:05 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	*tilde_replace(char *str)
 	if (ft_strncmp(str, "~", 2) == 0 \
 		|| ft_strncmp(str, "~/", 2) == 0)
 	{
-		ft_memcpy(buffer, sys.home_dir, ft_strlen(sys.home_dir) + 1);
-		buf_idx += ft_strlen(sys.home_dir);
+		ft_memcpy(buffer, g_sys.home_dir, ft_strlen(g_sys.home_dir) + 1);
+		buf_idx += ft_strlen(g_sys.home_dir);
 		str_idx += 1;
 	}
 	while (str[str_idx])

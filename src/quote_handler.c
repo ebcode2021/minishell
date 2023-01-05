@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 18:09:25 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_env(char *str, size_t *index)
 	buffer[buf_idx] = 0;
 	if (index)
 		*index = str_idx + 1;
-	lst = sys.env_lst;
+	lst = g_sys.env_lst;
 	while (lst)
 	{
 		if (ft_strncmp(buffer, lst->variable_name, buf_idx + 1) == 0)
