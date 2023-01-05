@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   const.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 18:39:59 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:56:15 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define BUFFER_SIZE 1024
 # define TMP_DIRECTORY "/tmp/picoshell/"
-# define AMBIGUOUS "ambiguous redirect"
 
 # define INFILE 60
 # define OUTFILE 62
