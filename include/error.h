@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:19:10 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 22:03:16 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 12:27:29 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@
 #define NO_SUCH_FILE_DIR ": No such file or directory"
 #define HOME_NOT_SET ": HOME not set"
 #define OLDPWD_NOT_SET ": OLDPWD not set"
+#define MALLOC_FAIL ": malloc failure"
+#define FORK_ERR ": fork error"
 
 #endif

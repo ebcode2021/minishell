@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 18:13:48 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:46:11 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int	is_builtin(char *command)
 {
-	const char *builtin_list[8] = {"cd", "echo", "env", "exit", "export", "pwd", "unset", 0};
-	int	idx;
+	const char	*builtin_list[8] = \
+	{"cd", "echo", "env", "exit", "export", "pwd", "unset", 0};
+	int			idx;
 
-	idx = 0;
 	if (!command)
 		return (0);
+	idx = 0;
 	while (builtin_list[idx])
 	{
 		if (!ft_strncmp(builtin_list[idx], command, ft_strlen(command) + 1))
@@ -44,7 +45,6 @@ int	check_export_unset_argv(char *arguments, int unset)
 	}
 	return (1);
 }
-
 
 void	builtin_handler(t_exec_block *exec)
 {

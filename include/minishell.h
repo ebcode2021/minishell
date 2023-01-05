@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 11:18:25 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:34:36 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@
 # include "error.h"
 # include "struct.h"
 # include "libft.h"
-# include <fcntl.h>
+# include <curses.h>
 # include <dirent.h>
 # include <errno.h>
+# include <fcntl.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <signal.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <term.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <curses.h>
-# include <term.h>
 
 extern t_system	sys;
 
@@ -65,8 +65,8 @@ char			**split_with_char(char *raw_input, char c);
 char			*tilde_replace(char *str);
 
 /*block_utils.c*/
-t_exec_block	*block_new(void);
-void			block_add(t_exec_block	**head, t_exec_block *new);
+t_exec_block	*new_block(void);
+void			add_block(t_exec_block	**head, t_exec_block *new);
 void			free_block(t_exec_block *blocks);
 void			print_block(t_exec_block *block);
 
@@ -79,8 +79,8 @@ void			execute_handler(t_exec_block *execs);
 pid_t			pipe_n_fork(t_pipe *new_pipe);
 
 /*error_handler.c*/
-void			print_custom_error_msg(char *location, char *argument, char *message);
-void			print_error_msg(char *location, char *argument);
+void			print_custom_error(char *location, char *argument, char *message);
+void			print_error(char *location, char *argument);
 void			redirection_error(char *file_name, int child);
 
 /*builtin_handler.c*/
