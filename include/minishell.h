@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 21:37:35 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:38:22 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,6 @@ void			builtin_exit(t_exec_block *execs);
 
 /*signals*/
 void			set_signal_handler(void);
-void			pseudo_SIGTERM(void);
+void			pseudo_sigterm(void);
 
 #endif

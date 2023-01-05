@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:19 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 22:16:03 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:38:54 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	new_prompt(int signo)
 	rl_redisplay();
 }
 
-void	pseudo_SIGTERM(void)
+void	pseudo_sigterm(void)
 {
 	ft_putstr_fd("\033[1A", STDOUT_FILENO);
 	ft_putstr_fd("\033[11C", STDOUT_FILENO);

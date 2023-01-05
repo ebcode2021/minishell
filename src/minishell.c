@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 21:18:16 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:38:31 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int main(int argc, char *argv[], char *envp[])
 		if (input)
 			add_history(input);
 		else
-			pseudo_SIGTERM();
+			pseudo_sigterm();
 		if (syntax_check(input))
 		{
 			elem = exec_block_parser(input);
