@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 15:04:05 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/05 19:58:57 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 20:58:15 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	check_redirection_syntax(char *str, int *idx)
 	else if (!ft_strncmp(location, "<<<", 3) || !ft_strncmp(location, ">>>", 3))
 		return (0);
 	skip_blank(str, idx);
+	if (!str[*idx] || str[*idx] == '|' || str[*idx] == '<' || str[*idx] == '>')
+		return (0);
 	return (1);
 }
 
@@ -45,9 +47,6 @@ int	syntax_check(char *input)
 		if (trimed[idx] == '<' || trimed[idx] == '>')
 		{
 			if (!check_redirection_syntax((char *)trimed, &idx))
-				return (syntax_error(trimed[idx], (char *)trimed));
-			if (!trimed[idx] || trimed[idx] == '|' \
-				|| trimed[idx] == '<' || trimed[idx] == '>')
 				return (syntax_error(trimed[idx], (char *)trimed));
 		}
 		else if (trimed[idx] == '|')
