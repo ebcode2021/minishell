@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/04 12:09:18 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:28:57 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,11 @@ int	here_doc_handler(t_redirecion *redirection)
 	char	*tmp_filename;
 
 	tmp_filename = get_tmp_filename(sys.here_doc_index++);
-	pid = fork();
-	if (pid == -1)
-	{
-		sys.last_errno = errno;
-		return (0);
-	}
+	pid = pipe_n_fork(0);
 	if (pid == 0)
 	{
 		here_doc(redirection->file_name, tmp_filename);
-		exit(0);
+		exit(1);
 	}
 	else
 		waitpid(pid, &status, 0);

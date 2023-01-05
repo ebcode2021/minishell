@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 10:38:31 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:47:52 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	set_tmp_dir(char **envp)
 	dir = opendir(sys.tmp_dir);
 	if (dir == 0)
 	{
-		pid = fork();
+		pid = pipe_n_fork(0);
 		if (pid == 0)
 		{
 			execve("/bin/rm", rm_args, envp);
 			exit(1);
 		}
 		waitpid(pid, 0, 0);
-		pid = fork();
+		pid = pipe_n_fork(0);
 		if (pid == 0)
 		{
 			execve("/bin/mkdir", mkdir_args, envp);
@@ -76,7 +76,7 @@ void	clean_up(void)
 	char		**envp;
 	char *const rm_args[4] = {"rm", "-rf", sys.tmp_dir, 0};
 
-	pid = fork();
+	pid = pipe_n_fork(0);
 	if (pid == 0)
 	{
 		envp = current_env_lst();

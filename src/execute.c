@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 20:06:36 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 11:19:32 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ pid_t	pipe_n_fork(t_pipe *new_pipe)
 	if (new_pipe)
 		pipe(new_pipe->fd);
 	pid = fork();
+	if (pid == 0)
+	{
+		signal(SIGINT, signal_interrupt);
+		signal(SIGQUIT, signal_quit);
+	}
 	return (pid);
 }
 
