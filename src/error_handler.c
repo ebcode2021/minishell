@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 14:53:30 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 20:01:53 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,24 @@ void	redirection_error(char *file_name, int child)
 	if (child)
 	{
 		g_sys.last_exit_status_code = 1;
-		//builtin_exit(exec);
+		exit(1);
 	}
 }
 
 int	syntax_error(char c, char *trimed)
 {
-	if (c == '\n')
+	char	str[2];
+
+	if (!c)
 		print_custom_error(0, 0, SYNTAX_NEW_LINE);
 	else
 	{
+		str[0] = c;
+		str[1] = 0;
 		ft_putstr_fd("picoshell: ", STDERR_FILENO);
 		ft_putstr_fd(SYNTAX_TOKEN, STDERR_FILENO);
-		ft_putstr_fd("|", STDERR_FILENO);
-		ft_putstr_fd("\'", STDERR_FILENO);
-		ft_putendl_fd("", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putendl_fd("\'", STDERR_FILENO);
 	}
 	free(trimed);
 	return (0);
