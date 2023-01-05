@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:19 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 14:37:42 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 20:43:09 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	new_prompt(int signo)
+void	new_prompt(int signo)
 {
 	if (signo != SIGINT)
 		return ;

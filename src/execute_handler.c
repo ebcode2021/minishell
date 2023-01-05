@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 14:11:23 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 20:57:36 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 void	single_execute(t_exec_block *exec)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = pipe_n_fork(0);
 	if (pid == 0)
@@ -37,7 +38,10 @@ void	single_execute(t_exec_block *exec)
 			command_handler(exec);
 		exit(1);
 	}
-	waitpid(pid, &g_sys.last_errno, 0);
+	waitpid(pid, &status, 0);
+	child_error_handler(status);
+	g_sys.last_exit_status_code = status;
+	signal(SIGINT, new_prompt);
 }
 
 void	execute(t_exec_block *execs)

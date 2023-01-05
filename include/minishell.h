@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 19:31:08 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:56:26 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ pid_t			pipe_n_fork(t_pipe *new_pipe);
 void			set_current_cmd(t_exec_block *execs);
 
 /*error_handler.c*/
+void			child_error_handler(int signo);
 void			print_custom_error(char *location, char *argument, char *msg);
 void			print_error(char *location, char *argument);
 void			redirection_error(char *file_name, int child);
@@ -105,6 +106,7 @@ void			change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe);
 void			reset_fd(void);
 
 /*signal_handler*/
+void			new_prompt(int signo);
 void			set_signal_handler(void);
 void			pseudo_sigterm(void);
 void			signal_interrupt(int signo);

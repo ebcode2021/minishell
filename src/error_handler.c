@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 20:01:53 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 20:47:02 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	child_error_handler(int signo)
+{
+	if (signo == 131)
+	{
+		ft_putstr_fd("Quit", STDERR_FILENO);
+		ft_putnbr_fd(signo - 128, STDERR_FILENO);
+		ft_putchar_fd('\n', STDERR_FILENO);
+	}
+}
 
 void	print_custom_error(char *location, char *argument, char *msg)
 {
