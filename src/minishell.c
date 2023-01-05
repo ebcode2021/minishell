@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 13:59:10 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 14:32:10 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,12 @@
 
 t_system	g_sys;
 
-void	init_g_system_info()
-{
-	g_sys.env_lst = 0;
-	g_sys.last_exit_status_code = 0;
-	g_sys.last_errno = 0;
-	g_sys.here_doc_names = 0;
-	g_sys.here_doc_index = 0;
-	g_sys.current_fd[READ] = dup2(STD_IN, STDIN_FILENO);
-	g_sys.current_fd[WRITE] = dup2(STD_OUT, STDOUT_FILENO);
-}
-
 void	set_tmp_dir(char **envp)
 {
 	DIR			*dir;
 	pid_t		pid;
-	char *const rm_args[4] = {"rm", "-rf", g_sys.tmp_dir, 0};
-	char *const mkdir_args[4] = {"mkdir", "-p", g_sys.tmp_dir, 0};
+	char *const	rm_args[4] = {"rm", "-rf", g_sys.tmp_dir, 0};
+	char *const	mkdir_args[4] = {"mkdir", "-p", g_sys.tmp_dir, 0};
 
 	dir = opendir(g_sys.tmp_dir);
 	if (dir == 0)
@@ -58,7 +47,7 @@ void	clean_up(void)
 {
 	pid_t		pid;
 	char		**envp;
-	char *const rm_args[4] = {"rm", "-rf", g_sys.tmp_dir, 0};
+	char *const	rm_args[4] = {"rm", "-rf", g_sys.tmp_dir, 0};
 
 	pid = pipe_n_fork(0);
 	if (pid == 0)
@@ -69,7 +58,6 @@ void	clean_up(void)
 	}
 	waitpid(pid, 0, 0);
 }
-
 
 void	set_g_system_info(char *envp[])
 {
@@ -92,10 +80,10 @@ void	set_g_system_info(char *envp[])
 	g_sys.last_exit_status_code = 0;
 }
 
-int main(int argc, char *argv[], char *envp[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	char			*input;
-	t_exec_block	*elem;
+	t_exec_block	*execs;
 
 	if (!argc && !argv)
 		return (0);
@@ -110,9 +98,9 @@ int main(int argc, char *argv[], char *envp[])
 			pseudo_sigterm();
 		if (syntax_check(input))
 		{
-			elem = exec_block_parser(input);
-			execute_handler(elem);
-			free_block(elem);
+			execs = exec_block_parser(input);
+			execute_handler(execs);
+			free_blocks(execs);
 			reset_fd();
 		}
 		//g_system("leaks minishell");

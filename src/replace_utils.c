@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 13:22:01 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 13:33:50 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 14:38:08 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*str_replace(char *str, char *to_find, char *to_replace)
 {
-	char	buffer[BUFFER_SIZE];
 	size_t	str_idx;
 	size_t	buf_idx;
+	char	buffer[BUFFER_SIZE];
 
 	str_idx = 0;
 	buf_idx = 0;
@@ -39,11 +39,11 @@ char	*str_replace(char *str, char *to_find, char *to_replace)
 char	*tilde_replace(char *str)
 {
 	char	buffer[BUFFER_SIZE];
-	size_t	str_idx;
 	size_t	buf_idx;
+	size_t	str_idx;
 
-	str_idx = 0;
 	buf_idx = 0;
+	str_idx = 0;
 	if (ft_strncmp(str, "~", 2) == 0 \
 		|| ft_strncmp(str, "~/", 2) == 0)
 	{

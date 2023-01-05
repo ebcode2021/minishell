@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:19 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 12:27:15 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:37:42 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	pseudo_sigterm(void)
 	ft_putstr_fd("\033[1A", STDOUT_FILENO);
 	ft_putstr_fd("\033[11C", STDOUT_FILENO);
 	ft_putendl_fd("exit", STDOUT_FILENO);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 void	signal_interrupt(int signo)
 {
 	if (signo != SIGINT)
 		return ;
-	exit(130);
+	exit(EXIT_INTERRUPT);
 }
 
 void	signal_quit(int signo)
@@ -44,7 +44,7 @@ void	signal_quit(int signo)
 	ft_putstr_fd("Quit: ", STDOUT_FILENO);
 	ft_putnbr_fd(signo, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
-	exit(131);
+	exit(EXIT_QUIT);
 }
 
 void	set_signal_handler(void)
@@ -52,6 +52,6 @@ void	set_signal_handler(void)
 	extern int	rl_catch_signals;
 
 	rl_catch_signals = 0;
-	signal(SIGINT, new_prompt); // ctrl + c (new prompt)
-	signal(SIGQUIT, SIG_IGN); // ctrl + \ (do nothing..)
+	signal(SIGINT, new_prompt);
+	signal(SIGQUIT, SIG_IGN);
 }

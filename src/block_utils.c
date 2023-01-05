@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:33:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 13:41:29 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 14:33:36 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ t_exec_block	*new_block(void)
 
 void	add_block(t_exec_block	**head, t_exec_block *new)
 {
-	t_exec_block	*block;
 	size_t			idx;
+	t_exec_block	*block;
 
 	if (!*head)
 	{
@@ -72,10 +72,10 @@ void	add_block(t_exec_block	**head, t_exec_block *new)
 	}
 }
 
-void	free_block(t_exec_block *blocks)
+void	free_blocks(t_exec_block *blocks)
 {
 	t_exec_block	*block;
-	t_exec_block	*block_tmp;
+	t_exec_block	*tmp_block;
 	t_redirecion	*r_cur;
 	t_redirecion	*r_tmp;
 
@@ -93,8 +93,8 @@ void	free_block(t_exec_block *blocks)
 			free(r_cur);
 			r_cur = r_tmp;
 		}
-		block_tmp = block->next;
+		tmp_block = block->next;
 		free(block);
-		block = block_tmp;
+		block = tmp_block;
 	}
 }

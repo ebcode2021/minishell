@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/05 13:18:08 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:40:25 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,23 @@ void	here_doc(char *eof, char *tmp_filename)
 	}
 }
 
-int	here_doc_handler(t_redirecion *redirection)
+void	here_doc_handler(t_redirecion *redirection)
 {
 	pid_t	pid;
 	int		status;
 	char	*tmp_filename;
 
 	tmp_filename = get_tmp_filename(g_sys.here_doc_index++);
-	pid = fork();
-	if (pid == -1)
-	{
-		g_sys.last_errno = errno;
-		return (0);
-	}
+	pid = pipe_n_fork(0);
 	if (pid == 0)
 	{
 		here_doc(redirection->file_name, tmp_filename);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else
 		waitpid(pid, &status, 0);
 	g_sys.last_exit_status_code = status;
 	free(redirection->file_name);
 	redirection->file_name = tmp_filename;
-	redirection->type = 60;
-	return (1);
+	redirection->type = INFILE;
 }

@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:06 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 14:29:25 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	print_sorted_env_lst(void)
 	t_list	**addrs;
 
 	idx = 0;
-	addrs = (t_list **)malloc(sizeof(t_list *) * (ft_lstsize(g_sys.env_lst) + 1));
+	addrs = (t_list **)malloc \
+			(sizeof(t_list *) * (ft_lstsize(g_sys.env_lst) + 1));
 	save_address(addrs);
 	bubble_sort(addrs);
 	while (addrs[idx])

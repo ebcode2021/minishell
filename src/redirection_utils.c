@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:35:47 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 18:09:42 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:04:16 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	add_redirection(t_redirecion **head, char **split, size_t *index)
 {
 	t_redirecion	*block;
 	t_redirecion	*new;
-	size_t			i;
+	size_t			idx;
 
 	new = ft_calloc(1, sizeof(t_redirecion));
 	if (!*head)
@@ -28,36 +28,36 @@ void	add_redirection(t_redirecion **head, char **split, size_t *index)
 			block = block->next;
 		block->next = new;
 	}
-	i = *index;
-	if (*split[i] == '<' || *split[i] == '>')
+	idx = *index;
+	if (*split[idx] == '<' || *split[idx] == '>')
 	{
-		new->type = *split[i++];
-		if (*split[i] == '<' || *split[i] == '>')
-			new->type += *split[i++];
-		new->file_name = ft_strdup(split[i]);
+		new->type = *split[idx++];
+		if (*split[idx] == '<' || *split[idx] == '>')
+			new->type += *split[idx++];
+		new->file_name = ft_strdup(split[idx]);
 	}
-	*index = i;
+	*index = idx;
 }
 
 char	**set_redirections(t_exec_block *block, char **split)
 {
 	char	buffer[BUFFER_SIZE];
 	size_t	buffer_index;
-	size_t	i;
+	size_t	idx;
 
-	i = 0;
+	idx = 0;
 	buffer_index = 0;
-	while (split[i])
+	while (split[idx])
 	{
-		if (*split[i] == '<' || *split[i] == '>')
-			add_redirection(&block->redirection, split, &i);
+		if (*split[idx] == '<' || *split[idx] == '>')
+			add_redirection(&block->redirection, split, &idx);
 		else
 		{
 			ft_memcpy(buffer + buffer_index++, " ", 1);
-			ft_memcpy(buffer + buffer_index, split[i], ft_strlen(split[i]));
-			buffer_index += ft_strlen(split[i]);
+			ft_memcpy(buffer + buffer_index, split[idx], ft_strlen(split[idx]));
+			buffer_index += ft_strlen(split[idx]);
 		}
-		i++;
+		idx++;
 	}
 	buffer[buffer_index] = 0;
 	free_split(split);
@@ -68,20 +68,20 @@ char	**set_arguments(char **split)
 {
 	char	**args;
 	char	*output;
-	size_t	i;
-	size_t	j;
+	size_t	idx;
+	size_t	jdx;
 
-	i = 0;
-	while (split[i])
-		i++;
-	args = ft_calloc(i + 1, sizeof(char *));
-	i = 0;
-	j = 0;
-	while (split[i])
+	idx = 0;
+	while (split[idx])
+		idx++;
+	args = ft_calloc(idx + 1, sizeof(char *));
+	idx = 0;
+	jdx = 0;
+	while (split[idx])
 	{
-		output = quote_handler(split[i++]);
+		output = quote_handler(split[idx++]);
 		if (output)
-			args[j++] = output;
+			args[jdx++] = output;
 	}
 	return (args);
 }

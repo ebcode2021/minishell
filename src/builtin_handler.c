@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 10:46:11 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 14:33:55 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char *command)
 {
 	const char	*builtin_list[8] = \
-	{"cd", "echo", "env", "exit", "export", "pwd", "unset", 0};
+					{"cd", "echo", "env", "exit", "export", "pwd", "unset", 0};
 	int			idx;
 
 	if (!command)

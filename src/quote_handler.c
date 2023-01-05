@@ -6,13 +6,13 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 13:17:45 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 14:39:32 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env(char *str, size_t *index)
+char	*get_env(char *str, size_t *idx)
 {
 	t_list	*lst;
 	char	buffer[BUFFER_SIZE];
@@ -20,14 +20,14 @@ char	*get_env(char *str, size_t *index)
 	size_t	buf_idx;
 
 	str_idx = 1;
-	if (index)
-		str_idx += *index;
+	if (idx)
+		str_idx += *idx;
 	buf_idx = 0;
 	while (str[str_idx] && (str[str_idx] != ' ' || str[str_idx] != -1))
 		buffer[buf_idx++] = str[str_idx++];
 	buffer[buf_idx] = 0;
-	if (index)
-		*index = str_idx + 1;
+	if (idx)
+		*idx = str_idx + 1;
 	lst = g_sys.env_lst;
 	while (lst)
 	{
@@ -45,8 +45,8 @@ char	*expand_env(char *str)
 	size_t	str_idx;
 	size_t	buf_idx;
 
-	str_idx = 0;
 	buf_idx = 0;
+	str_idx = 0;
 	while (str[str_idx])
 	{
 		if (str[str_idx] == '$')

@@ -3,20 +3,21 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra
 SRC_DIR = src/
 SRC = minishell.c \
-	ft_allocs.c \
-	syntax.c \
-	here_doc.c \
-	exec_block_parser.c \
 	block_utils.c \
-	quote_handler.c \
-	redirection_utils.c \
-	string_utils.c \
-	execute.c \
 	builtin_handler.c \
 	command_handler.c \
 	error_handler.c \
+	exec_block_parser.c \
+	execute_handler.c \
+	execute_utils.c \
 	fd_handler.c \
-	signal_handler.c
+	here_doc.c \
+	quote_handler.c \
+	redirection_utils.c \
+	replace_utils.c \
+	syntax.c \
+	signal_handler.c \
+	string_utils.c
 BUILT_IN = builtins/cd.c builtins/pwd.c builtins/echo.c builtins/env.c builtins/export.c builtins/unset.c builtins/exit.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC)) $(addprefix $(SRC_DIR), $(BUILT_IN))
 OBJS = $(SRCS:.c=.o)
