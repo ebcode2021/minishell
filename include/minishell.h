@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 13:45:36 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:58:58 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_exec_block	*exec_block_parser(char *raw_input);
 
 /*execute.c*/
 void			execute_handler(t_exec_block *execs);
+pid_t			pipe_n_fork(t_pipe *new_pipe);
 
 /*error_handler.c*/
 void			print_custom_error(char *location, char *argument, char *msg);
@@ -110,6 +111,8 @@ void			reset_fd(void);
 /*signals*/
 void			set_signal_handler(void);
 void			pseudo_sigterm(void);
+void			signal_interrupt(int signo);
+void			signal_quit(int signo);
 
 /*syntax.c*/
 int				syntax_check(char *input);

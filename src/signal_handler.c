@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:19 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 10:38:54 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:27:15 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,23 @@ void	pseudo_sigterm(void)
 	ft_putstr_fd("\033[11C", STDOUT_FILENO);
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit(0);
+}
+
+void	signal_interrupt(int signo)
+{
+	if (signo != SIGINT)
+		return ;
+	exit(130);
+}
+
+void	signal_quit(int signo)
+{
+	if (signo != SIGQUIT)
+		return ;
+	ft_putstr_fd("Quit: ", STDOUT_FILENO);
+	ft_putnbr_fd(signo, STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	exit(131);
 }
 
 void	set_signal_handler(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:18:08 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	here_doc_handler(t_redirecion *redirection)
 	if (pid == 0)
 	{
 		here_doc(redirection->file_name, tmp_filename);
-		exit(0);
+		exit(1);
 	}
 	else
 		waitpid(pid, &status, 0);
