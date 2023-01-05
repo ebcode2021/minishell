@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 14:51:59 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 19:31:08 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void			add_redirection(t_redirecion **head, \
 								char **split, size_t *index);
 char			**set_redirections(t_exec_block *block, char **split);
 char			**set_arguments(char **split);
+int				is_quoted(char *str);
 
 /*replace_utils.c*/
 char			*str_replace(char *str, char *to_find, char *to_replace);

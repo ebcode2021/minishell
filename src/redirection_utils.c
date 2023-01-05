@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:35:47 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 14:04:16 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 19:14:15 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,84 @@ char	**set_redirections(t_exec_block *block, char **split)
 	return (split_with_char(buffer, ' '));
 }
 
+// char	**set_arguments(char **split)
+// {
+// 	char	**args;
+// 	char	*output;
+// 	size_t	idx;
+// 	size_t	jdx;
+
+// 	idx = 0;
+// 	while (split[idx])
+// 		idx++;
+// 	args = ft_calloc(idx + 1, sizeof(char *));
+// 	idx = 0;
+// 	jdx = 0;
+// 	while (split[idx])
+// 	{
+// 		output = quote_handler(split[idx++]);
+// 		if (output)
+// 			args[jdx++] = output;
+// 	}
+// 	return (args);
+// }
+
+int	is_quoted(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	**lst_to_arr(t_list *lst)
+{
+	t_list	*elem;
+	char	**arr;
+	size_t	i;
+
+	arr = ft_malloc(sizeof(char *) * (ft_lstsize(lst) + 1));
+	i = 0;
+	elem = lst;
+	while (elem)
+	{
+		arr[i++] = ft_strdup(elem->copy);
+		elem = elem->next;
+	}
+	arr[i] = 0;
+	ft_lstclear(&lst, free);
+	return (arr);
+}
+
 char	**set_arguments(char **split)
 {
-	char	**args;
-	char	*output;
-	size_t	idx;
-	size_t	jdx;
+	t_list	*args;
+	char	**expanded;
+	size_t	i;
+	size_t	j;
 
-	idx = 0;
-	while (split[idx])
-		idx++;
-	args = ft_calloc(idx + 1, sizeof(char *));
-	idx = 0;
-	jdx = 0;
-	while (split[idx])
+	args = 0;
+	i = 0;
+	while (split[i])
 	{
-		output = quote_handler(split[idx++]);
-		if (output)
-			args[jdx++] = output;
+		if (!is_quoted(split[i]))
+		{
+			j = 0;
+			expanded = ft_split(expand_env(tilde_replace(split[i])), ' ');
+			while (expanded[j])
+				ft_lstadd_back(&args, ft_lstnew(expanded[j++]));
+			free_split(expanded);
+		}
+		else
+			ft_lstadd_back(&args, \
+			ft_lstnew(quote_handler(tilde_replace(split[i]))));
+		i++;
 	}
-	return (args);
+	return (lst_to_arr(args));
 }

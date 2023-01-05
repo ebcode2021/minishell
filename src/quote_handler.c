@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 16:01:07 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:12:31 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char	*quote_handler(char *str)
 		result = str_replace(str, "\'", "");
 	else
 	{
-		result = tilde_replace(expand_env(str));
+		result = expand_env(tilde_replace(str));
 		if (is_blank(result))
 		{
 			free(result);
