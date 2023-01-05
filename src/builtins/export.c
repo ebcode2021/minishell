@@ -6,11 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:06 by eunson            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/01/05 14:29:25 by eunson           ###   ########.fr       */
-=======
-/*   Updated: 2023/01/05 13:46:11 by jinholee         ###   ########.fr       */
->>>>>>> feature/export
+/*   Updated: 2023/01/05 15:23:19 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +82,11 @@ char	*find_variable_name(char *argument)
 	char	*variable_name;
 
 	idx = 0;
-	while (argument[idx] != '=')
+	while (argument[idx] && argument[idx] != '=')
 		idx++;
-	variable_name = (char *)malloc(sizeof(char) * idx);
+	variable_name = (char *)malloc(sizeof(char) * idx + 1);
 	idx = 0;
-	while (argument[idx] != '=')
+	while (argument[idx] && argument[idx] != '=')
 	{
 		variable_name[idx] = argument[idx];
 		idx++;

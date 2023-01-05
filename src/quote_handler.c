@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 14:39:32 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 16:01:07 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_env(char *str, size_t *idx)
 		buffer[buf_idx++] = str[str_idx++];
 	buffer[buf_idx] = 0;
 	if (idx)
-		*idx = str_idx + 1;
+		*idx = str_idx;
 	lst = g_sys.env_lst;
 	while (lst)
 	{
@@ -46,22 +46,25 @@ char	*expand_env(char *str)
 	size_t	buf_idx;
 
 	buf_idx = 0;
-	str_idx = 0;
-	while (str[str_idx])
+	if (str)
 	{
-		if (str[str_idx] == '$')
+		str_idx = 0;
+		while (str[str_idx])
 		{
-			env = get_env(str, &str_idx);
-			if (env)
+			if (str[str_idx] == '$')
 			{
-				ft_memcpy(buffer + buf_idx, env, ft_strlen(env));
-				buf_idx += ft_strlen(env);
+				env = get_env(str, &str_idx);
+				if (env)
+				{
+					ft_memcpy(buffer + buf_idx, env, ft_strlen(env));
+					buf_idx += ft_strlen(env);
+				}
 			}
+			else if (str[str_idx] != '\"')
+				buffer[buf_idx++] = str[str_idx++];
 		}
-		else if (str[str_idx] != '\"')
-			buffer[buf_idx++] = str[str_idx++];
-	}
-	free(str);
+		free(str);
+	}	
 	buffer[buf_idx] = 0;
 	return (ft_strdup(buffer));
 }
@@ -99,10 +102,20 @@ char	*double_quote_handler(char *str)
 char	*quote_handler(char *str)
 {
 	char	*result;
+	char	first_quote;
+	size_t	idx;
 
-	if (*str == '\"')
+	first_quote = 0;
+	idx = 0;
+	while (str[idx])
+	{
+		if (str[idx] == '\'' || str[idx] == '\"')
+			first_quote = str[idx];
+		idx++;
+	}
+	if (first_quote == '\"')
 		result = double_quote_handler(str);
-	else if (*str == '\'')
+	else if (first_quote == '\'')
 		result = str_replace(str, "\'", "");
 	else
 	{
