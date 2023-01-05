@@ -6,7 +6,11 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/01/05 14:32:10 by eunson           ###   ########.fr       */
+=======
+/*   Updated: 2023/01/05 13:33:36 by jinholee         ###   ########.fr       */
+>>>>>>> feature/export
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +73,7 @@ void	set_g_system_info(char *envp[])
 	g_sys.env_lst = 0;
 	while (*envp)
 		ft_lstadd_back(&g_sys.env_lst, ft_lstnew(*envp++));
+	ft_lstadd_back(&g_sys.env_lst, ft_lstnew("?=0"));
 	g_sys.home_dir = g_sys.pwd;
 	env = ft_lstfind(g_sys.env_lst, "HOME");
 	if (env)
