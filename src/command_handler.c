@@ -6,21 +6,21 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 21:15:55 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 10:47:54 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_path_in_envp()
+char	**get_path_in_envp(void)
 {
 	t_list	*path_list;
-	
+
 	path_list = ft_lstfind(sys.env_lst, "PATH");
 	if (!path_list)
 		return (0);
 	if (path_list->value)
-		return(ft_split(path_list->value, ':'));
+		return (ft_split(path_list->value, ':'));
 	else
 		return (0);
 }
@@ -33,7 +33,6 @@ char	*get_cmd_path(char *command)
 	size_t	idx;
 
 	idx = 0;
-
 	path_lists = get_path_in_envp();
 	if (path_lists)
 	{
@@ -51,7 +50,7 @@ char	*get_cmd_path(char *command)
 	return (0);
 }
 
-char	**current_env_lst()
+char	**current_env_lst(void)
 {
 	char	**env_lst;
 	size_t	idx;
@@ -81,16 +80,16 @@ void	command_handler(t_exec_block *exec)
 		if (!access(exec->command, F_OK))
 			execve(exec->command, &exec->command, env_lst);
 		else
-			print_custom_error_msg(exec->command, 0, NO_SUCH_FILE_DIR);
+			print_custom_error(exec->command, 0, NO_SUCH_FILE_DIR);
 	}
 	else
 	{
 		cmd_path = get_cmd_path(exec->command);
 		path = ft_lstfind(sys.env_lst, "PATH");
 		if (!cmd_path && path && path->value)
-			print_custom_error_msg(exec->command, 0, COMMAND_NOT_FOUND);
+			print_custom_error(exec->command, 0, COMMAND_NOT_FOUND);
 		else if (!cmd_path)
-			print_custom_error_msg(exec->command, 0, NO_SUCH_FILE_DIR);
+			print_custom_error(exec->command, 0, NO_SUCH_FILE_DIR);
 		else
 			execve(cmd_path, exec->args, env_lst);
 	}

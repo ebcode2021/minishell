@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 21:49:16 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 10:48:06 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	update_oldpwd(void)
 void	change_dir(char *dest, t_exec_block *exec)
 {
 	if (!dest)
-		print_custom_error_msg(exec->command, 0, HOME_NOT_SET);
+		print_custom_error(exec->command, 0, HOME_NOT_SET);
 	else if (chdir(dest) == -1)
-		print_error_msg(exec->command, exec->args[1]);
+		print_error(exec->command, exec->args[1]);
 	else
 	{
 		update_oldpwd();
@@ -51,7 +51,7 @@ void	hyphen_handler(t_exec_block *exec)
 		ft_putendl_fd(sys.pwd, STDIN_FILENO);
 	}
 	else
-		print_custom_error_msg(exec->command, 0, OLDPWD_NOT_SET);
+		print_custom_error(exec->command, 0, OLDPWD_NOT_SET);
 }
 
 void	builtin_cd(t_exec_block *exec)
@@ -62,7 +62,7 @@ void	builtin_cd(t_exec_block *exec)
 	while (exec->args[arg_cnt])
 		arg_cnt++;
 	if (arg_cnt > 2)
-		print_custom_error_msg(exec->command, 0, TOO_MANY_ARG);
+		print_custom_error(exec->command, 0, TOO_MANY_ARG);
 	else if (arg_cnt == 2)
 	{
 		if (ft_strncmp(exec->args[1], "-", 2) == 0)

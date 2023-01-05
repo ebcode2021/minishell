@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:06 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 22:07:41 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 10:47:54 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	builtin_export(t_exec_block *exec)
 				free(variable_name);
 			}
 			else
-				print_custom_error_msg \
+				print_custom_error \
 				(exec->command, exec->args[idx], NOT_A_VALID_IDENTIFIER);
 			idx++;
 		}

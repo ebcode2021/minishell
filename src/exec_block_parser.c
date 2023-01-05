@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block_parser.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 18:06:07 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:52:55 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,42 @@
 
 t_exec_block	*str_to_block(char *str)
 {
-	t_exec_block	*block;
+	t_exec_block	*exec;
 	t_redirecion	*elem;
 	char			*replaced;
-	char			**split;
+	char			**splited;
 
-	block = block_new();
+	exec = block_new();
 	replaced = str_replace(str, "<", " < ");
 	replaced = str_replace(replaced, ">", " > ");
-	split = set_redirections(block, split_with_char(replaced, ' '));
-	block->args = set_arguments(split);
-	if (block->args[0])
-		block->command = ft_strdup(block->args[0]);
-	elem = block->redirection;
+	splited = set_redirections(exec, split_with_char(replaced, ' '));
+	exec->args = set_arguments(splited);
+	if (exec->args[0])
+		exec->command = ft_strdup(exec->args[0]);
+	elem = exec->redirection;
 	while (elem)
 	{
 		if (elem->type == HERE_DOC)
 			here_doc_handler(elem);
 		elem = elem->next;
 	}
-	//print_block(block);
+	//print_block(exec);
 	free(replaced);
-	free(split);
-	return (block);
+	free(splited);
+	return (exec);
 }
 
-t_exec_block *exec_block_parser(char *raw_input)
+t_exec_block	*exec_block_parser(char *raw_input)
 {
-	char			**pipe_split;
+	char			**splited;
+	size_t			idx;
 	t_exec_block	*exec_blocks;
-	size_t			i;
 
-	i = 0;
+	idx = 0;
 	exec_blocks = 0;
-	pipe_split = split_with_char(raw_input, '|');
-	while (pipe_split[i])
-		block_add(&exec_blocks, str_to_block(pipe_split[i++]));
-	free(pipe_split);
+	splited = split_with_char(raw_input, '|');
+	while (splited[idx])
+		block_add(&exec_blocks, str_to_block(splited[idx++]));
+	free(splited);
 	return (exec_blocks);
 }

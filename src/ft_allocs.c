@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_allocs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:47:39 by jinholee          #+#    #+#             */
-/*   Updated: 2022/12/19 19:14:52 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:58:44 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,12 @@
 
 void	free_split(char **splitted)
 {
-	size_t	i;
+	size_t	idx;
 
-	i = 0;
-	while (splitted[i])
-		free(splitted[i++]);
+	idx = 0;
+	while (splitted[idx])
+		free(splitted[idx++]);
 	free(splitted);
-}
-
-void	exit_with_error_msg(const char *msg)
-{
-	if (msg)
-		ft_putendl_fd((char *)msg, 2);
-	exit(1);
 }
 
 void	*ft_malloc(size_t size)
@@ -35,6 +28,9 @@ void	*ft_malloc(size_t size)
 
 	mem = ft_calloc(1, size);
 	if (!mem)
-		exit_with_error_msg("malloc failure");
+	{
+		print_custom_error(0, 0, MALLOC_FAIL);
+		exit(EXIT_FAILURE);
+	}
 	return (mem);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   block_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:33:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/04 18:06:02 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 10:41:12 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_block(t_exec_block *block)
 	fprintf(stderr,"==========================\n");
 }
 
-t_exec_block	*block_new(void)
+t_exec_block	*new_block(void)
 {
 	t_exec_block	*new;
 
@@ -48,7 +48,7 @@ t_exec_block	*block_new(void)
 	return (new);
 }
 
-void	block_add(t_exec_block	**head, t_exec_block *new)
+void	add_block(t_exec_block	**head, t_exec_block *new)
 {
 	t_exec_block	*block;
 	size_t			idx;

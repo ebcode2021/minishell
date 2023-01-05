@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 22:03:16 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 10:47:54 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	builtin_exit(t_exec_block *execs)
 			exit_code = ft_atoi(execs->args[1]);
 		else
 		{
-			print_custom_error_msg(execs->command, execs->args[1], NUMERIC_ARG);
+			print_custom_error(execs->command, execs->args[1], NUMERIC_ARG);
 			exit(exit_code);
 		}
 		if (execs->args[2])
 		{
-			print_custom_error_msg(execs->command, 0, TOO_MANY_ARG);
+			print_custom_error(execs->command, 0, TOO_MANY_ARG);
 			sys.last_exit_status_code = 1;
 			return ;
 		}
