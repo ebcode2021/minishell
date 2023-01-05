@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:06 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:46:11 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,21 @@ void	bubble_sort(t_list **array)
 {
 	int		idx;
 	int		jdx;
-	char	*left_variable;
-	char	*right_variable;
 	t_list	*tmp_lst;
 
 	idx = 0;
 	while (array[idx])
 	{
 		jdx = idx + 1;
-		left_variable = array[idx]->variable_name;
 		while (array[jdx])
 		{
-			right_variable = array[jdx]->variable_name;
-			if (ft_strncmp(left_variable, right_variable, BUFFER_SIZE) > 0)
+			if (ft_strncmp(array[idx]->copy, array[jdx]->copy, BUFFER_SIZE) > 0)
 			{
 				tmp_lst = array[idx];
 				array[idx] = array[jdx];
 				array[jdx] = tmp_lst;
+				idx = -1;
+				break ;
 			}
 			jdx++;
 		}
@@ -66,6 +64,11 @@ void	print_sorted_env_lst(void)
 	bubble_sort(addrs);
 	while (addrs[idx])
 	{
+		if (ft_strncmp(addrs[idx]->variable_name, "?", 2) == 0)
+		{
+			idx++;
+			continue ;
+		}
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		ft_putendl_fd(addrs[idx++]->copy, STDOUT_FILENO);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block_parser.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 10:52:55 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:30:52 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_exec_block	*str_to_block(char *str)
 	char			*replaced;
 	char			**splited;
 
-	exec = block_new();
+	exec = new_block();
 	replaced = str_replace(str, "<", " < ");
 	replaced = str_replace(replaced, ">", " > ");
 	splited = set_redirections(exec, split_with_char(replaced, ' '));
@@ -49,7 +49,8 @@ t_exec_block	*exec_block_parser(char *raw_input)
 	exec_blocks = 0;
 	splited = split_with_char(raw_input, '|');
 	while (splited[idx])
-		block_add(&exec_blocks, str_to_block(splited[idx++]));
+		add_block(&exec_blocks, str_to_block(splited[idx++]));
 	free(splited);
 	return (exec_blocks);
 }
+
