@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 10:47:54 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	**get_path_in_envp(void)
 {
 	t_list	*path_list;
 
-	path_list = ft_lstfind(sys.env_lst, "PATH");
+	path_list = ft_lstfind(g_sys.env_lst, "PATH");
 	if (!path_list)
 		return (0);
 	if (path_list->value)
@@ -57,8 +57,8 @@ char	**current_env_lst(void)
 	t_list	*head;
 
 	idx = 0;
-	env_lst = (char **)malloc(sizeof(char *) * (ft_lstsize(sys.env_lst) + 1));
-	head = sys.env_lst;
+	env_lst = (char **)malloc(sizeof(char *) * (ft_lstsize(g_sys.env_lst) + 1));
+	head = g_sys.env_lst;
 	while (head)
 	{
 		env_lst[idx++] = head->copy;
@@ -85,7 +85,7 @@ void	command_handler(t_exec_block *exec)
 	else
 	{
 		cmd_path = get_cmd_path(exec->command);
-		path = ft_lstfind(sys.env_lst, "PATH");
+		path = ft_lstfind(g_sys.env_lst, "PATH");
 		if (!cmd_path && path && path->value)
 			print_custom_error(exec->command, 0, COMMAND_NOT_FOUND);
 		else if (!cmd_path)

@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/04 20:06:36 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	single_execute(t_exec_block *exec)
 			command_handler(exec);
 		exit(1);
 	}
-	waitpid(pid, &sys.last_errno, 0);
+	waitpid(pid, &g_sys.last_errno, 0);
 }
 
 void	execute(t_exec_block *execs)
@@ -76,7 +76,7 @@ void	execute(t_exec_block *execs)
 	}
 	close(iter_pipe.fd[READ]);
 	while (idx--)
-		waitpid(-1, &sys.last_errno, 0);
+		waitpid(-1, &g_sys.last_errno, 0);
 }
 
 void	set_current_cmd(t_exec_block *execs)
@@ -84,12 +84,12 @@ void	set_current_cmd(t_exec_block *execs)
 	t_list	*new_lst;
 	char	*data;
 
-	ft_lst_remove_if(&sys.env_lst, "_");
+	ft_lst_remove_if(&g_sys.env_lst, "_");
 	if (!execs->command || execs->next)
 		return ;
 	data = ft_strjoin("_=", execs->command);
 	new_lst = ft_lstnew(data);
-	ft_lstadd_back(&sys.env_lst, new_lst);
+	ft_lstadd_back(&g_sys.env_lst, new_lst);
 }
 
 void	execute_handler(t_exec_block *execs)

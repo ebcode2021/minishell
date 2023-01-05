@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/04 12:09:18 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_tmp_filename(int number)
 	char	*tmp;
 
 	str_num = ft_itoa(number);
-	tmp = ft_strjoin(sys.tmp_dir, "/");
+	tmp = ft_strjoin(g_sys.tmp_dir, "/");
 	tmp_filename = ft_strjoin(tmp, str_num);
 	free(str_num);
 	free(tmp);
@@ -41,7 +41,7 @@ void	here_doc(char *eof, char *tmp_filename)
 			add_history(input);
 			if (ft_strncmp(input, eof, eof_len) == 0)
 			{
-				ft_lstadd_back(&sys.here_doc_names, \
+				ft_lstadd_back(&g_sys.here_doc_names, \
 					ft_lstnew(tmp_filename));
 				free(input);
 				close(fd);
@@ -61,11 +61,11 @@ int	here_doc_handler(t_redirecion *redirection)
 	int		status;
 	char	*tmp_filename;
 
-	tmp_filename = get_tmp_filename(sys.here_doc_index++);
+	tmp_filename = get_tmp_filename(g_sys.here_doc_index++);
 	pid = fork();
 	if (pid == -1)
 	{
-		sys.last_errno = errno;
+		g_sys.last_errno = errno;
 		return (0);
 	}
 	if (pid == 0)
@@ -75,7 +75,7 @@ int	here_doc_handler(t_redirecion *redirection)
 	}
 	else
 		waitpid(pid, &status, 0);
-	sys.last_exit_status_code = status;
+	g_sys.last_exit_status_code = status;
 	free(redirection->file_name);
 	redirection->file_name = tmp_filename;
 	redirection->type = 60;

@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 10:51:49 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:15:01 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-extern t_system	sys;
+extern t_system	g_sys;
 
+/*ft_allocs.c*/
 void			free_split(char **splitted);
-void			exit_with_error_msg(const char *msg);
 void			*ft_malloc(size_t size);
 int				syntax_check(char *input);
 
@@ -72,13 +72,13 @@ void			print_block(t_exec_block *block);
 
 /*exec_block_parser.c*/
 t_exec_block	*str_to_block(char *str);
-t_exec_block 	*exec_block_parser(char *raw_input);
+t_exec_block	*exec_block_parser(char *raw_input);
 
 /*execute.c*/
 void			execute_handler(t_exec_block *execs);
 
 /*error_handler.c*/
-void			print_custom_error(char *location, char *argument, char *message);
+void			print_custom_error(char *location, char *argument, char *msg);
 void			print_error(char *location, char *argument);
 void			redirection_error(char *file_name, int child);
 
@@ -90,7 +90,7 @@ int				check_export_unset_argv(char *arguments, int unset);
 /*command_handler.c*/
 void			command_handler(t_exec_block *exec);
 void			redirection_error(char *file_name, int child);
-char			**current_env_lst();
+char			**current_env_lst(void);
 
 /*fd_handler.c*/
 int				get_redirection_fd(t_exec_block *exec, char *file_name);
@@ -100,12 +100,12 @@ void			reset_fd(void);
 
 /*builtins*/
 void			builtin_cd(t_exec_block *block);
-void			builtin_pwd(void);
-void			builtin_env(void);
 void			builtin_echo(t_exec_block *execs);
-void			builtin_unset(t_exec_block *exec);
-void			builtin_export(t_exec_block *exec);
+void			builtin_env(void);
 void			builtin_exit(t_exec_block *execs);
+void			builtin_export(t_exec_block *exec);
+void			builtin_pwd(void);
+void			builtin_unset(t_exec_block *exec);
 
 /*signals*/
 void			set_signal_handler(void);

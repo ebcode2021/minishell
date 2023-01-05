@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 10:48:06 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	update_oldpwd(void)
 {
 	t_list	*oldpwd;
 
-	oldpwd = ft_lstfind(sys.env_lst, "OLDPWD");
+	oldpwd = ft_lstfind(g_sys.env_lst, "OLDPWD");
 	if (!oldpwd)
-		ft_lstadd_back(&sys.env_lst, ft_lstnew(sys.pwd));
+		ft_lstadd_back(&g_sys.env_lst, ft_lstnew(g_sys.pwd));
 	else
 	{
 		if (oldpwd->value)
 			free(oldpwd->value);
-		oldpwd->value = ft_strdup(sys.pwd);
+		oldpwd->value = ft_strdup(g_sys.pwd);
 	}
 }
 
@@ -36,7 +36,7 @@ void	change_dir(char *dest, t_exec_block *exec)
 	else
 	{
 		update_oldpwd();
-		getcwd(sys.pwd, BUFFER_SIZE);
+		getcwd(g_sys.pwd, BUFFER_SIZE);
 	}
 }
 
@@ -48,7 +48,7 @@ void	hyphen_handler(t_exec_block *exec)
 	if (oldpwd)
 	{
 		change_dir(oldpwd, exec);
-		ft_putendl_fd(sys.pwd, STDIN_FILENO);
+		ft_putendl_fd(g_sys.pwd, STDIN_FILENO);
 	}
 	else
 		print_custom_error(exec->command, 0, OLDPWD_NOT_SET);

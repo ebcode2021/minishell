@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:08 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/03 20:47:50 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	builtin_pwd(void)
 {
-	ft_putendl_fd(sys.pwd, STDOUT_FILENO);
+	ft_putendl_fd(g_sys.pwd, STDOUT_FILENO);
 }

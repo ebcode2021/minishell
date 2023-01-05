@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 10:38:31 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:14:15 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,27 @@
 //2. built_in 구현. 역시 에러처리는 1번과 같이
 //3. signal 공부해서 어떻게 처리할지
 
-t_system	sys;
+t_system	g_sys;
 
-void	init_system_info()
+void	init_g_system_info()
 {
-	sys.env_lst = 0;
-	sys.last_exit_status_code = 0;
-	sys.last_errno = 0;
-	sys.here_doc_names = 0;
-	sys.here_doc_index = 0;
-	sys.current_fd[READ] = dup2(STD_IN, STDIN_FILENO);
-	sys.current_fd[WRITE] = dup2(STD_OUT, STDOUT_FILENO);
+	g_sys.env_lst = 0;
+	g_sys.last_exit_status_code = 0;
+	g_sys.last_errno = 0;
+	g_sys.here_doc_names = 0;
+	g_sys.here_doc_index = 0;
+	g_sys.current_fd[READ] = dup2(STD_IN, STDIN_FILENO);
+	g_sys.current_fd[WRITE] = dup2(STD_OUT, STDOUT_FILENO);
 }
 
 void	set_tmp_dir(char **envp)
 {
 	DIR			*dir;
 	pid_t		pid;
-	char *const rm_args[4] = {"rm", "-rf", sys.tmp_dir, 0};
-	char *const mkdir_args[4] = {"mkdir", "-p", sys.tmp_dir, 0};
+	char *const rm_args[4] = {"rm", "-rf", g_sys.tmp_dir, 0};
+	char *const mkdir_args[4] = {"mkdir", "-p", g_sys.tmp_dir, 0};
 
-	dir = opendir(sys.tmp_dir);
+	dir = opendir(g_sys.tmp_dir);
 	if (dir == 0)
 	{
 		pid = fork();
@@ -74,7 +74,7 @@ void	clean_up(void)
 {
 	pid_t		pid;
 	char		**envp;
-	char *const rm_args[4] = {"rm", "-rf", sys.tmp_dir, 0};
+	char *const rm_args[4] = {"rm", "-rf", g_sys.tmp_dir, 0};
 
 	pid = fork();
 	if (pid == 0)
@@ -87,25 +87,25 @@ void	clean_up(void)
 }
 
 
-void	set_system_info(char *envp[])
+void	set_g_system_info(char *envp[])
 {
 	t_list	*env;
 
-	getcwd(sys.pwd, BUFFER_SIZE);
-	sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
+	getcwd(g_sys.pwd, BUFFER_SIZE);
+	g_sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
 	set_tmp_dir(envp);
-	sys.env_lst = 0;
+	g_sys.env_lst = 0;
 	while (*envp)
-		ft_lstadd_back(&sys.env_lst, ft_lstnew(*envp++));
-	sys.home_dir = sys.pwd;
-	env = ft_lstfind(sys.env_lst, "HOME");
+		ft_lstadd_back(&g_sys.env_lst, ft_lstnew(*envp++));
+	g_sys.home_dir = g_sys.pwd;
+	env = ft_lstfind(g_sys.env_lst, "HOME");
 	if (env)
-		sys.home_dir = env->value;
-	env = ft_lstfind(sys.env_lst, "OLDPWD");
+		g_sys.home_dir = env->value;
+	env = ft_lstfind(g_sys.env_lst, "OLDPWD");
 	free(env->value);
 	env->value = 0;
-	sys.last_errno = 0;
-	sys.last_exit_status_code = 0;
+	g_sys.last_errno = 0;
+	g_sys.last_exit_status_code = 0;
 }
 
 int main(int argc, char *argv[], char *envp[])
@@ -116,7 +116,7 @@ int main(int argc, char *argv[], char *envp[])
 	if (!argc && !argv)
 		return (0);
 	set_signal_handler();
-	set_system_info(envp);
+	set_g_system_info(envp);
 	while (1)
 	{
 		input = readline("picoshell> ");
@@ -131,7 +131,7 @@ int main(int argc, char *argv[], char *envp[])
 			free_block(elem);
 			reset_fd();
 		}
-		//system("leaks minishell");
+		//g_system("leaks minishell");
 		free(input);
 	}
 	return (0);
