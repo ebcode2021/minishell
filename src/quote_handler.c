@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/06 18:47:45 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 19:57:40 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*get_env(char *str, size_t *idx)
 	while (str[str_idx] && (str[str_idx] != ' ' || str[str_idx] != -1))
 		buffer[buf_idx++] = str[str_idx++];
 	buffer[buf_idx] = 0;
-	printf("buffer: %s\n", buffer);
 	if (idx)
 		*idx = str_idx;
 	lst = g_sys.env_lst;

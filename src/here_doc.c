@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/06 18:53:45 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 19:47:45 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	*quote_handler_without_expand(char *str)
 	char	first_quote;
 	size_t	str_idx;
 	size_t	buf_idx;
-
 
 	str_idx = 0;
 	buf_idx = 0;

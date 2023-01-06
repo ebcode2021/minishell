@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/06 18:54:51 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 19:50:53 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,5 @@ void			*ft_malloc(size_t size);
 
 /*syntax.c*/
 int				syntax_check(char *input);
-
-
 
 #endif
