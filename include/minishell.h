@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/06 14:22:32 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:17:16 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,6 @@ void			*ft_malloc(size_t size);
 /*syntax.c*/
 int				syntax_check(char *input);
 
-
+void			init_system_info(char **envp);
 
 #endif
