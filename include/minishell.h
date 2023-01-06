@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/06 19:09:25 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/06 20:20:36 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ void			*ft_malloc(size_t size);
 /*syntax.c*/
 int				syntax_check(char *input);
 
+void			init_system_info(char **envp);
 
 #endif
