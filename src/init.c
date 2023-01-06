@@ -6,11 +6,33 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 14:44:39 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/06 15:11:18 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:37:11 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	update_shell_level(void)
+{
+	t_list	*env;
+	int		level;
+	char	*str_level;
+	char	*joined;
+
+	env = ft_lstfind(g_sys.env_lst, "SHLVL");
+	if (env)
+	{
+		level = ft_atoi(env->value);
+		str_level = ft_itoa(level + 1);
+		joined = ft_strjoin("SHLVL=", str_level);
+		ft_lst_remove_if(&g_sys.env_lst, "SHLVL");
+		ft_lstadd_back(&g_sys.env_lst, ft_lstnew(joined));
+		free(str_level);
+		free(joined);
+	}
+	else
+		ft_lstadd_back(&g_sys.env_lst, ft_lstnew("SHLVL=1"));
+}
 
 static void	create_env_lst(char **envp)
 {
@@ -26,6 +48,7 @@ static void	create_env_lst(char **envp)
 	if (env)
 		g_sys.home_dir = ft_strdup(env->value);
 	ft_lst_remove_if(&g_sys.env_lst, "OLDPWD");
+	update_shell_level();
 }
 
 static void	create_tmp_dir(char **envp)
