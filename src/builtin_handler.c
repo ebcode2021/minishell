@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 14:33:55 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/06 14:22:12 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,5 @@ void	builtin_handler(t_exec_block *exec)
 		builtin_pwd();
 	else
 		builtin_unset(exec);
+	g_sys.last_exit_status_code = 0;
 }

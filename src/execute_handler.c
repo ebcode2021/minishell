@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 21:11:44 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:21:31 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ void	single_execute(t_exec_block *exec)
 		exit(1);
 	}
 	waitpid(pid, &status, 0);
-	child_error_handler(status);
-	g_sys.last_exit_status_code = status;
-	signal(SIGINT, new_prompt);
+	child_exit_handler(status);
 }
 
 void	execute(t_exec_block *execs)
@@ -68,16 +66,15 @@ void	execute(t_exec_block *execs)
 	}
 	close(iter_pipe.fd[READ]);
 	while (idx--)
-		waitpid(-1, &g_sys.last_errno, 0);
-	child_error_handler(g_sys.last_exit_status_code);
-	signal(SIGINT, new_prompt);
+		waitpid(-1, &g_sys.last_exit_status_code, 0);
+	child_exit_handler(g_sys.last_exit_status_code);
 }
 
 void	execute_handler(t_exec_block *execs)
 {
 	if (!execs)
 		return ;
-	set_current_cmd(execs);
+	update_current_cmd(execs);
 	if (execs->next)
 		execute(execs);
 	else
@@ -90,4 +87,5 @@ void	execute_handler(t_exec_block *execs)
 		else
 			single_execute(execs);
 	}
+	update_exit_status_code();
 }
