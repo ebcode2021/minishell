@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 20:56:26 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:22:32 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,11 @@ void			execute_handler(t_exec_block *execs);
 
 /*execute_utils.c*/
 pid_t			pipe_n_fork(t_pipe *new_pipe);
-void			set_current_cmd(t_exec_block *execs);
+void			update_current_cmd(t_exec_block *execs);
+void			update_exit_status_code(void);
 
 /*error_handler.c*/
-void			child_error_handler(int signo);
+void			child_exit_handler(int signo);
 void			print_custom_error(char *location, char *argument, char *msg);
 void			print_error(char *location, char *argument);
 void			redirection_error(char *file_name, int child);
@@ -121,5 +122,7 @@ void			*ft_malloc(size_t size);
 
 /*syntax.c*/
 int				syntax_check(char *input);
+
+
 
 #endif

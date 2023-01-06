@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:19 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 20:43:09 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:50:32 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	pseudo_sigterm(void)
 void	signal_interrupt(int signo)
 {
 	if (signo != SIGINT)
-		return ;
+		return ; 
 	exit(EXIT_INTERRUPT);
 }
 

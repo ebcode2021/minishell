@@ -6,20 +6,27 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 20:47:02 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:25:09 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_error_handler(int signo)
+void	child_exit_handler(int exit_code)
 {
-	if (signo == 131)
+	exit_code %= 256;
+	if (exit_code == SIGQUIT)
 	{
-		ft_putstr_fd("Quit", STDERR_FILENO);
-		ft_putnbr_fd(signo - 128, STDERR_FILENO);
+		ft_putstr_fd("Quit ", STDERR_FILENO);
+		ft_putnbr_fd(exit_code, STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);
 	}
+	else if (exit_code != 0)
+		ft_putchar_fd('\n', STDERR_FILENO);
+	if (exit_code)
+		exit_code += 128;
+	g_sys.last_exit_status_code = exit_code;
+	signal(SIGINT, new_prompt);
 }
 
 void	print_custom_error(char *location, char *argument, char *msg)
