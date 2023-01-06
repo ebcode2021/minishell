@@ -6,13 +6,13 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 13:25:57 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/06 16:04:55 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_long(char *str)
+static int	is_long(char *str)
 {
 	int				sign;
 	int				flag;
@@ -39,7 +39,7 @@ int	is_long(char *str)
 	return (flag);
 }
 
-void	builtin_exit(t_exec_block *exec)
+int	builtin_exit(t_exec_block *exec)
 {
 	int		exit_code;
 
@@ -57,9 +57,9 @@ void	builtin_exit(t_exec_block *exec)
 		if (exec->args[2])
 		{
 			print_custom_error(exec->command, 0, TOO_MANY_ARG);
-			g_sys.last_exit_status_code = 1;
-			return ;
+			return (1);
 		}
 	}
 	exit(exit_code);
+	return (0);
 }

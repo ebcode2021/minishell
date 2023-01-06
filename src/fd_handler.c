@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_handler.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 09:39:24 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 19:40:18 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 19:11:30 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ void	set_redirection_fd(t_exec_block *exec, int child)
 		file_name = get_redirection_file_name(exec->redirection->file_name);
 		if (!file_name)
 		{
-			redirection_error(exec->redirection->file_name, 0);
+			redirection_error(file_name, exec->redirection->file_name, child);
 			break ;
 		}
 		change_fd = get_redirection_fd(exec, file_name);
 		if (change_fd == -1)
 		{
-			redirection_error(file_name, child);
+			redirection_error(file_name, 0, child);
 			break ;
 		}
 		if (exec->redirection->type == INFILE)

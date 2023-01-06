@@ -6,13 +6,13 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/06 15:41:32 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_oldpwd(void)
+static void	update_oldpwd(void)
 {
 	t_list	*oldpwd;
 
@@ -27,49 +27,63 @@ void	update_oldpwd(void)
 	}
 }
 
-void	change_dir(char *dest, t_exec_block *exec)
+static int	change_dir(char *dest, t_exec_block *exec)
 {
+	int	success;
+
+	success = 0;
 	if (!dest)
 		print_custom_error(exec->command, 0, HOME_NOT_SET);
 	else if (chdir(dest) == -1)
 		print_error(exec->command, exec->args[1]);
 	else
 	{
+		success = 1;
 		update_oldpwd();
 		getcwd(g_sys.pwd, BUFFER_SIZE);
 	}
+	return (success);
 }
 
-void	hyphen_handler(t_exec_block *exec)
+static int	is_oldpwd(t_exec_block *exec)
 {
 	char	*oldpwd;
+	int		oldpwd_cnt;
 
 	oldpwd = get_env("$OLDPWD", 0);
+	oldpwd_cnt = 0;
 	if (oldpwd)
 	{
-		change_dir(oldpwd, exec);
+		oldpwd_cnt = change_dir(oldpwd, exec);
 		ft_putendl_fd(g_sys.pwd, STDIN_FILENO);
 	}
 	else
 		print_custom_error(exec->command, 0, OLDPWD_NOT_SET);
+	return (oldpwd_cnt);
 }
 
-void	builtin_cd(t_exec_block *exec)
+int	builtin_cd(t_exec_block *exec)
 {
+	int		exit_status;
 	size_t	arg_cnt;
 
 	arg_cnt = 0;
+	exit_status = 0;
 	while (exec->args[arg_cnt])
 		arg_cnt++;
 	if (arg_cnt > 2)
+	{
+		exit_status = 1;
 		print_custom_error(exec->command, 0, TOO_MANY_ARG);
+	}
 	else if (arg_cnt == 2)
 	{
-		if (ft_strncmp(exec->args[1], "-", 2) == 0)
-			hyphen_handler(exec);
+		if (ft_strncmp(exec->args[1], "-", 2) == 0 && !is_oldpwd(exec))
+			exit_status = 1;
 		else
-			change_dir(exec->args[1], exec);
+			exit_status = change_dir(exec->args[1], exec);
 	}
 	else
-		change_dir(get_env("$HOME", 0), exec);
+		exit_status = change_dir(get_env("$HOME", 0), exec);
+	return (exit_status);
 }

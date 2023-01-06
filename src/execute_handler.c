@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/06 14:21:31 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 18:48:38 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	execute_handler(t_exec_block *execs)
 {
 	if (!execs)
 		return ;
-	update_current_cmd(execs);
+	update_current_argument(execs);
 	if (execs->next)
 		execute(execs);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/06 14:22:12 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/06 16:05:11 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,24 @@ int	check_export_unset_argv(char *arguments, int unset)
 
 void	builtin_handler(t_exec_block *exec)
 {
-	char	*command_name;
+	int		exit_status;
+	char	*command;
 
-	command_name = exec->command;
-	if (!ft_strncmp(command_name, "cd", 3))
-		builtin_cd(exec);
-	else if (!ft_strncmp(command_name, "echo", 5))
+	exit_status = 0;
+	command = exec->command;
+	if (!ft_strncmp(command, "cd", 3))
+		exit_status = builtin_cd(exec);
+	else if (!ft_strncmp(command, "exit", 5))
+		exit_status = builtin_exit(exec);
+	else if (!ft_strncmp(command, "export", 7))
+		exit_status = builtin_export(exec);
+	else if (!ft_strncmp(command, "unset", 6))
+		exit_status = builtin_unset(exec);
+	else if (!ft_strncmp(command, "echo", 5))
 		builtin_echo(exec);
-	else if (!ft_strncmp(command_name, "env", 4))
+	else if (!ft_strncmp(command, "env", 4))
 		builtin_env();
-	else if (!ft_strncmp(command_name, "export", 7))
-		builtin_export(exec);
-	else if (!ft_strncmp(command_name, "exit", 5))
-		builtin_exit(exec);
-	else if (!ft_strncmp(command_name, "pwd", 4))
-		builtin_pwd();
 	else
-		builtin_unset(exec);
-	g_sys.last_exit_status_code = 0;
+		builtin_pwd();
+	g_sys.last_exit_status_code = exit_status;
 }
