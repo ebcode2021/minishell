@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 15:57:21 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:28:32 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	child_exit_handler(int exit_code)
 		ft_putnbr_fd(exit_code, STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);
 	}
-	else if (exit_code != 0)
+	else if (!higher_bits && lower_bits != 0)
 		ft_putchar_fd('\n', STDERR_FILENO);
 	if (!higher_bits && lower_bits)
 		lower_bits += 128;

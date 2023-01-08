@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 16:04:13 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 16:27:38 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,8 @@ int	command_handler(t_exec_block *exec)
 	t_list	*path;
 
 	env_lst = current_env_lst();
-	print_block(exec);
 	if (ft_strchr(exec->command, '/') && !access(exec->command, F_OK))
 	{
-		fprintf(stderr, "hi???\n");
 		execve(exec->command, exec->args, env_lst);
 	}
 	else if (ft_strchr(exec->command, '/') && access(exec->command, F_OK))
