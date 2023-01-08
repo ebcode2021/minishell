@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 15:25:58 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 16:04:13 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,12 @@ int	command_handler(t_exec_block *exec)
 	t_list	*path;
 
 	env_lst = current_env_lst();
+	print_block(exec);
 	if (ft_strchr(exec->command, '/') && !access(exec->command, F_OK))
-		execve(exec->command, &exec->command, env_lst);
+	{
+		fprintf(stderr, "hi???\n");
+		execve(exec->command, exec->args, env_lst);
+	}
 	else if (ft_strchr(exec->command, '/') && access(exec->command, F_OK))
 		print_custom_error(exec->command, 0, NO_SUCH_FILE_DIR);
 	else
