@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/06 15:41:32 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 18:51:57 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	update_oldpwd(void)
 {
 	t_list	*oldpwd;
 
+	printf("updated\n");
 	oldpwd = ft_lstfind(g_sys.env_lst, "OLDPWD");
 	if (!oldpwd)
 		ft_lstadd_back(&g_sys.env_lst, ft_lstnew(g_sys.pwd));
