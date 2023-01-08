@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 16:27:38 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/08 20:22:04 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*get_cmd_path(char *command)
 
 	idx = 0;
 	path_lists = get_path_in_envp();
+	if (*command == 0)
+		print_custom_error(command, 0, COMMAND_NOT_FOUND);
 	if (path_lists)
 	{
 		while (path_lists[idx])
@@ -70,17 +72,14 @@ char	**current_env_lst(void)
 
 int	command_handler(t_exec_block *exec)
 {
-	char	*cmd_path;
-	char	**env_lst;
-	t_list	*path;
+	char		*cmd_path;
+	char		**env_lst;
+	t_list		*path;
+	struct stat	path_stat;
 
 	env_lst = current_env_lst();
-	if (ft_strchr(exec->command, '/') && !access(exec->command, F_OK))
-	{
-		execve(exec->command, exec->args, env_lst);
-	}
-	else if (ft_strchr(exec->command, '/') && access(exec->command, F_OK))
-		print_custom_error(exec->command, 0, NO_SUCH_FILE_DIR);
+	if (stat(exec->command, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+			print_custom_error(exec->command, 0, IS_DIR);
 	else
 	{
 		cmd_path = get_cmd_path(exec->command);
@@ -92,5 +91,20 @@ int	command_handler(t_exec_block *exec)
 		else
 			execve(cmd_path, exec->args, env_lst);
 	}
+	// if (ft_strchr(exec->command, '/') && !access(exec->command, F_OK))
+	// 	execve(exec->command, exec->args, env_lst);
+	// else if (ft_strchr(exec->command, '/') && access(exec->command, F_OK))
+	// 	print_custom_error(exec->command, 0, NO_SUCH_FILE_DIR);
+	// else
+	// {
+	// 	cmd_path = get_cmd_path(exec->command);
+	// 	path = ft_lstfind(g_sys.env_lst, "PATH");
+	// 	if (!cmd_path && path && path->value)
+	// 		print_custom_error(exec->command, 0, COMMAND_NOT_FOUND);
+	// 	else if (!cmd_path)
+	// 		print_custom_error(exec->command, 0, NO_SUCH_FILE_DIR);
+	// 	else
+	// 		execve(cmd_path, exec->args, env_lst);
+	// }
 	return (g_sys.last_exit_status_code);
 }

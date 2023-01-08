@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 18:18:05 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/08 20:20:03 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	child_exit_handler(int exit_code)
 	{
 		if (exit_code == SIGQUIT)
 		{
-			ft_putstr_fd("Quit ", STDERR_FILENO);
+			ft_putstr_fd("Quit: ", STDERR_FILENO);
 			ft_putnbr_fd(exit_code, STDERR_FILENO);
 			ft_putchar_fd('\n', STDERR_FILENO);
 		}
@@ -35,14 +35,9 @@ void	print_custom_error(char *location, char *argument, char *msg)
 {
 	ft_putstr_fd("picoshell: ", STDERR_FILENO);
 	if (location)
-	{
 		ft_putstr_fd(location, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-	}
 	if (argument)
-	{
 		ft_putstr_fd(argument, STDERR_FILENO);
-	}
 	ft_putendl_fd(msg, STDERR_FILENO);
 	g_sys.last_exit_status_code = 1;
 	if (!ft_strncmp(msg, COMMAND_NOT_FOUND, ft_strlen(msg)))
