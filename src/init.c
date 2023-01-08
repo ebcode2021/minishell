@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 14:44:39 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/06 15:37:11 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/08 11:45:02 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	init_system_info(char **envp)
 	g_sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
 	create_tmp_dir(envp);
 	create_env_lst(envp);
+	dup2(STDIN_FILENO, STD_IN);
+	dup2(STDOUT_FILENO, STD_OUT);
 	g_sys.last_errno = 0;
 	g_sys.last_exit_status_code = 0;
 }
