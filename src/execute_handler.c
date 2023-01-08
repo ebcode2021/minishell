@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 15:53:28 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 16:18:36 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ void	execute(t_exec_block *execs)
 		head = head->next;
 	}
 	close(iter_pipe.fd[READ]);
-	while (idx--)
+	while (idx-- > 1)
 		waitpid(-1, &g_sys.last_exit_status_code, 0);
+	waitpid(pid, &g_sys.last_exit_status_code, 0);
 	child_exit_handler(g_sys.last_exit_status_code);
 }
 
