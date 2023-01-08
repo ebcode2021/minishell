@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 14:48:50 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 17:55:38 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	builtin_exit(t_exec_block *exec, int child)
 		else
 		{
 			print_custom_error(exec->command, exec->args[1], NUMERIC_ARG);
-			exit(exit_code);
+			exit(exit_code & 0xFF);
 		}
 		if (exec->args[2])
 		{
@@ -61,6 +61,6 @@ int	builtin_exit(t_exec_block *exec, int child)
 			return (1);
 		}
 	}
-	exit(exit_code);
+	exit(exit_code & 0xFF);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 16:28:32 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:18:05 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 void	child_exit_handler(int exit_code)
 {
-	int higher_bits;
-	int lower_bits;
-
-	higher_bits = exit_code / 256;
-	lower_bits = exit_code % 255;
-	if (!higher_bits && lower_bits == SIGQUIT)
+	if (WIFSIGNALED(exit_code))
 	{
-		ft_putstr_fd("Quit ", STDERR_FILENO);
-		ft_putnbr_fd(exit_code, STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
+		if (exit_code == SIGQUIT)
+		{
+			ft_putstr_fd("Quit ", STDERR_FILENO);
+			ft_putnbr_fd(exit_code, STDERR_FILENO);
+			ft_putchar_fd('\n', STDERR_FILENO);
+		}
+		else
+			ft_putchar_fd('\n', STDERR_FILENO);
+		g_sys.last_exit_status_code = exit_code + 128;
 	}
-	else if (!higher_bits && lower_bits != 0)
-		ft_putchar_fd('\n', STDERR_FILENO);
-	if (!higher_bits && lower_bits)
-		lower_bits += 128;
-	g_sys.last_exit_status_code = lower_bits;
+	else
+		g_sys.last_exit_status_code = WEXITSTATUS(exit_code);
 	signal(SIGINT, new_prompt);
 }
 
