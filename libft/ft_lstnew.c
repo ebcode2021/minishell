@@ -3,21 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:31:46 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 14:41:27 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 20:44:45 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
+static void	free_split(char **split)
+{
+	size_t	idx;
+
+	idx = 0;
+	while (split[idx])
+		free(split[idx++]);
+	free(split);
+}
+
 t_list	*ft_lstnew(char *envp)
 {
 	t_list	*lstnew;
 	char	**split;
-	size_t	idx;
 
 	lstnew = malloc (sizeof(t_list));
 	if (!lstnew)
@@ -31,9 +40,6 @@ t_list	*ft_lstnew(char *envp)
 	if (split[1])
 		lstnew->value = ft_strdup(split[1]);
 	lstnew->next = 0;
-	idx = 0;
-	while (split[idx])
-		free(split[idx++]);
-	free(split);
+	free_split(split);
 	return (lstnew);
 }

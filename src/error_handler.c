@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 20:20:03 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 21:53:11 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	child_exit_handler(int exit_code)
 			ft_putnbr_fd(exit_code, STDERR_FILENO);
 			ft_putchar_fd('\n', STDERR_FILENO);
 		}
-		else
+		else if (exit_code == SIGINT)
 			ft_putchar_fd('\n', STDERR_FILENO);
 		g_sys.last_exit_status_code = exit_code + 128;
 	}

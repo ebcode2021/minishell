@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block_parser.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 18:06:58 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 21:33:49 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_exec_block	*str_to_block(char *str)
 	replaced = str_replace(replaced, ">", " > ");
 	splited = set_redirections(exec, split_with_char(replaced, ' '));
 	exec->args = set_arguments(splited);
+	//system("leaks minishell");
 	if (exec->args[0])
 		exec->command = ft_strdup(exec->args[0]);
 	elem = exec->redirection;
