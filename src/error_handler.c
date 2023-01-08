@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/06 19:17:55 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 15:41:30 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 void	child_exit_handler(int exit_code)
 {
-	exit_code %= 256;
-	if (exit_code == SIGQUIT)
+	int higher_bits;
+	int lower_bits;
+
+	higher_bits = exit_code / 256;
+	lower_bits = exit_code % 255;
+	printf("hi:%d, low:%d\n", higher_bits, lower_bits);
+	if (!higher_bits && lower_bits == SIGQUIT)
 	{
 		ft_putstr_fd("Quit ", STDERR_FILENO);
 		ft_putnbr_fd(exit_code, STDERR_FILENO);
@@ -23,8 +28,8 @@ void	child_exit_handler(int exit_code)
 	}
 	else if (exit_code != 0)
 		ft_putchar_fd('\n', STDERR_FILENO);
-	if (exit_code)
-		exit_code += 128;
+	if (!higher_bits)
+		exit_code = lower_bits + 128;
 	g_sys.last_exit_status_code = exit_code;
 	signal(SIGINT, new_prompt);
 }
@@ -42,6 +47,9 @@ void	print_custom_error(char *location, char *argument, char *msg)
 		ft_putstr_fd(argument, STDERR_FILENO);
 	}
 	ft_putendl_fd(msg, STDERR_FILENO);
+	g_sys.last_exit_status_code = 1;
+	if (!ft_strncmp(msg, COMMAND_NOT_FOUND, ft_strlen(msg)))
+		g_sys.last_exit_status_code = 127;
 }
 
 void	print_error(char *location, char *argument)
@@ -55,12 +63,15 @@ void	print_error(char *location, char *argument)
 		ft_putstr_fd(": ", STDERR_FILENO);
 		perror(argument);
 	}
+	g_sys.last_exit_status_code = 1;
 }
 
 void	redirection_error(char *file_name, char *location, int child)
 {
-	if (!file_name)
+	if (!file_name && ft_strncmp("$", location, 2))
 		print_custom_error(location, 0, AMBIGUOUS);
+	else if (!file_name)
+		print_custom_error(location, 0, NO_SUCH_FILE_DIR);
 	else
 	{
 		print_error(file_name, 0);

@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:44 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/06 16:05:11 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 14:47:40 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	check_export_unset_argv(char *arguments, int unset)
 	return (1);
 }
 
-void	builtin_handler(t_exec_block *exec)
+void	builtin_handler(t_exec_block *exec, int child)
 {
 	int		exit_status;
 	char	*command;
@@ -56,7 +56,7 @@ void	builtin_handler(t_exec_block *exec)
 	if (!ft_strncmp(command, "cd", 3))
 		exit_status = builtin_cd(exec);
 	else if (!ft_strncmp(command, "exit", 5))
-		exit_status = builtin_exit(exec);
+		exit_status = builtin_exit(exec, child);
 	else if (!ft_strncmp(command, "export", 7))
 		exit_status = builtin_export(exec);
 	else if (!ft_strncmp(command, "unset", 6))

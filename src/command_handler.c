@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/05 13:14:00 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 15:25:58 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,17 @@ char	**current_env_lst(void)
 	return (env_lst);
 }
 
-void	command_handler(t_exec_block *exec)
+int	command_handler(t_exec_block *exec)
 {
 	char	*cmd_path;
 	char	**env_lst;
 	t_list	*path;
 
 	env_lst = current_env_lst();
-	if (ft_strchr(exec->command, '/'))
-	{
-		if (!access(exec->command, F_OK))
-			execve(exec->command, &exec->command, env_lst);
-		else
-			print_custom_error(exec->command, 0, NO_SUCH_FILE_DIR);
-	}
+	if (ft_strchr(exec->command, '/') && !access(exec->command, F_OK))
+		execve(exec->command, &exec->command, env_lst);
+	else if (ft_strchr(exec->command, '/') && access(exec->command, F_OK))
+		print_custom_error(exec->command, 0, NO_SUCH_FILE_DIR);
 	else
 	{
 		cmd_path = get_cmd_path(exec->command);
@@ -93,4 +90,5 @@ void	command_handler(t_exec_block *exec)
 		else
 			execve(cmd_path, exec->args, env_lst);
 	}
+	return (g_sys.last_exit_status_code);
 }

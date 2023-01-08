@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/06 16:04:55 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 14:48:50 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ static int	is_long(char *str)
 	return (flag);
 }
 
-int	builtin_exit(t_exec_block *exec)
+int	builtin_exit(t_exec_block *exec, int child)
 {
 	int		exit_code;
 
 	exit_code = 0;
-	ft_putendl_fd("exit", STDERR_FILENO);
+	if (!child)
+		ft_putendl_fd("exit", STDOUT_FILENO);
 	if (exec->args[1])
 	{
 		if (is_long(exec->args[1]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 11:28:04 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/08 15:27:28 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ extern t_system	g_sys;
 
 /* builtins */
 int				builtin_cd(t_exec_block *block);
-int				builtin_exit(t_exec_block *exec);
+int				builtin_exit(t_exec_block *exec, int child);
 int				builtin_export(t_exec_block *exec);
 int				builtin_unset(t_exec_block *exec);
 void			builtin_echo(t_exec_block *exec);
@@ -52,11 +52,11 @@ t_exec_block	*new_block(void);
 /*builtin_handler.c*/
 int				check_export_unset_argv(char *arguments, int unset);
 int				is_builtin(char *command);
-void			builtin_handler(t_exec_block *exec);
+void			builtin_handler(t_exec_block *exec, int child);
 
 /*command_handler.c*/
 char			**current_env_lst(void);
-void			command_handler(t_exec_block *exec);
+int				command_handler(t_exec_block *exec);
 
 /*here_doc.c*/
 char			*get_tmp_filename(int number);

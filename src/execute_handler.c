@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/06 18:48:38 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 15:27:44 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 	if (exec->command)
 	{
 		if (is_builtin(exec->command))
-			builtin_handler(exec);
+			builtin_handler(exec, CHILD);
 		else
 			command_handler(exec);
 	}
@@ -32,12 +32,13 @@ void	single_execute(t_exec_block *exec)
 	int		status;
 
 	pid = pipe_n_fork(0);
+	status = 0;
 	if (pid == 0)
 	{
 		set_redirection_fd(exec, CHILD);
 		if (exec->command)
-			command_handler(exec);
-		exit(1);
+			status = command_handler(exec);
+		exit(status);
 	}
 	waitpid(pid, &status, 0);
 	child_exit_handler(status);
@@ -82,7 +83,7 @@ void	execute_handler(t_exec_block *execs)
 		if (is_builtin(execs->command))
 		{
 			set_redirection_fd(execs, PARENTS);
-			builtin_handler(execs);
+			builtin_handler(execs, PARENTS);
 		}
 		else
 			single_execute(execs);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:35:47 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 19:14:15 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/08 14:41:59 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char	**set_arguments(char **split)
 		}
 		else
 			ft_lstadd_back(&args, \
-			ft_lstnew(quote_handler(tilde_replace(split[i]))));
+			ft_lstnew(quote_handler(split[i])));
 		i++;
 	}
 	return (lst_to_arr(args));
