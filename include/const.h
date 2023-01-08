@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 14:37:36 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 18:08:54 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@
 # define READ 0
 # define WRITE 1
 
-# define REDIRECTION 0
-# define BUILT_IN 1
-
 # define STD_IN 1000
 # define STD_OUT 1001
 
@@ -35,6 +32,7 @@
 
 # define EXPORT 0
 # define UNSET 1
+
 # define LONG_MAX 9223372036854775807UL
 
 # define EXIT_INTERRUPT 130

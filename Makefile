@@ -12,21 +12,31 @@ SRC = minishell.c \
 	execute_utils.c \
 	fd_handler.c \
 	here_doc.c \
+	init.c \
 	quote_handler.c \
 	redirection_utils.c \
 	replace_utils.c \
+	sort_utils.c \
 	syntax.c \
-	signal_handler.c \
 	string_utils.c \
-	init.c \
-	sort_utils.c
-BUILT_IN = builtins/cd.c builtins/pwd.c builtins/echo.c builtins/env.c builtins/export.c builtins/unset.c builtins/exit.c
-SRCS = $(addprefix $(SRC_DIR), $(SRC)) $(addprefix $(SRC_DIR), $(BUILT_IN))
+	signal_handler.c
+
+BUILT_IN_DIR = src/builtins/
+BUILT_IN = cd.c \
+		pwd.c \
+		echo.c \
+		env.c \
+		export.c \
+		unset.c \
+		exit.c
+
+SRCS = $(addprefix $(SRC_DIR), $(SRC)) $(addprefix $(BUILT_IN_DIR), $(BUILT_IN))
 OBJS = $(SRCS:.c=.o)
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+
 INCLUDE = include \
 		-I libft \
 		-I ${HOME}/.brew/opt/readline/include
+
 LIBFT = libft/libft.a
 READLINE = -lreadline -L ~/.brew/opt/readline/lib
 #READLINE = -lreadline -L /usr/local/Cellar/readline/8.2.1/lib
@@ -59,4 +69,4 @@ re : fclean all
 sanitize :
 	make SANITIZE=1 re
 
-.PHONY: all clean fclean re libft bonus sanitize
+.PHONY: all clean fclean re libft sanitize

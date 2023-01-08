@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block_parser.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 19:46:13 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:06:58 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_exec_block	*str_to_block(char *str)
 			here_doc_handler(elem);
 		elem = elem->next;
 	}
-	//print_block(exec);
 	free(replaced);
 	free(splited);
 	return (exec);
@@ -53,4 +52,3 @@ t_exec_block	*exec_block_parser(char *raw_input)
 	free(splited);
 	return (exec_blocks);
 }
-
