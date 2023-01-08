@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 15:41:30 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/08 15:57:21 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	child_exit_handler(int exit_code)
 
 	higher_bits = exit_code / 256;
 	lower_bits = exit_code % 255;
-	printf("hi:%d, low:%d\n", higher_bits, lower_bits);
 	if (!higher_bits && lower_bits == SIGQUIT)
 	{
 		ft_putstr_fd("Quit ", STDERR_FILENO);
@@ -28,9 +27,9 @@ void	child_exit_handler(int exit_code)
 	}
 	else if (exit_code != 0)
 		ft_putchar_fd('\n', STDERR_FILENO);
-	if (!higher_bits)
-		exit_code = lower_bits + 128;
-	g_sys.last_exit_status_code = exit_code;
+	if (!higher_bits && lower_bits)
+		lower_bits += 128;
+	g_sys.last_exit_status_code = lower_bits;
 	signal(SIGINT, new_prompt);
 }
 
