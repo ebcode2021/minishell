@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/09 18:59:04 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 20:08:01 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void			set_signal_handler(void);
 void			pseudo_sigterm(void);
 void			signal_interrupt(int signo);
 void			signal_quit(int signo);
+void			set_signal_flag(int signo);
 
 /*sort_utils.c*/
 void			bubble_sort(t_list **array);

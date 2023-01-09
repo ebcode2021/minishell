@@ -36,13 +36,14 @@ OBJS = $(SRCS:.c=.o)
 INCLUDE = include \
 		-I libft \
 		-I ${HOME}/.brew/opt/readline/include
-
 LIBFT = libft/libft.a
 READLINE = -lreadline -L ~/.brew/opt/readline/lib
 #READLINE = -lreadline -L /usr/local/Cellar/readline/8.2.1/lib
+LIBFT_RULE = @$(MAKE) -C ./libft bonus
 
 ifdef SANITIZE
 	CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+	LIBFT_RULE = @$(MAKE) -C ./libft bonus sanitize
 endif
 
 all : $(NAME)
@@ -54,7 +55,7 @@ $(NAME) : $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(READLINE) -o $(NAME)
 
 $(LIBFT):
-	@$(MAKE) -C ./libft bonus
+	$(LIBFT_RULE)
 
 clean : 
 	@$(MAKE) -C ./libft clean
