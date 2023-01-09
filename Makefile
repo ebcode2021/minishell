@@ -12,15 +12,15 @@ SRC = minishell.c \
 	execute_utils.c \
 	fd_handler.c \
 	here_doc.c \
-	init.c \
+	mem_utils.c \
 	quote_handler.c \
 	redirection_utils.c \
 	replace_utils.c \
-	sort_utils.c \
-	syntax.c \
-	string_utils.c \
 	signal_handler.c \
-	mem_utils.c
+	sort_utils.c \
+	string_utils.c \
+	syntax.c \
+	system_utils.c
 BUILT_IN_DIR = src/builtins/
 BUILT_IN = cd.c \
 		pwd.c \
@@ -37,13 +37,6 @@ INCLUDE = include \
 		-I ${HOME}/.brew/opt/readline/include
 LIBFT = libft/libft.a
 READLINE = -lreadline -L ~/.brew/opt/readline/lib
-#READLINE = -lreadline -L /usr/local/Cellar/readline/8.2.1/lib
-LIBFT_RULE = @$(MAKE) -C ./libft bonus
-
-ifdef SANITIZE
-	CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-	LIBFT_RULE = @$(MAKE) -C ./libft bonus sanitize
-endif
 
 all : $(NAME)
 
@@ -54,7 +47,7 @@ $(NAME) : $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(READLINE) -o $(NAME)
 
 $(LIBFT):
-	$(LIBFT_RULE)
+	@$(MAKE) -C ./libft bonus
 
 clean : 
 	@$(MAKE) -C ./libft clean
@@ -66,7 +59,4 @@ fclean : clean
 
 re : fclean all
 
-sanitize :
-	make SANITIZE=1 re
-
-.PHONY: all clean fclean re libft sanitize
+.PHONY: all clean fclean re libft

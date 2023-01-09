@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:57:26 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/09 15:15:44 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:52:37 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@
 typedef struct s_system
 {
 	t_list	*env_lst;
-	t_list	*here_doc_names;
 	char	*tmp_dir;
 	char	pwd[BUFFER_SIZE];
 	char	*home_dir;
 	int		last_exit_status_code;
-	int		last_errno;
 	int		here_doc_index;
 	int		signal;
 }				t_system;

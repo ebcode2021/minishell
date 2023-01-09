@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 21:31:53 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:34:48 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (!argc && !argv)
 		return (0);
-	set_signal_handler();
 	init_system_info(envp);
 	while (1)
 	{

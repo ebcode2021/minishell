@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 20:20:19 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 21:45:10 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
+static void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 {
 	change_pipe_fd(exec, iter_pipe);
 	set_redirection_fd(exec, CHILD);
@@ -26,7 +26,7 @@ void	child_process(t_exec_block *exec, t_pipe *iter_pipe)
 	exit(EXIT_FAILURE);
 }
 
-void	single_execute(t_exec_block *exec)
+static void	single_execute(t_exec_block *exec)
 {
 	pid_t	pid;
 	int		status;
@@ -44,7 +44,7 @@ void	single_execute(t_exec_block *exec)
 	child_exit_handler(status);
 }
 
-void	execute(t_exec_block *execs)
+static void	execute(t_exec_block *execs)
 {
 	pid_t			*pid_list;
 	t_pipe			iter_pipe;

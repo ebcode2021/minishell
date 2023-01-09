@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/09 21:32:17 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:50:35 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,10 @@ char			*get_tmp_filename(int number);
 void			here_doc(char *eof, char *tmp_filename);
 void			here_doc_handler(t_redirecion *redirection);
 
-/*init.c*/
-void			init_system_info(char **envp);
-
 /*quote_handler.c*/
-char			*quote_handler(char *str);
-char			*double_quote_handler(char *str);
 char			*get_env(char *str, size_t *index);
 char			*expand_env(char *str);
-char			*expanded_join(char **split);
+char			*quote_handler(char *str);
 
 /*redirection_utils.c*/
 void			add_redirection(t_redirecion **head, \
@@ -116,7 +111,6 @@ void			set_signal_handler(void);
 void			pseudo_sigterm(void);
 void			signal_interrupt(int signo);
 void			signal_quit(int signo);
-void			set_signal_flag(int signo);
 
 /*sort_utils.c*/
 void			bubble_sort(t_list **array);
@@ -132,6 +126,8 @@ void			*ft_malloc(size_t size);
 /*syntax.c*/
 int				syntax_check(char *input);
 
-void			clean_up(void);
+/*system_utils.c*/
+void			init_system_info(char **envp);
+void			set_signal_flag(int signo);
 
 #endif

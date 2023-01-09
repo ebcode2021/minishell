@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   system_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 14:44:39 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 11:45:02 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:54:00 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	set_signal_flag(int signo)
+{
+	if (signo)
+		g_sys.signal = 1;
+}
 
 static void	update_shell_level(void)
 {
@@ -82,12 +88,12 @@ static void	create_tmp_dir(char **envp)
 
 void	init_system_info(char **envp)
 {
+	set_signal_handler();
 	getcwd(g_sys.pwd, BUFFER_SIZE);
 	g_sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
 	create_tmp_dir(envp);
 	create_env_lst(envp);
 	dup2(STDIN_FILENO, STD_IN);
 	dup2(STDOUT_FILENO, STD_OUT);
-	g_sys.last_errno = 0;
 	g_sys.last_exit_status_code = 0;
 }
