@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 21:39:00 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 13:56:03 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	main(int argc, char *argv[], char *envp[])
 			free_blocks(execs);
 			reset_fd();
 		}
-		//system("leaks minishell");
 		free(input);
 	}
 	return (0);
