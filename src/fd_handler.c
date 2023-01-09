@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 09:39:24 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 19:32:29 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:23:17 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,10 @@ void	change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe)
 	close(iter_pipe->prev_fd);
 }
 
-void	reset_fd(void)
+void	reset_params(void)
 {
 	g_sys.signal = 0;
+	g_sys.here_doc_index = 0;
 	dup2(STD_IN, STDIN_FILENO);
 	dup2(STD_OUT, STDOUT_FILENO);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/09 20:08:01 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 21:21:03 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void			update_exit_status_code(void);
 int				get_redirection_fd(t_exec_block *exec, char *file_name);
 void			set_redirection_fd(t_exec_block *exec, int child);
 void			change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe);
-void			reset_fd(void);
+void			reset_params(void);
 
 /*here_doc.c*/
 char			*get_tmp_filename(int number);
@@ -130,5 +130,7 @@ void			*ft_malloc(size_t size);
 
 /*syntax.c*/
 int				syntax_check(char *input);
+
+void			clean_up(void);
 
 #endif
