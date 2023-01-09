@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 22:05:56 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 11:33:45 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	single_execute(t_exec_block *exec)
 
 void	execute(t_exec_block *execs)
 {
-	pid_t			pid;
+	pid_t			*pid_list;
 	t_pipe			iter_pipe;
 	t_exec_block	*head;
 	size_t			idx;
@@ -54,11 +54,11 @@ void	execute(t_exec_block *execs)
 	idx = 0;
 	iter_pipe.prev_fd = -1;
 	head = execs;
+	pid_list = ft_calloc(1, BUFFER_SIZE);
 	while (head)
 	{
-		idx++;
-		pid = pipe_n_fork(&iter_pipe);
-		if (pid == 0)
+		pid_list[idx] = pipe_n_fork(&iter_pipe);
+		if (pid_list[idx++] == 0)
 			child_process(head, &iter_pipe);
 		close(iter_pipe.prev_fd);
 		close(iter_pipe.fd[WRITE]);
@@ -66,9 +66,10 @@ void	execute(t_exec_block *execs)
 		head = head->next;
 	}
 	close(iter_pipe.fd[READ]);
-	while (idx-- > 1)
-		waitpid(-1, &g_sys.last_exit_status_code, 0);
-	waitpid(pid, &g_sys.last_exit_status_code, 0);
+	idx = 0;
+	while (pid_list[idx])
+		waitpid(pid_list[idx++], &g_sys.last_exit_status_code, 0);
+	free(pid_list);
 	child_exit_handler(g_sys.last_exit_status_code);
 }
 
