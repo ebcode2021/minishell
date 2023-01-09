@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 09:39:24 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 15:21:14 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:13:49 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	set_redirection_fd(t_exec_block *exec, int child)
 	while (exec->redirection)
 	{
 		file_name = get_redirection_file_name(exec->redirection->file_name);
-		if (!file_name)
+		if (!file_name || is_blank(file_name))
 		{
 			redirection_error(file_name, exec->redirection->file_name, child);
 			break ;

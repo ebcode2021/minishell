@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:19:10 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 20:15:22 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 19:05:55 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-# define AMBIGUOUS "ambiguous redirect"
+# define AMBIGUOUS ": ambiguous redirect"
 # define COMMAND_NOT_FOUND ": command not found"
 # define IS_DIR ": is a directory"
 # define FORK_ERR ": fork error"
