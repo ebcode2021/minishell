@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:19:10 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 20:07:55 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 20:21:38 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define NOT_A_DIR ": not a directory"
 # define NUMERIC_ARG ": numeric argument required"
 # define OLDPWD_NOT_SET ": OLDPWD not set"
-# define QUOTE_MATCH ": quote pair is not match"
+# define QUOTE_MATCH ": unclosed quotes"
 # define SYNTAX_NEW_LINE ": syntax error near unexpected token `newline\'"
 # define SYNTAX_TOKEN  ": syntax error near unexpected token `"
 # define TOO_MANY_ARG ": too many arguments"
