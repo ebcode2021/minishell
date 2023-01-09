@@ -6,7 +6,11 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/01/09 11:47:23 by jinholee         ###   ########.fr       */
+=======
+/*   Updated: 2023/01/09 20:50:29 by jinholee         ###   ########.fr       */
+>>>>>>> 710f3e4f8028c5e2331ee8626f69a2e8a6593b59
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +27,12 @@ char	*get_env(char *str, size_t *idx)
 	if (idx)
 		str_idx += *idx;
 	buf_idx = 0;
-	while (str[str_idx] && (str[str_idx] != ' ' || str[str_idx] != -1))
+	while (str[str_idx] && (str[str_idx] != ' ' \
+		&& str[str_idx] != '\"' && str[str_idx] != '\'' && str[str_idx] != '|'))
 		buffer[buf_idx++] = str[str_idx++];
 	buffer[buf_idx] = 0;
 	if (idx)
-		*idx = str_idx;
+		*idx = str_idx - 1;
 	lst = g_sys.env_lst;
 	while (lst)
 	{
@@ -38,10 +43,21 @@ char	*get_env(char *str, size_t *idx)
 	return (0);
 }
 
+void	expand_env_to_buffer(char *buffer, char *str, size_t *buf_idx, size_t *i)
+{
+	char	*env;
+
+	env = get_env(str, i);
+	if (env)
+	{
+		ft_memcpy(buffer + *buf_idx, env, ft_strlen(env));
+		*buf_idx += ft_strlen(env);
+	}
+}
+
 char	*expand_env(char *str)
 {
 	char	buffer[BUFFER_SIZE];
-	char	*env;
 	size_t	str_idx;
 	size_t	buf_idx;
 
@@ -52,13 +68,18 @@ char	*expand_env(char *str)
 		while (str[str_idx])
 		{
 			if (str[str_idx] == '$')
+<<<<<<< HEAD
 			{
 				env = get_env(str, &str_idx);
 				if (env && ft_memcpy(buffer + buf_idx, env, ft_strlen(env)))
 					buf_idx += ft_strlen(env);
 			}
+=======
+				expand_env_to_buffer(buffer, str, &buf_idx, &str_idx);
+>>>>>>> 710f3e4f8028c5e2331ee8626f69a2e8a6593b59
 			else if (str[str_idx] != '\"')
-				buffer[buf_idx++] = str[str_idx++];
+				buffer[buf_idx++] = str[str_idx];
+			str_idx++;
 		}
 		free(str);
 	}	
@@ -66,36 +87,54 @@ char	*expand_env(char *str)
 	return (ft_strdup(buffer));
 }
 
-char	*expanded_join(char **split)
+char	*quote_handler(char *str)
 {
-	char	*tmp;
-	char	*expanded;
-	char	*result;
+	char	quote;
+	char	buffer[BUFFER_SIZE];
+	size_t	i;
+	size_t	buf_idx;
 
-	result = ft_calloc(1, 1);
-	while (*split)
+	i = 0;
+	buf_idx = 0;
+	quote = 0;
+	while (str[i])
 	{
-		expanded = expand_env(*split++);
-		tmp = result;
-		result = ft_strjoin(tmp, expanded);
-		free(tmp);
-		free(expanded);
+		if (!quote && (str[i] == '\'' || str[i] == '\"'))
+			quote = str[i];
+		else if (str[i] == quote)
+			quote = 0;
+		else if (quote == '\'')
+			buffer[buf_idx++] = str[i];
+		else if (quote != '\'' && str[i] == '$')
+			 expand_env_to_buffer(buffer, str, &buf_idx, &i);
+		else
+			buffer[buf_idx++] = str[i];
+		i++;
 	}
-	return (result);
-}
-
-char	*double_quote_handler(char *str)
-{
-	char	**split;
-	char	*replaced;
-
-	split = ft_split(str, '\"');
-	replaced = expanded_join(split);
-	free(split);
+	buffer[buf_idx] = 0;
 	free(str);
-	return (replaced);
+	return (ft_strdup(buffer));
 }
 
+// char	*expanded_join(char **split)
+// {
+// 	char	*tmp;
+// 	char	*expanded;
+// 	char	*result;
+
+// 	result = ft_calloc(1, 1);
+// 	while (*split)
+// 	{
+// 		expanded = expand_env(*split++);
+// 		tmp = result;
+// 		result = ft_strjoin(tmp, expanded);
+// 		free(tmp);
+// 		free(expanded);
+// 	}
+// 	return (result);
+// }
+
+<<<<<<< HEAD
 char	*quote_handler(char *str)
 {
 	char	*result;
@@ -117,3 +156,46 @@ char	*quote_handler(char *str)
 	}
 	return (result);
 }
+=======
+// char	*double_quote_handler(char *str)
+// {
+// 	char	**split;
+// 	char	*replaced;
+
+// 	split = ft_split(str, '\"');
+// 	replaced = expanded_join(split);
+// 	free(split);
+// 	free(str);
+// 	return (replaced);
+// }
+
+// char	*quote_handler(char *str)
+// {
+// 	char	*result;
+// 	char	first_quote;
+// 	size_t	idx;
+
+// 	first_quote = 0;
+// 	idx = 0;
+// 	while (str[idx])
+// 	{
+// 		if (str[idx] == '\'' || str[idx] == '\"')
+// 			first_quote = str[idx];
+// 		idx++;
+// 	}
+// 	if (first_quote == '\"')
+// 		result = double_quote_handler(str);
+// 	else if (first_quote == '\'')
+// 		result = str_replace(str, "\'", "");
+// 	else
+// 	{
+// 		result = expand_env(tilde_replace(str));
+// 		if (is_blank(result))
+// 		{
+// 			free(result);
+// 			return (0);
+// 		}
+// 	}
+// 	return (result);
+// }
+>>>>>>> 710f3e4f8028c5e2331ee8626f69a2e8a6593b59

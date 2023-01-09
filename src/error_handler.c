@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 21:53:11 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 20:24:14 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	print_error(char *location, char *argument)
 
 void	redirection_error(char *file_name, char *location, int child)
 {
-	if (!file_name && ft_strncmp("$", location, 2))
+	if ((!file_name && ft_strncmp("$", location, 2)))
 		print_custom_error(location, 0, AMBIGUOUS);
-	else if (!file_name)
+	else if (!file_name || is_blank(file_name))
 		print_custom_error(location, 0, NO_SUCH_FILE_DIR);
 	else
 	{
@@ -76,7 +76,7 @@ void	redirection_error(char *file_name, char *location, int child)
 	}
 }
 
-int	syntax_error(char c, char *trimed)
+int	syntax_error(char c)
 {
 	char	str[2];
 
@@ -91,6 +91,5 @@ int	syntax_error(char c, char *trimed)
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putendl_fd("\'", STDERR_FILENO);
 	}
-	free(trimed);
 	return (0);
 }

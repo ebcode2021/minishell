@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 12:02:17 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:32:01 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	builtin_exit(t_exec_block *exec, int child)
 		else
 		{
 			print_custom_error(exec->command, exec->args[1], NUMERIC_ARG);
-			exit(exit_code & 0xFF);
+			exit(0xFF);
 		}
 		if (exec->args[2])
 		{

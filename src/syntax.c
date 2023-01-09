@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 15:04:05 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/05 20:58:15 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 18:58:35 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,47 @@ static void	skip_blank(char *str, int *idx)
 	(*idx)++;
 	while (str[*idx] && str[*idx] == ' ')
 		(*idx)++;
+}
+
+static int	close_quote_check(char *str, int *idx, int quote)
+{
+	(*idx)++;
+	if (!str[*idx])
+	{
+		(*idx)--;
+		return (1);
+	}
+	if (str[*idx] == quote)
+		return (0);
+	while (str[*idx])
+	{
+		if (str[*idx] == quote)
+			return (0);
+		(*idx)++;
+	}
+	(*idx)--;
+	return (1);
+}
+
+static int	check_quote(char *str)
+{
+	int	idx;
+	int	flag;
+
+	idx = 0;
+	flag = 0;
+	while (str[idx])
+	{
+		if (str[idx] == SINGLE_QUOTE || str[idx] == DOUBLE_QUOTE)
+			flag = close_quote_check(str, &idx, str[idx]);
+		idx++;
+	}
+	if (flag == 1)
+	{
+		print_custom_error(str, 0, QUOTE_MATCH);
+		return (0);
+	}
+	return (1);
 }
 
 static int	check_redirection_syntax(char *str, int *idx)
@@ -37,27 +78,27 @@ static int	check_redirection_syntax(char *str, int *idx)
 int	syntax_check(char *input)
 {
 	int			idx;
-	const char	*trimed = ft_strtrim(input, " ");
 
-	if (*trimed == '|')
-		return (syntax_error('|', (char *)trimed));
+	if (*input == '|')
+		return (syntax_error('|'));
+	if (!check_quote(input))
+		return (0);
 	idx = -1;
-	while (trimed[++idx])
+	while (input[++idx])
 	{
-		if (trimed[idx] == '<' || trimed[idx] == '>')
+		if (input[idx] == '<' || input[idx] == '>')
 		{
-			if (!check_redirection_syntax((char *)trimed, &idx))
-				return (syntax_error(trimed[idx], (char *)trimed));
+			if (!check_redirection_syntax(input, &idx))
+				return (syntax_error(input[idx]));
 		}
-		else if (trimed[idx] == '|')
+		else if (input[idx] == '|')
 		{
-			skip_blank((char *)trimed, &idx);
-			if (!trimed[idx] || trimed[idx] == '|')
-				return (syntax_error(trimed[idx], (char *)trimed));
-			else if (trimed[idx] == '<' || trimed[idx] == '>')
+			skip_blank(input, &idx);
+			if (!input[idx] || input[idx] == '|')
+				return (syntax_error(input[idx]));
+			else if (input[idx] == '<' || input[idx] == '>')
 				idx--;
 		}
 	}
-	free((char *)trimed);
 	return (1);
 }

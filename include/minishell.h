@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/09 12:01:32 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:32:17 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			child_exit_handler(int signo);
 void			print_custom_error(char *location, char *argument, char *msg);
 void			print_error(char *location, char *argument);
 void			redirection_error(char *file_name, char *location, int child);
-int				syntax_error(char c, char *trimed);
+int				syntax_error(char c);
 
 /*exec_block_parser.c*/
 t_exec_block	*str_to_block(char *str);
@@ -81,7 +81,7 @@ void			update_exit_status_code(void);
 int				get_redirection_fd(t_exec_block *exec, char *file_name);
 void			set_redirection_fd(t_exec_block *exec, int child);
 void			change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe);
-void			reset_fd(void);
+void			reset_params(void);
 
 /*here_doc.c*/
 void			clean_up(void);
@@ -116,6 +116,7 @@ void			set_signal_handler(void);
 void			pseudo_sigterm(void);
 void			signal_interrupt(int signo);
 void			signal_quit(int signo);
+void			set_signal_flag(int signo);
 
 /*sort_utils.c*/
 void			bubble_sort(t_list **array);
@@ -130,5 +131,7 @@ void			*ft_malloc(size_t size);
 
 /*syntax.c*/
 int				syntax_check(char *input);
+
+void			clean_up(void);
 
 #endif

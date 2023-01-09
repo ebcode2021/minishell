@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/09 11:58:51 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:31:49 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_exec_block	*str_to_block(char *str)
 	elem = exec->redirection;
 	while (elem)
 	{
-		if (elem->type == HERE_DOC)
+		if (elem->type == HERE_DOC && !g_sys.signal)
 			here_doc_handler(elem);
 		elem = elem->next;
 	}

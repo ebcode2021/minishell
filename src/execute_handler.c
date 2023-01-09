@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 11:33:45 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 20:20:19 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	execute(t_exec_block *execs)
 
 void	execute_handler(t_exec_block *execs)
 {
-	if (!execs)
+	if (!execs || g_sys.signal)
 		return ;
 	update_current_argument(execs);
 	if (execs->next)

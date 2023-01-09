@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:19 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 12:03:20 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:31:56 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	signal_interrupt(int signo)
 {
 	if (signo != SIGINT)
 		return ;
+	ft_putendl_fd("", STDOUT_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 1);
 	exit(EXIT_INTERRUPT);
 }
 
@@ -46,6 +49,12 @@ void	signal_quit(int signo)
 	ft_putnbr_fd(signo, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	exit(EXIT_QUIT);
+}
+
+void	set_signal_flag(int signo)
+{
+	if (signo)
+		g_sys.signal = 1;
 }
 
 void	set_signal_handler(void)

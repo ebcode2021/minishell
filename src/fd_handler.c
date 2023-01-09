@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 09:39:24 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 11:54:50 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:23:17 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,26 @@ char	*get_redirection_file_name(char *str)
 	char	**split;
 	size_t	i;
 
-	if (is_quoted(str))
-		return (quote_handler(ft_strdup(str)));
-	else
+	file_name = quote_handler(ft_strdup(str));
+	if (!is_quoted(str))
 	{
-		file_name = quote_handler(ft_strdup(str));
-		if (file_name)
+		if (is_blank(file_name))
 		{
-			split = ft_split(file_name, ' ');
-			i = 0;
-			while (split[i])
-				i++;
-			free_split(split);
-			if (i > 1)
-			{
-				free(file_name);
-				return (0);
-			}
+			free(file_name);
+			return (0);
 		}
-		return (file_name);
+		split = ft_split(file_name, ' ');
+		i = 0;
+		while (split[i])
+			i++;
+		free_split(split);
+		if (i > 1)
+		{
+			free(file_name);
+			return (0);
+		}
 	}
+	return (file_name);
 }
 
 void	set_redirection_fd(t_exec_block *exec, int child)
@@ -101,8 +101,10 @@ void	change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe)
 	close(iter_pipe->prev_fd);
 }
 
-void	reset_fd(void)
+void	reset_params(void)
 {
+	g_sys.signal = 0;
+	g_sys.here_doc_index = 0;
 	dup2(STD_IN, STDIN_FILENO);
 	dup2(STD_OUT, STDOUT_FILENO);
 }

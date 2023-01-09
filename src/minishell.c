@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 10:51:11 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 12:00:58 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:31:53 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char *argv[], char *envp[])
 			execs = exec_block_parser(input);
 			execute_handler(execs);
 			free_blocks(execs);
-			reset_fd();
+			reset_params();
 		}
 		free(input);
 	}

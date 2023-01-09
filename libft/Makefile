@@ -48,6 +48,10 @@ OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 NAME = libft.a
 
+ifdef SANITIZE
+	CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+endif
+
 ifdef BONUSFLAG
 	OBJECT = $(OBJS) $(BONUS_OBJS)
 else
@@ -72,5 +76,8 @@ re : fclean all
 
 bonus : 
 	make BONUSFLAG=1 all
+
+sanitize :
+	make SANITIE=1 BONUSFLAG=1 all
 
 .PHONY : all clean fclean re bonus
