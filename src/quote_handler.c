@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/09 19:07:56 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 20:50:29 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ char	*quote_handler(char *str)
 		i++;
 	}
 	buffer[buf_idx] = 0;
+	free(str);
 	return (ft_strdup(buffer));
 }
 
