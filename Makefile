@@ -19,8 +19,8 @@ SRC = minishell.c \
 	sort_utils.c \
 	syntax.c \
 	string_utils.c \
-	signal_handler.c
-
+	signal_handler.c \
+	mem_utils.c
 BUILT_IN_DIR = src/builtins/
 BUILT_IN = cd.c \
 		pwd.c \
@@ -29,7 +29,6 @@ BUILT_IN = cd.c \
 		export.c \
 		unset.c \
 		exit.c
-
 SRCS = $(addprefix $(SRC_DIR), $(SRC)) $(addprefix $(BUILT_IN_DIR), $(BUILT_IN))
 OBJS = $(SRCS:.c=.o)
 

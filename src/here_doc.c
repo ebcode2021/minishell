@@ -6,11 +6,27 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/06 19:47:45 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 12:01:18 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	clean_up(void)
+{
+	pid_t		pid;
+	char		**envp;
+	char *const	rm_args[4] = {"rm", "-rf", g_sys.tmp_dir, 0};
+
+	pid = pipe_n_fork(0);
+	if (pid == 0)
+	{
+		envp = current_env_lst();
+		execve("/bin/rm", rm_args, envp);
+		exit(1);
+	}
+	waitpid(pid, 0, 0);
+}
 
 char	*get_tmp_filename(int number)
 {

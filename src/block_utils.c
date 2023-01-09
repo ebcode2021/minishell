@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   block_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:33:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 14:33:36 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 11:55:28 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_block(t_exec_block *block)
-{
-	size_t			i;
-	t_redirecion	*elem;
-
-	i = 0;
-	ft_putendl_fd("==========================", STDERR_FILENO);
-	fprintf(stderr,"cmd: %s\nargs:", block->command);
-	while (block->args[i])
-		fprintf(stderr,"%s, ", block->args[i++]);
-	fprintf(stderr,"\n");
-	elem = block->redirection;
-	while (elem)
-	{
-		fprintf(stderr,"file: %s, type: %d\n", \
-			elem->file_name, elem->type);
-		elem = elem->next;
-	}
-	ft_putendl_fd("==========================", STDERR_FILENO);
-}
 
 t_exec_block	*new_block(void)
 {

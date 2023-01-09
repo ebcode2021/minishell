@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idxinholee <idxinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/30 21:35:47 by idxinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 21:00:31 by idxinholee         ###   ########.fr       */
+/*   Created: 2023/01/09 11:41:33 by jinholee          #+#    #+#             */
+/*   Updated: 2023/01/09 11:58:20 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,42 +62,6 @@ char	**set_redirections(t_exec_block *block, char **split)
 	buffer[buffer_index] = 0;
 	free_split(split);
 	return (split_with_char(buffer, ' '));
-}
-
-// char	**set_arguments(char **split)
-// {
-// 	char	**args;
-// 	char	*output;
-// 	size_t	idx;
-// 	size_t	idxdx;
-
-// 	idx = 0;
-// 	while (split[idx])
-// 		idx++;
-// 	args = ft_calloc(idx + 1, sizeof(char *));
-// 	idx = 0;
-// 	idxdx = 0;
-// 	while (split[idx])
-// 	{
-// 		output = quote_handler(split[idx++]);
-// 		if (output)
-// 			args[idxdx++] = output;
-// 	}
-// 	return (args);
-// }
-
-int	is_quoted(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 char	**lst_to_arr(t_list *lst)

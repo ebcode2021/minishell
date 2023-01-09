@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 14:31:15 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 11:47:23 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,8 @@ char	*expand_env(char *str)
 			if (str[str_idx] == '$')
 			{
 				env = get_env(str, &str_idx);
-				if (env)
-				{
-					ft_memcpy(buffer + buf_idx, env, ft_strlen(env));
+				if (env && ft_memcpy(buffer + buf_idx, env, ft_strlen(env)))
 					buf_idx += ft_strlen(env);
-				}
 			}
 			else if (str[str_idx] != '\"')
 				buffer[buf_idx++] = str[str_idx++];
@@ -103,16 +100,8 @@ char	*quote_handler(char *str)
 {
 	char	*result;
 	char	first_quote;
-	size_t	idx;
 
-	first_quote = 0;
-	idx = 0;
-	while (str[idx])
-	{
-		if (str[idx] == '\'' || str[idx] == '\"')
-			first_quote = str[idx];
-		idx++;
-	}
+	first_quote = is_quoted(str);
 	if (first_quote == '\"')
 		result = double_quote_handler(str);
 	else if (first_quote == '\'')

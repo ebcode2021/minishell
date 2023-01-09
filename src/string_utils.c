@@ -6,11 +6,39 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:37:55 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/05 16:00:53 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 11:57:13 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	is_quoted(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			return (str[i]);
+		i++;
+	}
+	return (0);
+}
+
+int	is_blank(char *str)
+{
+	size_t	idx;
+
+	idx = 0;
+	while (str[idx])
+	{
+		if (str[idx] != ' ')
+			return (0);
+		idx++;
+	}
+	return (1);
+}
 
 void	convert_back(char **split, char c)
 {
@@ -26,20 +54,6 @@ void	convert_back(char **split, char c)
 			str++;
 		}
 	}
-}
-
-int	is_blank(char *str)
-{
-	size_t	idx;
-
-	idx = 0;
-	while (str[idx])
-	{
-		if (str[idx] != ' ')
-			return (0);
-		idx++;
-	}
-	return (1);
 }
 
 char	**split_with_char(char *raw_input, char c)
@@ -69,27 +83,4 @@ char	**split_with_char(char *raw_input, char c)
 	convert_back(split, c);
 	free(converted);
 	return (split);
-}
-
-void	free_split(char **splitted)
-{
-	size_t	idx;
-
-	idx = 0;
-	while (splitted[idx])
-		free(splitted[idx++]);
-	free(splitted);
-}
-
-void	*ft_malloc(size_t size)
-{
-	void	*mem;
-
-	mem = ft_calloc(1, size);
-	if (!mem)
-	{
-		print_custom_error(0, 0, MALLOC_FAIL);
-		exit(EXIT_FAILURE);
-	}
-	return (mem);
 }
