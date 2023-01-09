@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:10:51 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 20:51:11 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:20:27 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ pid_t	pipe_n_fork(t_pipe *new_pipe)
 
 	if (new_pipe)
 		pipe(new_pipe->fd);
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, set_signal_flag);
 	pid = fork();
 	if (pid == 0)
 	{
