@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 18:12:44 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 18:59:04 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void			child_exit_handler(int signo);
 void			print_custom_error(char *location, char *argument, char *msg);
 void			print_error(char *location, char *argument);
 void			redirection_error(char *file_name, char *location, int child);
-int				syntax_error(char c, char *trimed);
+int				syntax_error(char c);
 
 /*exec_block_parser.c*/
 t_exec_block	*str_to_block(char *str);

@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/08 18:08:54 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/09 17:47:36 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@
 
 # define EXIT_INTERRUPT 130
 # define EXIT_QUIT 131
+
+# define SINGLE_QUOTE 39
+# define DOUBLE_QUOTE 34
 
 #endif
