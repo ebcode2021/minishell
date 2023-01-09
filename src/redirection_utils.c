@@ -115,7 +115,6 @@ char	**lst_to_arr(t_list *lst)
 		elem = elem->next;
 	}
 	arr[i] = 0;
-	ft_lstclear(&lst, free);
 	return (arr);
 }
 
@@ -156,5 +155,6 @@ char	**set_arguments(char **split)
 		i++;
 	}
 	arr = lst_to_arr(args);
+	ft_lstclear(&args, free);
 	return (arr);
 }
