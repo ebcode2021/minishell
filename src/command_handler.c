@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 21:40:51 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 10:48:49 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void	command_execute(t_exec_block *exec, char **env_lst)
 		print_custom_error(exec->command, 0, COMMAND_NOT_FOUND);
 	else if (!cmd_path)
 		print_custom_error(exec->command, 0, NO_SUCH_FILE_DIR);
-	else
-		execve(cmd_path, exec->args, env_lst);
+	else if (execve(cmd_path, exec->args, env_lst) == -1)
+		print_error(exec->command, 0);
 }
 
 int	command_handler(t_exec_block *exec)
