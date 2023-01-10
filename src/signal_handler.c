@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:32:19 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/10 15:13:54 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/10 19:28:41 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	new_prompt(int signo)
 
 void	pseudo_sigterm(void)
 {
-	clean_up();
 	ft_putstr_fd("\033[1A", STDOUT_FILENO);
 	ft_putstr_fd("\033[11C", STDOUT_FILENO);
 	ft_putendl_fd("exit", STDOUT_FILENO);

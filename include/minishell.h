@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 12:42:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/10 14:12:45 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/10 19:30:29 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void			change_pipe_fd(t_exec_block *exec, t_pipe *iter_pipe);
 void			reset_params(void);
 
 /*here_doc.c*/
-void			clean_up(void);
 char			*get_tmp_filename(int number);
 void			here_doc(char *eof, char *tmp_filename);
 void			here_doc_handler(t_redirecion *redirection);

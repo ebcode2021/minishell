@@ -6,14 +6,14 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 19:01:59 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/10 12:07:20 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:29:59 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONST_H
 # define CONST_H
 
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 65535
 # define TMP_DIRECTORY "/tmp/picoshell"
 
 # define INFILE 60
