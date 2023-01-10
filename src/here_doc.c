@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 22:06:31 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/10 12:18:21 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:36:15 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	here_doc_handler(t_redirecion *redirection)
 	if (pid == 0)
 	{
 		rl_catch_signals = 1;
+		signal(SIGQUIT, SIG_IGN);
 		replaced = quote_handler_without_expand(redirection->file_name);
 		here_doc(replaced, tmp_filename);
 		free(replaced);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 16:30:49 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 21:45:10 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:33:47 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	execute(t_exec_block *execs)
 	iter_pipe.prev_fd = -1;
 	head = execs;
 	pid_list = ft_calloc(1, BUFFER_SIZE);
-	while (head)
+	while (head && !g_sys.signal)
 	{
 		pid_list[idx] = pipe_n_fork(&iter_pipe);
 		if (pid_list[idx++] == 0)
@@ -75,7 +75,7 @@ static void	execute(t_exec_block *execs)
 
 void	execute_handler(t_exec_block *execs)
 {
-	if (!execs || g_sys.signal)
+	if (g_sys.signal || !execs)
 		return ;
 	update_current_argument(execs);
 	if (execs->next)

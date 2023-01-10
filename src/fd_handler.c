@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   fd_handler.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 09:39:24 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 21:23:17 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:14:44 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_redirection_fd(t_exec_block *exec, char *file_name)
+int	get_redirection_fd(t_redirecion *redirection, char *file_name)
 {
 	int	fd;
 
-	if (exec->redirection->type == INFILE)
+	if (redirection->type == INFILE)
 		fd = open(file_name, O_RDONLY);
-	else if (exec->redirection->type == OUTFILE_A)
+	else if (redirection->type == OUTFILE_A)
 		fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	else
 		fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
@@ -53,32 +53,29 @@ char	*get_redirection_file_name(char *str)
 	return (file_name);
 }
 
-void	set_redirection_fd(t_exec_block *exec, int child)
+void	set_redirection_fd(t_exec_block *execs, int child)
 {
-	int		change_fd;
-	char	*file_name;
+	t_redirecion	*redirection;
+	int				change_fd;
+	char			*file_name;
 
-	while (exec->redirection)
+	redirection = execs->redirection;
+	while (redirection)
 	{
-		file_name = get_redirection_file_name(exec->redirection->file_name);
+		file_name = get_redirection_file_name(redirection->file_name);
 		if (!file_name)
-		{
-			redirection_error(file_name, exec->redirection->file_name, child);
-			break ;
-		}
-		change_fd = get_redirection_fd(exec, file_name);
+			return (redirection_error(file_name, \
+					redirection->file_name, child));
+		change_fd = get_redirection_fd(redirection, file_name);
 		if (change_fd == -1)
-		{
-			redirection_error(file_name, 0, child);
-			break ;
-		}
-		if (exec->redirection->type == INFILE)
+			return (redirection_error(file_name, 0, child));
+		if (redirection->type == INFILE)
 			dup2(change_fd, STDIN_FILENO);
 		else
 			dup2(change_fd, STDOUT_FILENO);
 		close(change_fd);
 		free(file_name);
-		exec->redirection = exec->redirection->next;
+		redirection = redirection->next;
 	}
 }
 
