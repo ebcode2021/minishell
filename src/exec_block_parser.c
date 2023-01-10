@@ -6,7 +6,7 @@
 /*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 10:44:34 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/09 21:31:49 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 09:16:22 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ t_exec_block	*exec_block_parser(char *raw_input)
 	splited = split_with_char(raw_input, '|');
 	while (splited[idx])
 		add_block(&exec_blocks, str_to_block(splited[idx++]));
+	if (idx > 100)
+	{
+		print_custom_error(0, 0, TOO_MANY_PIPE);
+		g_sys.signal = 1;
+	}
 	free(splited);
 	return (exec_blocks);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:19:10 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/09 20:21:38 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/10 09:15:02 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@
 # define SYNTAX_NEW_LINE ": syntax error near unexpected token `newline\'"
 # define SYNTAX_TOKEN  ": syntax error near unexpected token `"
 # define TOO_MANY_ARG ": too many arguments"
+# define TOO_MANY_PIPE ": picoshell only support less than 100 pipes"
 
 #endif

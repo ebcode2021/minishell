@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 15:04:05 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/09 18:58:35 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/10 09:18:12 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ int	syntax_check(char *input)
 {
 	int			idx;
 
-	if (*input == '|')
+	idx = 0;
+	skip_blank(input, &idx);
+	if (input[idx] == '|')
 		return (syntax_error('|'));
 	if (!check_quote(input))
 		return (0);
-	idx = -1;
 	while (input[++idx])
 	{
 		if (input[idx] == '<' || input[idx] == '>')
