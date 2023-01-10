@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:34:57 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/09 21:42:16 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:21:16 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ char	*get_env(char *str, size_t *idx)
 	if (idx)
 		str_idx += *idx;
 	buf_idx = 0;
-	while (str[str_idx] && (str[str_idx] != ' ' \
+	while (str[str_idx] && (str[str_idx] != ' ' && str[str_idx] != '$'\
 		&& str[str_idx] != '\"' && str[str_idx] != '\'' && str[str_idx] != '|'))
 		buffer[buf_idx++] = str[str_idx++];
 	buffer[buf_idx] = 0;
 	if (idx)
 		*idx = str_idx - 1;
 	lst = g_sys.env_lst;
-	while (lst)
+	while (lst && *buffer)
 	{
 		if (ft_strncmp(buffer, lst->variable_name, buf_idx + 1) == 0)
 			return (lst->value);
@@ -63,7 +63,10 @@ char	*expand_env(char *str)
 		str_idx = 0;
 		while (str[str_idx])
 		{
-			if (str[str_idx] == '$')
+			if (str[str_idx] == '$' \
+				&& (!str[str_idx + 1] || str[str_idx + 1] == ' '))
+				buffer[buf_idx++] = str[str_idx];
+			else if (str[str_idx] == '$')
 				expand_env_to_buffer(buffer, str, &buf_idx, &str_idx);
 			else if (str[str_idx] != '\"')
 				buffer[buf_idx++] = str[str_idx];

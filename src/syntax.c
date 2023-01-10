@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/25 15:04:05 by jinhong           #+#    #+#             */
-/*   Updated: 2023/01/10 10:49:30 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:15:39 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ int	first_check(char *str, size_t *idx)
 		print_custom_error(str, 0, QUOTE_MATCH);
 		return (0);
 	}
-	skip_blank(str, idx);
+	i = 0;
+	skip_blank(str, &i);
 	if (str[i] == '|')
 		return (syntax_error(str[i]));
+	*idx = i;
 	return (1);
 }
 

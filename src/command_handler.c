@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 09:51:04 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/10 10:48:49 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 12:54:05 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*get_cmd_path(char *command)
 	idx = 0;
 	path_lists = get_path_in_envp();
 	if (*command == 0)
-		print_custom_error(command, 0, COMMAND_NOT_FOUND);
+		return (0);
 	if (path_lists)
 	{
 		while (path_lists[idx])
