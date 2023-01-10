@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 09:39:24 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/10 14:14:44 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/10 15:13:18 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	reset_params(void)
 {
 	g_sys.signal = 0;
 	g_sys.here_doc_index = 0;
+	signal(SIGINT, new_prompt);
 	dup2(STD_IN, STDIN_FILENO);
 	dup2(STD_OUT, STDOUT_FILENO);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 14:44:39 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/10 12:14:04 by jinholee         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:13:43 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static void	create_tmp_dir(char **envp)
 
 void	init_system_info(char **envp)
 {
-	set_signal_handler();
 	getcwd(g_sys.pwd, BUFFER_SIZE);
 	g_sys.tmp_dir = ft_strjoin(TMP_DIRECTORY, ttyname(STDIN_FILENO));
 	create_tmp_dir(envp);
@@ -96,4 +95,5 @@ void	init_system_info(char **envp)
 	dup2(STDIN_FILENO, STD_IN);
 	dup2(STDOUT_FILENO, STD_OUT);
 	g_sys.last_exit_status_code = 0;
+	set_signal_handler();
 }
