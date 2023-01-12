@@ -6,7 +6,7 @@
 /*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 16:56:42 by jinholee          #+#    #+#             */
-/*   Updated: 2023/01/10 13:48:52 by eunson           ###   ########.fr       */
+/*   Updated: 2023/01/12 13:22:43 by eunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	print_custom_error(char *location, char *argument, char *msg)
 {
 	ft_putstr_fd("picoshell: ", STDERR_FILENO);
 	if (location)
+	{
 		ft_putstr_fd(location, STDERR_FILENO);
+		ft_putstr_fd(" ", STDERR_FILENO);
+	}
 	if (argument)
 		ft_putstr_fd(argument, STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
