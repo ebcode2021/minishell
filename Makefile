@@ -33,7 +33,7 @@ SRCS = $(addprefix $(SRC_DIR), $(SRC)) $(addprefix $(BUILT_IN_DIR), $(BUILT_IN))
 OBJS = $(SRCS:.c=.o)
 INCLUDE = include \
 		-I libft \
-		-I ${HOME}/.brew/opt/readline/include
+		-I readline/include
 LIBFT = libft/libft.a
 READLINE = -l readline -L ./readline/lib
 
