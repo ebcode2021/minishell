@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eunson <eunson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jinholee <jinholee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:31:58 by eunson            #+#    #+#             */
-/*   Updated: 2023/01/08 19:54:41 by eunson           ###   ########.fr       */
+/*   Updated: 2023/03/16 21:40:33 by jinholee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	update_pwd(void)
+{
+	t_list	*pwd;
+
+	pwd = ft_lstfind(g_sys.env_lst, "PWD");
+	if (!pwd)
+		ft_lstadd_back(&g_sys.env_lst, ft_lstnew(g_sys.pwd));
+	else
+	{
+		if (pwd->value)
+			free(pwd->value);
+		pwd->value = ft_strdup(g_sys.pwd);
+		if (pwd->copy)
+			free(pwd->copy);
+		pwd->copy = ft_strjoin("PWD=", pwd->value);
+	}
+}
 
 static void	update_oldpwd(void)
 {
@@ -29,6 +47,9 @@ static void	update_oldpwd(void)
 		if (oldpwd->value)
 			free(oldpwd->value);
 		oldpwd->value = ft_strdup(g_sys.pwd);
+		if (oldpwd->copy)
+			free(oldpwd->copy);
+		oldpwd->copy = ft_strjoin("OLDPWD=", oldpwd->value);
 	}
 }
 
@@ -46,6 +67,7 @@ static int	change_dir(char *dest, t_exec_block *exec)
 		exit_status = 0;
 		update_oldpwd();
 		getcwd(g_sys.pwd, BUFFER_SIZE);
+		update_pwd();
 	}
 	return (exit_status);
 }
